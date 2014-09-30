@@ -1,0 +1,39 @@
+##### EVENTOS
+categoria_id
+titulo
+slug
+descripcion
+fecha desde
+fecha hasta
+lugar
+horario
+pais
+ciudad
+mapa
+tags
+imagen
+
+categorias eventos
+nombre
+slug
+
+speakers
+evento_id
+nombre
+slug
+cargo
+empresa
+pais
+bio
+cv
+imagen
+
+
+sponsors
+evento_id
+nombre
+slug
+imagen
+
+
+
