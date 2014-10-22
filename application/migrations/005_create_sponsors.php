@@ -37,6 +37,10 @@ class Migration_Create_Sponsors extends CI_Migration
 					"filename"    		=>        array(
                     "type"                =>        "VARCHAR",
                     "constraint"        	=>        255,
+                  ),
+          "status"    		=>        array(
+                    "type"                =>        "INT",
+                    "constraint"        	=>        1,
                 ),
 	
             )

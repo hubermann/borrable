@@ -38,7 +38,7 @@ echo form_hidden('pais[id]');
 			<div class="control-group">
 			<label class="control-label">Nombre</label>
 			<div class="controls">
-			<input value="<?php echo set_value('nombre'); ?>" type="text" name="nombre" />
+			<input value="<?php echo set_value('nombre'); ?>" class="form-control" type="text" name="nombre" />
 			<?php echo form_error('nombre','<p class="error">', '</p>'); ?>
 			</div>
 			</div>

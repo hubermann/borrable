@@ -9,7 +9,7 @@ class Evento extends CI_Model{
 	}
 	//all
 	public function get_records($num,$start){
-		$this->db->select()->from('eventos')->order_by('id','ASC')->limit($num,$start);
+		$this->db->select()->from('eventos')->where('status', 0)->order_by('id','ASC')->limit($num,$start);
 		return $this->db->get();
 
 	}
@@ -25,17 +25,16 @@ class Evento extends CI_Model{
 	
 	//total rows
 	public function count_rows(){ 
-		$this->db->select('id')->from('eventos');
+		$this->db->select('id')->from('eventos')->where('status', 0);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
 
 
 
-		//add new
-		public function add_record($data){ $this->db->insert('eventos', $data);
-				
-
+	//add new
+	public function add_record($data){ 
+			$this->db->insert('eventos', $data);
 	}
 
 

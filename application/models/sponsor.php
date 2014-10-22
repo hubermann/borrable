@@ -8,8 +8,11 @@ class Sponsor extends CI_Model{
 
 	}
 	//all
-	public function get_records($num,$start){
-		$this->db->select()->from('sponsors')->order_by('id','ASC')->limit($num,$start);
+	public function get_records($id_evento){
+		$this->db->select()->from('sponsors')
+		->where('status',0)
+		->where('evento_id', $id_evento)
+		->order_by('id','ASC');
 		return $this->db->get();
 
 	}
@@ -33,10 +36,9 @@ class Sponsor extends CI_Model{
 
 
 		//add new
-		public function add_record($data){ $this->db->insert('sponsors', $data);
-				
-
-	}
+		public function add_record($data){ 
+			$this->db->insert('sponsors', $data);
+		}
 
 
 		//update

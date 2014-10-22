@@ -91,6 +91,7 @@ public function create(){
 
 		$newpais = array( 'nombre' => $this->input->post('nombre'), 
  'slug' => $slug, 
+ 'status' => 0, 
 );
 		#save
 		$this->pais->add_record($newpais);

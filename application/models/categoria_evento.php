@@ -9,13 +9,13 @@ class Categoria_evento extends CI_Model{
 	}
 	//all
 	public function get_records($num,$start){
-		$this->db->select()->from('categorias_eventos')->order_by('id','ASC')->limit($num,$start);
+		$this->db->select()->from('categorias_eventos')->where('status', 0)->order_by('id','ASC')->limit($num,$start);
 		return $this->db->get();
 
 	}
 
 	public function get_records_menu(){
-		$this->db->select()->from('categorias_eventos')->order_by('nombre','ASC');
+		$this->db->select()->from('categorias_eventos')->where('status', 0)->order_by('nombre','ASC');
 		return $this->db->get();
 
 	}
@@ -31,7 +31,7 @@ class Categoria_evento extends CI_Model{
 	
 	//total rows
 	public function count_rows(){ 
-		$this->db->select('id')->from('categorias_eventos');
+		$this->db->select('id')->where('status', 0)->from('categorias_eventos');
 		$query = $this->db->get();
 		return $query->num_rows();
 	}

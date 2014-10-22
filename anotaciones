@@ -37,3 +37,13 @@ imagen
 
 
 
+se implemento soft delete con opcion 0 por defecto 1 eliminado y 2 como draft
+
+resto agregar estilos luego de eliminar. seria bueno mostrar una opcion de UNDO para revertir el cambio.
+
+falta agregar a todos los input de formulario la clase "blabla-control" para q sean al 100%
+
+
+
+
+

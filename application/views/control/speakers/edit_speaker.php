@@ -13,6 +13,7 @@ $attributes = array('class' => 'form-horizontal', 'id' => 'edit_speaker');
 echo form_open_multipart(base_url('control/speakers/update/'),$attributes);
 
 echo form_hidden('id', $query->id); 
+echo form_hidden('evento_id', $query->evento_id); 
 ?>
 <legend><?php echo $title ?></legend>
 <div class="well well-large well-transparent">
@@ -45,19 +46,12 @@ echo form_hidden('id', $query->id);
 </div>
 -->
 
-			<!-- Text input-->
-			<div class="control-group">
-			<label class="control-label">Evento_id</label>
-			<div class="controls">
-			<input value="<?php echo $query->evento_id; ?>" type="text" name="evento_id" />
-			<?php echo form_error('evento_id','<p class="error">', '</p>'); ?>
-			</div>
-			</div>
+			
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Nombre</label>
 			<div class="controls">
-			<input value="<?php echo $query->nombre; ?>" type="text" name="nombre" />
+			<input value="<?php echo $query->nombre; ?>" class="form-control" type="text" name="nombre" />
 			<?php echo form_error('nombre','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -65,7 +59,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Slug</label>
 			<div class="controls">
-			<input value="<?php echo $query->slug; ?>" type="text" name="slug" />
+			<input value="<?php echo $query->slug; ?>" class="form-control" type="text" name="slug" />
 			<?php echo form_error('slug','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -73,7 +67,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Cargo</label>
 			<div class="controls">
-			<input value="<?php echo $query->cargo; ?>" type="text" name="cargo" />
+			<input value="<?php echo $query->cargo; ?>" class="form-control" type="text" name="cargo" />
 			<?php echo form_error('cargo','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -81,7 +75,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Empresa</label>
 			<div class="controls">
-			<input value="<?php echo $query->empresa; ?>" type="text" name="empresa" />
+			<input value="<?php echo $query->empresa; ?>" class="form-control" type="text" name="empresa" />
 			<?php echo form_error('empresa','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -89,7 +83,21 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Pais</label>
 			<div class="controls">
-			<input value="<?php echo $query->pais; ?>" type="text" name="pais" />
+			<select name="pais" id="pais">
+			<?php 
+
+			$paises = $this->pais->get_records_menu();
+			if($paises){
+
+			foreach ($paises->result() as $value) {
+			if($query->pais == $value->id){$sel= "selected";}else{$sel="";}
+			echo '<option value="'.$value->id.'" '.$sel.'>'.$value->nombre.'</option>';
+			}
+			}
+
+			?>
+			</select>
+
 			<?php echo form_error('pais','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -97,7 +105,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Bio</label>
 			<div class="controls">
-			<input value="<?php echo $query->bio; ?>" type="text" name="bio" />
+			<input value="<?php echo $query->bio; ?>"  class="form-control" type="text" name="bio" />
 			<?php echo form_error('bio','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -105,7 +113,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Cv</label>
 			<div class="controls">
-			<input value="<?php echo $query->cv; ?>" type="text" name="cv" />
+			<input value="<?php echo $query->cv; ?>"  class="form-control" type="text" name="cv" />
 			<?php echo form_error('cv','<p class="error">', '</p>'); ?>
 			</div>
 			</div>

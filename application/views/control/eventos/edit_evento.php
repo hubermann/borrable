@@ -179,7 +179,7 @@ echo form_hidden('id', $query->id);
 			<!-- Text input-->
 
 			<div class="control-group">
-			<label class="control-label">Categoria id</label>
+			<label class="control-label">Categoria</label>
 			<div class="controls">
 			<select name="categoria_id" id="categoria_id">
 			<?php 
@@ -204,7 +204,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Titulo</label>
 			<div class="controls">
-			<input value="<?php echo $query->titulo; ?>" type="text" name="titulo" />
+			<input value="<?php echo $query->titulo; ?>" class="form-control" type="text" name="titulo" />
 			<?php echo form_error('titulo','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -213,7 +213,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Descripcion</label>
 			<div class="controls">
-			<textarea name="descripcion" id="descripcion"><?php echo $query->descripcion; ?></textarea>
+			<textarea name="descripcion" class="form-control" id="descripcion"><?php echo $query->descripcion; ?></textarea>
 			<?php echo form_error('descripcion','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -230,7 +230,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Fecha Desde</label>
 			<div class="controls">
-			<input value="<?php echo $fecha_desde; ?>" type="text" name="fecha_desde" id="fecha_desde" class="datepicker" />
+			<input value="<?php echo $fecha_desde; ?>" class="form-control" type="text" name="fecha_desde" id="fecha_desde" class="datepicker" />
 			<?php echo form_error('fecha_desde','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -238,7 +238,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Fecha Hasta</label>
 			<div class="controls">
-			<input value="<?php echo $fecha_hasta; ?>" type="text" name="fecha_hasta" id="fecha_hasta" class="datepicker" />
+			<input value="<?php echo $fecha_hasta; ?>" class="form-control" type="text" name="fecha_hasta" id="fecha_hasta" class="datepicker" />
 			<?php echo form_error('fecha_hasta','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -246,7 +246,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Lugar</label>
 			<div class="controls">
-			<input value="<?php echo $query->lugar; ?>" type="text" name="lugar" />
+			<input value="<?php echo $query->lugar; ?>" class="form-control" type="text" name="lugar" />
 			<?php echo form_error('lugar','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -254,7 +254,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Horario</label>
 			<div class="controls">
-			<input value="<?php echo $query->horario; ?>" type="text" name="horario" />
+			<input value="<?php echo $query->horario; ?>" class="form-control" type="text" name="horario" />
 			<?php echo form_error('horario','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -287,7 +287,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Ciudad</label>
 			<div class="controls">
-			<input value="<?php echo $query->ciudad; ?>" type="text" name="ciudad" />
+			<input value="<?php echo $query->ciudad; ?>" class="form-control" type="text" name="ciudad" />
 			<?php echo form_error('ciudad','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -326,9 +326,9 @@ echo form_hidden('id', $query->id);
 			</div>
 			<!-- Text input-->
 			<div class="control-group">
-			<label class="control-label">Tags</label>
+			<label class="control-label">Tags <small>separados por coma. (Ej: uno, dos, tres)</small></label>
 			<div class="controls">
-			<input value="<?php echo $query->tags; ?>" type="text" name="tags" />
+			<input value="<?php echo $query->tags; ?>" class="form-control" type="text" name="tags" />
 			<?php echo form_error('tags','<p class="error">', '</p>'); ?>
 			</div>
 			</div>

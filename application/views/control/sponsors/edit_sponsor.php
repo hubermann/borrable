@@ -8,11 +8,16 @@
 	reader.readAsDataURL(input.files[0]);
 	}
 }
-</script><?php  
+</script>
+
+
+
+<?php  
 $attributes = array('class' => 'form-horizontal', 'id' => 'edit_sponsor');
 echo form_open_multipart(base_url('control/sponsors/update/'),$attributes);
 
 echo form_hidden('id', $query->id); 
+echo form_hidden('evento_id', $query->evento_id); 
 ?>
 <legend><?php echo $title ?></legend>
 <div class="well well-large well-transparent">
@@ -45,39 +50,35 @@ echo form_hidden('id', $query->id);
 </div>
 -->
 
-			<!-- Text input-->
-			<div class="control-group">
-			<label class="control-label">Evento_id</label>
-			<div class="controls">
-			<input value="<?php echo $query->evento_id; ?>" type="text" name="evento_id" />
-			<?php echo form_error('evento_id','<p class="error">', '</p>'); ?>
-			</div>
-			</div>
+			
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Nombre</label>
 			<div class="controls">
-			<input value="<?php echo $query->nombre; ?>" type="text" name="nombre" />
+			<input value="<?php echo $query->nombre; ?>" type="text" class="form-control" name="nombre" />
 			<?php echo form_error('nombre','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
+			
+
+
 			<!-- Text input-->
-			<div class="control-group">
-			<label class="control-label">Slug</label>
-			<div class="controls">
-			<input value="<?php echo $query->slug; ?>" type="text" name="slug" />
-			<?php echo form_error('slug','<p class="error">', '</p>'); ?>
-			</div>
-			</div>
-			<!-- Text input-->
-			<div class="control-group">
-			<label class="control-label">Destacado</label>
-			<div class="controls">
-			<input value="<?php echo $query->destacado; ?>" type="text" name="destacado" />
-			<?php echo form_error('destacado','<p class="error">', '</p>'); ?>
-			</div>
-			</div>
-	<!-- Text input-->
+			<div class="checkbox">
+		    <label>
+		    <?php 
+		    if($query->destacado==1){
+		    	$checked = "checked";
+		    }else{
+		    	$checked = "";
+		    }
+		    ?>
+		      <input type="checkbox" name="destacado" <?php echo $checked; ?>> Sponsor Destacado
+		    </label>
+		  	</div>
+
+
+
+<!-- Text input-->
 <div class="control-group">
 	<label class="control-label">Imagen</label>
 	<div class="controls">

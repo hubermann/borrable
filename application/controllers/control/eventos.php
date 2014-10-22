@@ -9,6 +9,7 @@ parent::__construct();
 $this->load->model('evento');
 $this->load->model('pais');
 $this->load->model('categoria_evento');
+$this->load->model('permiso');
 $this->load->helper('url');
 $this->load->library('session');
 
@@ -23,7 +24,7 @@ redirect('dashboard');
 
 public function index(){
 	//Pagination
-	$per_page = 4;
+	$per_page = 10;
 	$page = $this->uri->segment(3);
 	if(!$page){ $start =0; $page =1; }else{ $start = ($page -1 ) * $per_page; }
 		$data['pagination_links'] = "";
@@ -70,22 +71,41 @@ $data['menu'] = 'control/eventos/menu_evento';
 $this->load->view('control/control_layout', $data);
 }
 
+
+function check_date($str){
+        $three = explode("-",$str);
+        if(count($three) <= 2)
+        {
+            $this->form_validation->set_message('check_date','Ingrese fecha con formato dd-mm-yyyy.');
+            return false;
+        }
+        else
+        {
+            if(!checkdate((int)$three[0],(int)$three[1],(int)$three[2]))
+            {
+                $this->form_validation->set_message('check_date','Date must be valid.');
+                return false;
+            }
+            else{ return true; }
+        }
+    } 
+
+
+
 //create
 public function create(){
 
 	$this->load->helper('form');
 	$this->load->library('form_validation');
-$this->form_validation->set_rules('categoria_id', 'Categoria_id', 'required');
-
-$this->form_validation->set_rules('titulo', 'Titulo', 'required');
-
-$this->form_validation->set_rules('descripcion', 'Descripcion', 'required');
-
-$this->form_validation->set_rules('fecha_desde', 'Fecha_desde', 'required');
-
-
-$this->form_validation->set_message('required','El campo %s es requerido.');
+	$this->form_validation->set_rules('categoria_id', 'Categoria_id', 'required');
+	$this->form_validation->set_rules('titulo', 'Titulo', 'required');
+	$this->form_validation->set_rules('descripcion', 'Descripcion', 'required');
+	$this->form_validation->set_rules('fecha_desde', 'Fecha desde', 'required|callback_check_date');
+	$this->form_validation->set_rules('fecha_hasta', 'Fecha hasta', 'required|callback_check_date');
+	$this->form_validation->set_message('required','El campo %s es requerido.');
 	
+	#$this->form_validation->set_message('date_valid', 'No tiene formato de fecha');
+
 	if ($this->form_validation->run() === FALSE){
 
 		$this->load->helper('form');
@@ -110,8 +130,8 @@ $this->form_validation->set_message('required','El campo %s es requerido.');
 
 		list($dia, $mes, $anio) = explode("-", $this->input->post('fecha_desde'));
 		list($diah, $mesh, $anioh) = explode("-", $this->input->post('fecha_hasta'));
-		echo $fecha_desde = $anio."-".$mes."-".$dia;
-		echo $fecha_hasta = $anioh."-".$mesh."-".$diah;
+		$fecha_desde = $anio."-".$mes."-".$dia;
+		$fecha_hasta = $anioh."-".$mesh."-".$diah;
 
 		$newevento = array( 
 			'categoria_id' => $this->input->post('categoria_id'), 
@@ -127,6 +147,7 @@ $this->form_validation->set_message('required','El campo %s es requerido.');
 			'coordenadas' => $this->input->post('coordenadas'), 
 			'tags' => $this->input->post('tags'), 
 			'filename' => $file['filename'], 
+			'status' => 0, 
 			);
 		#save
 		$this->evento->add_record($newevento);
@@ -198,8 +219,8 @@ public function update(){
 
 		list($dia, $mes, $anio) = explode("-", $this->input->post('fecha_desde'));
 		list($diah, $mesh, $anioh) = explode("-", $this->input->post('fecha_hasta'));
-		echo $fecha_desde = $anio."-".$mes."-".$dia;
-		echo $fecha_hasta = $anioh."-".$mesh."-".$diah;
+		$fecha_desde = $anio."-".$mes."-".$dia;
+		$fecha_hasta = $anioh."-".$mesh."-".$diah;
 
 
 		$editedevento = array(  
@@ -230,11 +251,13 @@ public function update(){
 		#save
 		$this->session->set_flashdata('success', 'evento Actualizado!');
 		$this->evento->update_record($id, $editedevento);
+		
 		if($this->input->post('id')!=""){
 			redirect('control/eventos', 'refresh');
 		}else{
 			redirect('control/eventos', 'refresh');
 		}
+		
 
 
 
@@ -245,67 +268,31 @@ public function update(){
 }
 
 
-//delete comfirm		
-public function delete_comfirm(){
-	$this->load->helper('form');
-	$data['content'] = 'control/eventos/comfirm_delete';
-	$data['title'] = 'Eliminar evento';
-	$data['menu'] = 'control/eventos/menu_evento';
-	$data['query'] = $data['query'] = $this->evento->get_record($this->uri->segment(4));
-	$this->load->view('control/control_layout', $data);
-
-
-}
-
 public function soft_delete(){
+	$permiso = $this->permiso->verify_access_ajax( 'eventos', 'delete');
+	if(!$permiso){
+		$retorno = array('status' => 3);
+		echo json_encode($retorno);
+		exit;
+	}
 	// 0 Active
 	// 1 Deleted
 	// 2 Draft
-	$id_evento = $this->input->post('idevento');
+	$id_evento = $this->input->post('iditem');
 	if($id_evento > 0 && $id_evento != ""){
-		echo "Eliminado";
+		$editedevento = array(  
+		'status' => 1,
+		);
+		$this->evento->update_record($id_evento, $editedevento);
+		$retorno = array('status' => 1);
+		echo json_encode($retorno);
 	}else{
-		echo "Nada para eliminar";
+		$retorno = array('status' => 0);
+		echo json_encode($retorno);
 	}
 }
 
 
-//delete
-public function delete(){
-
-	$this->load->helper('form');
-	$this->load->library('form_validation');
-
-	$this->form_validation->set_rules('comfirm', 'comfirm', 'required');
-	$this->form_validation->set_message('required','Por favor, confirme para eliminar.');
-
-
-	if ($this->form_validation->run() === FALSE){
-		#validation failed
-		$this->load->helper('form');
-
-		$data['content'] = 'control/eventos/comfirm_delete';
-		$data['title'] = 'Eliminar evento';
-		$data['menu'] = 'control/eventos/menu_evento';
-		$data['query'] = $this->evento->get_record($this->input->post('id'));
-		$this->load->view('control/control_layout', $data);
-	}else{
-		#validation passed
-		$this->session->set_flashdata('success', 'evento eliminado!');
-
-		$prod = $this->evento->get_record($this->input->post('id'));
-			$path = 'images-eventos/'.$prod->filename;
-			if(is_link($path)){
-				unlink($path);
-			}
-		
-
-		$this->evento->delete_record();
-		redirect('control/eventos', 'refresh');
-		
-
-	}
-}
 
 public function upload_file(){
 

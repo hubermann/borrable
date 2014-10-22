@@ -39,7 +39,7 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Nombre</label>
 			<div class="controls">
-			<input value="<?php echo $query->nombre; ?>" type="text" name="nombre" />
+			<input value="<?php echo $query->nombre; ?>" type="text" class="form-control" name="nombre" />
 			<?php echo form_error('nombre','<p class="error">', '</p>'); ?>
 			</div>
 			</div>

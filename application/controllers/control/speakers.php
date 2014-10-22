@@ -7,6 +7,7 @@ public function __construct(){
 
 parent::__construct();
 $this->load->model('speaker');
+$this->load->model('pais');
 $this->load->helper('url');
 $this->load->library('session');
 
@@ -20,29 +21,14 @@ redirect('dashboard');
 }
 
 public function index(){
-	//Pagination
-	$per_page = 4;
-	$page = $this->uri->segment(3);
-	if(!$page){ $start =0; $page =1; }else{ $start = ($page -1 ) * $per_page; }
-		$data['pagination_links'] = "";
-		$total_pages = ceil($this->speaker->count_rows() / $per_page);
+	$id_evento = $this->uri->segment(4);
 
-		if ($total_pages > 1){ 
-			for ($i=1;$i<=$total_pages;$i++){ 
-			if ($page == $i) 
-				//si muestro el índice de la página actual, no coloco enlace 
-				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>'; 
-			else 
-				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina 
-				$data['pagination_links']  .= '<li><a href="'.base_url().'control/speakers/'.$i.'" > '. $i .'</a></li>'; 
-		} 
-	}
-	//End Pagination
-
+	$data['pagination_links'] ="";
 	$data['title'] = 'speakers';
 	$data['menu'] = 'control/speakers/menu_speaker';
+
 	$data['content'] = 'control/speakers/all';
-	$data['query'] = $this->speaker->get_records($per_page,$start);
+	$data['query'] = $this->speaker->get_records($id_evento);
 
 	$this->load->view('control/control_layout', $data);
 
@@ -73,21 +59,13 @@ public function create(){
 
 	$this->load->helper('form');
 	$this->load->library('form_validation');
-$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
+	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
 
-$this->form_validation->set_rules('nombre', 'Nombre', 'required');
+	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
 
-$this->form_validation->set_rules('slug', 'Slug', 'required');
+	$this->form_validation->set_rules('pais', 'Pais', 'required');
 
-$this->form_validation->set_rules('cargo', 'Cargo', 'required');
-
-$this->form_validation->set_rules('empresa', 'Empresa', 'required');
-
-$this->form_validation->set_rules('pais', 'Pais', 'required');
-
-$this->form_validation->set_rules('bio', 'Bio', 'required');
-
-$this->form_validation->set_rules('cv', 'Cv', 'required');
+	$this->form_validation->set_rules('bio', 'Bio', 'required');
 
 	
 	if ($this->form_validation->run() === FALSE){
@@ -95,14 +73,15 @@ $this->form_validation->set_rules('cv', 'Cv', 'required');
 		$this->load->helper('form');
 		$data['title'] = 'Nuevo speakers';
 		$data['content'] = 'control/speakers/new_speaker';
+		$data['id_evento'] = $this->input->post('evento_id');
 		$data['menu'] = 'control/speakers/menu_speaker';
 		$this->load->view('control/control_layout', $data);
 
 	}else{
-		/*
+		
 		$this->load->helper('url');
-		$slug = url_title($this->input->post('titulo'), 'dash', TRUE);
-		*/
+		$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
+		
 		$file  = $this->upload_file();
 		if($_FILES['filename']['size'] > 0){
 			if ( $file['status'] == 0 ){
@@ -112,19 +91,20 @@ $this->form_validation->set_rules('cv', 'Cv', 'required');
 			$file['filename'] = '';
 		}
 		$newspeaker = array( 'evento_id' => $this->input->post('evento_id'), 
- 'nombre' => $this->input->post('nombre'), 
- 'slug' => $this->input->post('slug'), 
- 'cargo' => $this->input->post('cargo'), 
- 'empresa' => $this->input->post('empresa'), 
- 'pais' => $this->input->post('pais'), 
- 'bio' => $this->input->post('bio'), 
- 'cv' => $this->input->post('cv'), 
-'filename' => $file['filename'], 
-);
+							 'nombre' => $this->input->post('nombre'), 
+							 'slug' => $slug, 
+							 'cargo' => $this->input->post('cargo'), 
+							 'empresa' => $this->input->post('empresa'), 
+							 'pais' => $this->input->post('pais'), 
+							 'bio' => $this->input->post('bio'), 
+							 'cv' => $this->input->post('cv'), 
+							'filename' => $file['filename'], 
+							'status' => 0, 
+							);
 		#save
 		$this->speaker->add_record($newspeaker);
 		$this->session->set_flashdata('success', 'speaker creado. <a href="speakers/detail/'.$this->db->insert_id().'">Ver</a>');
-		redirect('control/speakers', 'refresh');
+		redirect('control/speakers/evento/'.$this->input->post('evento_id'), 'refresh');
 
 	}
 
@@ -146,21 +126,13 @@ public function editar(){
 public function update(){
 	$this->load->helper('form');
 	$this->load->library('form_validation'); 
-$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
+	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
 
-$this->form_validation->set_rules('nombre', 'Nombre', 'required');
+	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
 
-$this->form_validation->set_rules('slug', 'Slug', 'required');
+	$this->form_validation->set_rules('pais', 'Pais', 'required');
 
-$this->form_validation->set_rules('cargo', 'Cargo', 'required');
-
-$this->form_validation->set_rules('empresa', 'Empresa', 'required');
-
-$this->form_validation->set_rules('pais', 'Pais', 'required');
-
-$this->form_validation->set_rules('bio', 'Bio', 'required');
-
-$this->form_validation->set_rules('cv', 'Cv', 'required');
+	$this->form_validation->set_rules('bio', 'Bio', 'required');
 
 
 	$this->form_validation->set_message('required','El campo %s es requerido.');
@@ -194,41 +166,66 @@ $this->form_validation->set_rules('cv', 'Cv', 'required');
 		
 		
 }		
+if($this->input->post('slug') == ""){
+
+	$this->load->helper('url');
+	$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
+}else{
+	$slug = $this->input->post('slug');
+}
+		
+
 		$id=  $this->input->post('id');
 
 		$editedspeaker = array(  
-'evento_id' => $this->input->post('evento_id'),
+		'evento_id' => $this->input->post('evento_id'),
 
-'nombre' => $this->input->post('nombre'),
+		'nombre' => $this->input->post('nombre'),
 
-'slug' => $this->input->post('slug'),
+		'slug' => $slug,
 
-'cargo' => $this->input->post('cargo'),
+		'cargo' => $this->input->post('cargo'),
 
-'empresa' => $this->input->post('empresa'),
+		'empresa' => $this->input->post('empresa'),
 
-'pais' => $this->input->post('pais'),
+		'pais' => $this->input->post('pais'),
 
-'bio' => $this->input->post('bio'),
+		'bio' => $this->input->post('bio'),
 
-'cv' => $this->input->post('cv'),
-);
+		'cv' => $this->input->post('cv'),
+		);
 		#save
 		$this->session->set_flashdata('success', 'speaker Actualizado!');
 		$this->speaker->update_record($id, $editedspeaker);
 		if($this->input->post('id')!=""){
-			redirect('control/speakers', 'refresh');
+			redirect('control/speakers/evento/'.$this->input->post('evento_id'), 'refresh');
 		}else{
-			redirect('control/speakers', 'refresh');
+			redirect('control/speakers/evento/'.$this->input->post('evento_id'), 'refresh');
 		}
-
-
 
 	}
 
-
-
 }
+
+
+public function soft_delete(){
+	// 0 Active
+	// 1 Deleted
+	// 2 Draft
+	$id_evento = $this->input->post('idevento');
+	$id_speaker = $this->input->post('idspeaker');
+	if($id_evento > 0 && $id_evento != ""){
+		$editedspeaker = array(  
+		'status' => 1,
+		);
+		$this->speaker->update_record($id_speaker, $editedsponsor);
+		$retorno = array('status' => 1);
+		echo json_encode($retorno);
+	}else{
+		echo "Nada para eliminar";
+	}
+}
+
 
 
 //delete comfirm		

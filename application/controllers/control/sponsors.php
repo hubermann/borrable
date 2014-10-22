@@ -20,7 +20,11 @@ redirect('dashboard');
 }
 
 public function index(){
+
+	$id_evento = $this->uri->segment(4);
+
 	//Pagination
+	/*
 	$per_page = 4;
 	$page = $this->uri->segment(3);
 	if(!$page){ $start =0; $page =1; }else{ $start = ($page -1 ) * $per_page; }
@@ -38,11 +42,14 @@ public function index(){
 		} 
 	}
 	//End Pagination
+	*/
 
+	$data['pagination_links'] ="";
 	$data['title'] = 'sponsors';
 	$data['menu'] = 'control/sponsors/menu_sponsor';
+
 	$data['content'] = 'control/sponsors/all';
-	$data['query'] = $this->sponsor->get_records($per_page,$start);
+	$data['query'] = $this->sponsor->get_records($id_evento);
 
 	$this->load->view('control/control_layout', $data);
 
@@ -73,28 +80,25 @@ public function create(){
 
 	$this->load->helper('form');
 	$this->load->library('form_validation');
-$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
+	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
 
-$this->form_validation->set_rules('nombre', 'Nombre', 'required');
-
-$this->form_validation->set_rules('slug', 'Slug', 'required');
-
-$this->form_validation->set_rules('destacado', 'Destacado', 'required');
-
+	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
 	
+	$this->form_validation->set_message('required','El campo %s es requerido.');
 	if ($this->form_validation->run() === FALSE){
 
 		$this->load->helper('form');
 		$data['title'] = 'Nuevo sponsors';
 		$data['content'] = 'control/sponsors/new_sponsor';
+		$data['id_evento'] = $this->input->post('evento_id');
 		$data['menu'] = 'control/sponsors/menu_sponsor';
 		$this->load->view('control/control_layout', $data);
 
 	}else{
-		/*
+		
 		$this->load->helper('url');
-		$slug = url_title($this->input->post('titulo'), 'dash', TRUE);
-		*/
+		$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
+		
 		$file  = $this->upload_file();
 		if($_FILES['filename']['size'] > 0){
 			if ( $file['status'] == 0 ){
@@ -103,16 +107,18 @@ $this->form_validation->set_rules('destacado', 'Destacado', 'required');
 		}else{
 			$file['filename'] = '';
 		}
-		$newsponsor = array( 'evento_id' => $this->input->post('evento_id'), 
- 'nombre' => $this->input->post('nombre'), 
- 'slug' => $this->input->post('slug'), 
- 'destacado' => $this->input->post('destacado'), 
-'filename' => $file['filename'], 
-);
+		$newsponsor = array( 
+			'evento_id' => $this->input->post('evento_id'), 
+			'nombre' => $this->input->post('nombre'), 
+			'slug' => $slug, 
+			'destacado' => $this->input->post('destacado'), 
+			'filename' => $file['filename'], 
+			'status' => 0, 
+		);
 		#save
 		$this->sponsor->add_record($newsponsor);
-		$this->session->set_flashdata('success', 'sponsor creado. <a href="sponsors/detail/'.$this->db->insert_id().'">Ver</a>');
-		redirect('control/sponsors', 'refresh');
+		$this->session->set_flashdata('success', 'sponsor creado.');
+		redirect('control/sponsors/evento/'.$this->input->post('evento_id'), 'refresh');
 
 	}
 
@@ -134,20 +140,14 @@ public function editar(){
 public function update(){
 	$this->load->helper('form');
 	$this->load->library('form_validation'); 
-$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
+	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
 
-$this->form_validation->set_rules('nombre', 'Nombre', 'required');
-
-$this->form_validation->set_rules('slug', 'Slug', 'required');
-
-$this->form_validation->set_rules('destacado', 'Destacado', 'required');
-
+	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
 
 	$this->form_validation->set_message('required','El campo %s es requerido.');
 
 	if ($this->form_validation->run() === FALSE){
 		$this->load->helper('form');
-
 		$data['title'] = 'Nuevo sponsor';
 		$data['content'] = 'control/sponsors/edit_sponsor';
 		$data['menu'] = 'control/sponsors/menu_sponsor';
@@ -158,15 +158,13 @@ $this->form_validation->set_rules('destacado', 'Destacado', 'required');
 		
 			$file  = $this->upload_file();
 		
-			if ( $file['status'] != 0 )
-				{
+			if ( $file['status'] != 0 ){
 				//guardo
 				$sponsor = $this->sponsor->get_record($this->input->post('id'));
-					 $path = 'images-sponsors/'.$sponsor->filename;
-					 if(is_link($path)){
-						unlink($path);
-					 }
-				
+				 $path = 'images-sponsors/'.$sponsor->filename;
+				 if(is_link($path)){
+					unlink($path);
+				 }
 				
 				$data = array('filename' => $file['filename']);
 				$this->sponsor->update_record($this->input->post('id'), $data);
@@ -177,29 +175,46 @@ $this->form_validation->set_rules('destacado', 'Destacado', 'required');
 		$id=  $this->input->post('id');
 
 		$editedsponsor = array(  
-'evento_id' => $this->input->post('evento_id'),
 
-'nombre' => $this->input->post('nombre'),
+		'nombre' => $this->input->post('nombre'),
 
-'slug' => $this->input->post('slug'),
+		'slug' => $this->input->post('slug'),
 
-'destacado' => $this->input->post('destacado'),
-);
+		'destacado' => $this->input->post('destacado'),
+		);
 		#save
 		$this->session->set_flashdata('success', 'sponsor Actualizado!');
 		$this->sponsor->update_record($id, $editedsponsor);
 		if($this->input->post('id')!=""){
-			redirect('control/sponsors', 'refresh');
+			redirect('control/sponsors/evento/'.$this->input->post('evento_id'), 'refresh');
 		}else{
-			redirect('control/sponsors', 'refresh');
+			redirect('control/sponsors'.$this->input->post('evento_id'), 'refresh');
 		}
 
 
 
 	}
 
+}
 
 
+
+public function soft_delete(){
+	// 0 Active
+	// 1 Deleted
+	// 2 Draft
+	$id_evento = $this->input->post('idevento');
+	$id_sponsor = $this->input->post('idsponsor');
+	if($id_evento > 0 && $id_evento != ""){
+		$editedsponsor = array(  
+		'status' => 1,
+		);
+		$this->sponsor->update_record($id_sponsor, $editedsponsor);
+		$retorno = array('status' => 1);
+		echo json_encode($retorno);
+	}else{
+		echo "Nada para eliminar";
+	}
 }
 
 

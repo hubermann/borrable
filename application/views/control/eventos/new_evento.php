@@ -12,10 +12,11 @@
 #coordenadas{width: 500px; padding: .1em; color: #ccc; font-size: 11px}
 </style>
 
+
+
 <!-- API from google -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
-		
 <script type="text/javascript">
 		//Auto complete function for address input
         function initialize() {
@@ -67,9 +68,9 @@ var arrayMarcadores = [];
 
 function initMap()
 {
-    var latlng = new google.maps.LatLng(-22.471954507739227, -61.87568374);
+    var latlng = new google.maps.LatLng(-34.604603,-58.45852);
     var myOptions = {
-        zoom: 3,
+        zoom: 11,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -144,23 +145,6 @@ function limpiarMarcadores() {
 
 
 </script>
-
-
-
-
-<script>
-	function show_preview(input) {
-	if (input.files && input.files[0]) {
-	var reader = new FileReader();
-	reader.onload = function (e) {
-	$('#previewImg').html('<img src="'+e.target.result+'" width="140" />' );
-	}
-	reader.readAsDataURL(input.files[0]);
-	}
-}
-
-</script>
-
 <?php  
 
 $attributes = array('class' => 'form-horizontal', 'id' => 'new_evento');
@@ -221,7 +205,7 @@ echo form_hidden('evento[id]');
 			<div class="control-group">
 			<label class="control-label">Fecha Desde</label>
 			<div class="controls">
-			<input value="<?php echo set_value('fecha_desde'); ?>" type="text" name="fecha_desde" id="fecha_desde" />
+			<input value="<?php echo set_value('fecha_desde'); ?>" type="text" class="form-control" name="fecha_desde" id="fecha_desde" />
 			<?php echo form_error('fecha_desde','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -229,7 +213,7 @@ echo form_hidden('evento[id]');
 			<div class="control-group">
 			<label class="control-label">Fecha Hasta</label>
 			<div class="controls">
-			<input value="<?php echo set_value('fecha_hasta'); ?>" type="text"  name="fecha_hasta" id="fecha_hasta" />
+			<input value="<?php echo set_value('fecha_hasta'); ?>" type="text"   class="form-control" name="fecha_hasta" id="fecha_hasta" />
 			<?php echo form_error('fecha_hasta','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -237,7 +221,7 @@ echo form_hidden('evento[id]');
 			<div class="control-group">
 			<label class="control-label">Lugar</label>
 			<div class="controls">
-			<input value="<?php echo set_value('lugar'); ?>" type="text" name="lugar" />
+			<input value="<?php echo set_value('lugar'); ?>" type="text" class="form-control"  name="lugar" />
 			<?php echo form_error('lugar','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -245,7 +229,7 @@ echo form_hidden('evento[id]');
 			<div class="control-group">
 			<label class="control-label">Horario</label>
 			<div class="controls">
-			<input value="<?php echo set_value('horario'); ?>" type="text" name="horario" />
+			<input value="<?php echo set_value('horario'); ?>" type="text" class="form-control"  name="horario" />
 			<?php echo form_error('horario','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -254,7 +238,7 @@ echo form_hidden('evento[id]');
 				<label class="control-label">pais</label>
 				<div class="controls">
 
-				<select name="pais" id="pais">
+				<select name="pais" id="pais" >
 				<?php  
 
 				$pais = $this->pais->get_records_menu();
@@ -279,7 +263,7 @@ echo form_hidden('evento[id]');
 			<div class="control-group">
 			<label class="control-label">Ciudad</label>
 			<div class="controls">
-			<input value="<?php echo set_value('ciudad'); ?>" type="text" name="ciudad" />
+			<input value="<?php echo set_value('ciudad'); ?>" type="text" class="form-control"  name="ciudad" />
 			<?php echo form_error('ciudad','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
@@ -289,8 +273,8 @@ echo form_hidden('evento[id]');
 			<div class="control-group">
 				<label class="control-label">Coordenadas</label>
 				<div id="maininput">
-					<input type="text" id="input_direccion" placeholder="Ingrese direccion a buscar.">
-					<span id="getCords" onClick="codeAddress();">>></span>
+					<input type="text" id="input_direccion" class="form-control"  placeholder="Ingrese direccion a buscar.">
+					<p id="getCords" onClick="codeAddress();" class="btn">>></p>
 				</div>
 							
 				<!-- MAPA -->
@@ -299,21 +283,22 @@ echo form_hidden('evento[id]');
 				<!-- COORDENADAS -->
 				<div id="coordenadas_mapa">
 
-				<input type="text" id="coordenadas" name="coordenadas" readonly="true" value="<?php echo set_value('coordenadas'); ?>">
+				<input type="text" id="coordenadas" name="coordenadas" class="form-control"  readonly="true" value="<?php echo set_value('coordenadas'); ?>">
 				<input type="text" id="latFld" readonly="true">
 				<input type="text" id="lngFld" readonly="true">
 				</div>
 				
 				<?php echo form_error('mapa','<p class="error">', '</p>'); ?>
-			</div>
+    <br />
+  </div>
 
 
 
 			<!-- Text input-->
 			<div class="control-group">
-			<label class="control-label">Tags</label>
+			<label class="control-label">Tags <small>separados por coma. (Ej: uno, dos, tres)</small></label>
 			<div class="controls">
-			<input value="<?php echo set_value('tags'); ?>" type="text" name="tags" />
+			<input value="<?php echo set_value('tags'); ?>" type="text" class="form-control"  name="tags" />
 			<?php echo form_error('tags','<p class="error">', '</p>'); ?>
 			</div>
 			</div>

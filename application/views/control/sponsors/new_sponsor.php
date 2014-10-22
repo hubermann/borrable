@@ -1,3 +1,18 @@
+<?php  
+
+if(!isset($id_evento)){
+	$id_evento = $this->uri->segment(4);
+}
+if($id_evento==""){redirect("/control/eventos"); }
+?>
+
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url('control/eventos'); ?>">Eventos</a></li>
+  <li class="active">Sponsors</li>
+</ol>
+
+
+
 <script>
 	function show_preview(input) {
 	if (input.files && input.files[0]) {
@@ -8,13 +23,15 @@
 	reader.readAsDataURL(input.files[0]);
 	}
 }
-</script><?php  
+</script>
+
+<?php  
 
 $attributes = array('class' => 'form-horizontal', 'id' => 'new_sponsor');
 echo form_open_multipart(base_url('control/sponsors/create/'),$attributes);
 
 echo form_hidden('sponsor[id]');
-
+echo form_hidden('evento_id',$id_evento);
 ?>
 <legend><?php echo $title ?></legend>
 <div class="well well-large well-transparent">
@@ -44,55 +61,41 @@ echo form_hidden('sponsor[id]');
 	</div>
 </div>
 -->
-			<!-- Text input-->
-			<div class="control-group">
-			<label class="control-label">Evento_id</label>
-			<div class="controls">
-			<input value="<?php echo set_value('evento_id'); ?>" type="text" name="evento_id" />
-			<?php echo form_error('evento_id','<p class="error">', '</p>'); ?>
-			</div>
-			</div>
+			
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Nombre</label>
 			<div class="controls">
-			<input value="<?php echo set_value('nombre'); ?>" type="text" name="nombre" />
+			<input value="<?php echo set_value('nombre'); ?>" type="text" name="nombre" class="form-control" />
 			<?php echo form_error('nombre','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
+			
+			
+			<!-- Text input-->
+			<div class="checkbox">
+		    <label>
+		      <input type="checkbox" name="destacado" > Sponsor Destacado
+		    </label>
+		  	</div>
+			
 			<!-- Text input-->
 			<div class="control-group">
-			<label class="control-label">Slug</label>
-			<div class="controls">
-			<input value="<?php echo set_value('slug'); ?>" type="text" name="slug" />
-			<?php echo form_error('slug','<p class="error">', '</p>'); ?>
+				<label class="control-label">Imagen</label>
+				<div class="controls">
+				<div id="previewImg"></div>
+				<input value="<?php echo set_value('filename'); ?>" type="file" name="filename" onchange="show_preview(this)"/>
+				<?php echo form_error('filename','<p class="error">', '</p>'); ?>
+				</div>
 			</div>
-			</div>
-			<!-- Text input-->
+
+
 			<div class="control-group">
-			<label class="control-label">Destacado</label>
-			<div class="controls">
-			<input value="<?php echo set_value('destacado'); ?>" type="text" name="destacado" />
-			<?php echo form_error('destacado','<p class="error">', '</p>'); ?>
+			<label class="control-label"></label>
+				<div class="controls">
+					<button class="btn" type="submit">Crear</button>
+				</div>
 			</div>
-			</div>
-	<!-- Text input-->
-<div class="control-group">
-	<label class="control-label">Imagen</label>
-	<div class="controls">
-	<div id="previewImg"></div>
-	<input value="<?php echo set_value('filename'); ?>" type="file" name="filename" onchange="show_preview(this)"/>
-	<?php echo form_error('filename','<p class="error">', '</p>'); ?>
-	</div>
-</div>
-
-
-<div class="control-group">
-<label class="control-label"></label>
-	<div class="controls">
-		<button class="btn" type="submit">Crear</button>
-	</div>
-</div>
 
 
 

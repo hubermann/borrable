@@ -14,6 +14,10 @@
         <link rel="stylesheet" href="<?php echo base_url('public_folder/css/datatables/dataTables.bootstrap.css'); ?>">
         <!-- Theme style -->
         <link rel="stylesheet" href="<?php echo base_url('public_folder/css/AdminLTE.css'); ?>">
+        <!-- Custom styles -->
+        <link rel="stylesheet" href="<?php echo base_url('public_folder/css/backend.css'); ?>">
+        <!-- Date picker CSS -->
+        <link rel="stylesheet" href="<?php echo base_url('public_folder/css/datepicker.css'); ?>">
 
         <!-- WP admin menu style -->
         <link rel="stylesheet" href="<?php echo base_url('public_folder/css/admin-menu.css'); ?>">
@@ -21,9 +25,15 @@
         <link rel="stylesheet" href="<?php echo base_url('public_folder/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>">
 
         <!-- jQuery 2.0.2 -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="<?php echo base_url("public_folder/js/vendor/jquery-1.11.0.min.js"); ?>"><\/script>')</script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script> 
 
+
+
+<style type="text/css" media="all">
+    <?php echo '@import '.base_url('public_folder/css_widg_editor/info.css'); ?>
+    <?php echo '@import '.base_url('public_folder/css_widg_editor/main.css'); ?>
+    <?php echo '@import '.base_url('public_folder/css_widg_editor/widgEditor.css'); ?>
+</style>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -60,66 +70,7 @@
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
-                                        <li><!-- start message -->
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="../../img/avatar3.png" class="img-circle" alt="User Image"/>
-                                                </div>
-                                                <h4>
-                                                    Support Team
-                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li><!-- end message -->
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="../../img/avatar2.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    AdminLTE Design Team
-                                                    <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="../../img/avatar.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Developers
-                                                    <small><i class="fa fa-clock-o"></i> Today</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="../../img/avatar2.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Sales Department
-                                                    <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="../../img/avatar.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Reviewers
-                                                    <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
+                                       
                                     </ul>
                                 </li>
                                 <li class="footer"><a href="#">See All Messages</a></li>
@@ -245,34 +196,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
-                                <li class="user-header bg-light-blue">
-                                    <img src="../../img/avatar3.png" class="img-circle" alt="User Image" />
-                                    <p>
-                                        Jane Doe - Web Developer
-                                        <small>Member since Nov. 2012</small>
-                                    </p>
-                                </li>
-                                <!-- Menu Body -->
-                                <li class="user-body">
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Followers</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Sales</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Friends</a>
-                                    </div>
-                                </li>
-                                <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                                    </div>
-                                </li>
+                               <li><a href="#">Fin</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -302,7 +226,7 @@
                     <?php include_once('includes/menu_admin.php'); ?>
 
 
-			
+      
 
                 </section>
                 <!-- /.sidebar -->
@@ -324,6 +248,28 @@
                     </ol>
                 </section>
                 
+    <div id="avisos">
+    <?php 
+
+      if($this->session->flashdata('success')): 
+      echo '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
+      '.$this->session->flashdata('success').'</div>';
+      endif;
+
+      if($this->session->flashdata('warning')): 
+      echo '<div class="alert alert-warning"  role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
+      '.$this->session->flashdata('warning').'</div>';
+      endif;
+
+      if($this->session->flashdata('error')): 
+      echo '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
+      '.$this->session->flashdata('error').'</div>';
+      endif;
+
+    ?>
+
+    </div>
+
                 <!-- Main content -->
                 <section class="content">
                 <?php $this->load->view($content); ?>
@@ -333,16 +279,24 @@
 
   
         <script src="<?php echo base_url('public_folder/js/bootstrap.js'); ?>"></script>
-        
+     
 
         <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="<?php echo base_url("public_folder/js/vendor/jquery-1.11.0.min.js"); ?>"><\/script>')</script>
+
+       <script src="<?php echo base_url('public_folder/js/backend.js'); ?>"></script>
+        <!-- Date Picker -->
+        <script type="text/javascript" src="<?php echo base_url('public_folder/js/bootstrap-datepicker.js'); ?>"></script>
+        
         <!-- Bootstrap -->
         <script src="<?php echo base_url('public_folder/js/bootstrap.js'); ?>"></script>
-
+        
+        <!-- editor -->
+        <script src="<?php echo base_url('public_folder/js/plugins/ckeditor/ckeditor.js'); ?>"></script>
+      
         <!-- modal confirm -->
         <script src="<?php echo base_url('public_folder/js/bootbox.min.js'); ?>"></script>
-
 
         <!-- DATA TABES SCRIPT -->
         <script src="<?php echo base_url('public_folder/js/plugins/datatables/jquery.dataTables.js'); ?>"></script>
@@ -350,6 +304,7 @@
         <!-- AdminLTE App -->
 
         <script src="<?php echo base_url('public_folder/js/AdminLTE/app.js'); ?>"></script>
+
 
         
 
@@ -366,8 +321,17 @@
                 });
             });
         </script>
-
-        
+        <script>
+        window.setTimeout(function() { $(".alert-success").alert('close'); }, 4000);
+        window.setTimeout(function() { $(".alert-warning").alert('close'); }, 4000);
+        window.setTimeout(function() { $(".alert-danger").alert('close'); }, 4000);
+        $('#fecha_desde').datepicker({
+          format: 'dd-mm-yyyy',
+        });
+        $('#fecha_hasta').datepicker({
+          format: 'dd-mm-yyyy',
+        });
+        </script>
 
     </body>
 </html>

@@ -8,8 +8,12 @@ class Speaker extends CI_Model{
 
 	}
 	//all
-	public function get_records($num,$start){
-		$this->db->select()->from('speakers')->order_by('id','ASC')->limit($num,$start);
+	//all
+	public function get_records($id_evento){
+		$this->db->select()->from('speakers')
+		->where('status',0)
+		->where('evento_id', $id_evento)
+		->order_by('id','ASC');
 		return $this->db->get();
 
 	}

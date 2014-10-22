@@ -90,7 +90,6 @@
     <div id="avisos" class="col-lg-12">
 
     <?php 
-
       if($this->session->flashdata('success')): 
       echo '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
       '.$this->session->flashdata('success').'</div>';
@@ -105,8 +104,8 @@
       echo '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
       '.$this->session->flashdata('error').'</div>';
       endif;
-
     ?>
+    
     </div>
   </div>
 </div>
@@ -117,10 +116,12 @@
     <!-- menu column -->
     <?php $this->load->view($menu); ?>
     </div>
-    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 
+
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
     <?php $this->load->view($content); ?>
     </div>
+
   </div>
 </div>
 

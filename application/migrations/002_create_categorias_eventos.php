@@ -14,7 +14,11 @@ class Migration_Create_Categorias_eventos extends CI_Migration
                     "auto_increment"    =>        TRUE,
  
                 ),
-					"nombre"    		=>        array(
+						"status"    		=>        array(
+                    "type"                =>        "INT",
+                    "constraint"        	=>        1,
+                ),
+"nombre"    		=>        array(
                     "type"                =>        "TEXT",
                     "constraint"        	=>        100,
                 ),

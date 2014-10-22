@@ -5,21 +5,23 @@ class categorias_eventos extends CI_Controller{
 
 public function __construct(){
 
-parent::__construct();
-$this->load->model('categoria_evento');
-$this->load->helper('url');
-$this->load->library('session');
+	parent::__construct();
+	$this->load->model('categoria_evento');
+	$this->load->model('permiso');
+	$this->load->helper('url');
+	$this->load->library('session');
 
-//Si no hay session redirige a Login
-if(! $this->session->userdata('logged_in')){
-redirect('dashboard');
-}
+	//Si no hay session redirige a Login
+	if(! $this->session->userdata('logged_in')){
+	redirect('dashboard');
+	}
 
 
 
 }
 
 public function index(){
+	$this->permiso->verify_access( 'categorias_eventos', 'view');
 	//Pagination
 	$per_page = 4;
 	$page = $this->uri->segment(3);
@@ -50,27 +52,28 @@ public function index(){
 
 //detail
 public function detail(){
-
-$data['title'] = 'Categorias eventos';
-$data['content'] = 'control/categorias_eventos/detail';
-$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
-$data['query'] = $this->categoria_evento->get_record($this->uri->segment(4));
-$this->load->view('control/control_layout', $data);
+	$this->permiso->verify_access( 'categorias_eventos', 'view');
+	$data['title'] = 'Categorias eventos';
+	$data['content'] = 'control/categorias_eventos/detail';
+	$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
+	$data['query'] = $this->categoria_evento->get_record($this->uri->segment(4));
+	$this->load->view('control/control_layout', $data);
 }
 
 
 //new
 public function form_new(){
-$this->load->helper('form');
-$data['title'] = 'Nueva categoria  de eventos';
-$data['content'] = 'control/categorias_eventos/new_categoria_evento';
-$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
-$this->load->view('control/control_layout', $data);
+	$this->permiso->verify_access( 'categorias_eventos', 'create');
+	$this->load->helper('form');
+	$data['title'] = 'Nueva categoria  de eventos';
+	$data['content'] = 'control/categorias_eventos/new_categoria_evento';
+	$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
+	$this->load->view('control/control_layout', $data);
 }
 
 //create
 public function create(){
-
+	$this->permiso->verify_access( 'categorias_eventos', 'create');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
@@ -81,7 +84,7 @@ public function create(){
 	if ($this->form_validation->run() === FALSE){
 
 		$this->load->helper('form');
-		$data['title'] = 'Nuevo categorias_eventos';
+		$data['title'] = 'Nueva categoria de eventos';
 		$data['content'] = 'control/categorias_eventos/new_categoria_evento';
 		$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 		$this->load->view('control/control_layout', $data);
@@ -92,7 +95,8 @@ public function create(){
 		$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
 		$newcategoria_evento = array( 
 			'nombre' => $this->input->post('nombre'), 
-			'slug' => $slug, 
+			'slug' => $slug,
+			'status' => 0, 
 			);
 		#save
 		$this->categoria_evento->add_record($newcategoria_evento);
@@ -107,8 +111,9 @@ public function create(){
 
 //edit
 public function editar(){
+	$this->permiso->verify_access( 'categorias_eventos', 'edit');
 	$this->load->helper('form');
-	$data['title']= 'Editar categoria_evento';	
+	$data['title']= 'Editar categoria de eventos';	
 	$data['content'] = 'control/categorias_eventos/edit_categoria_evento';
 	$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 	$data['query'] = $this->categoria_evento->get_record($this->uri->segment(4));
@@ -117,6 +122,7 @@ public function editar(){
 
 //update
 public function update(){
+	$this->permiso->verify_access('categorias_eventos', 'edit');
 	$this->load->helper('form');
 	$this->load->library('form_validation'); 
 	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
@@ -128,7 +134,7 @@ public function update(){
 	if ($this->form_validation->run() === FALSE){
 		$this->load->helper('form');
 
-		$data['title'] = 'Nuevo categoria_evento';
+		$data['title'] = 'Nueva categoria de evento';
 		$data['content'] = 'control/categorias_eventos/edit_categoria_evento';
 		$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 		$data['query'] = $this->categoria_evento->get_record($this->input->post('id'));
@@ -144,7 +150,7 @@ public function update(){
 		'slug' => $slug,
 		);
 		#save
-		$this->session->set_flashdata('success', 'categoria_evento Actualizado!');
+		$this->session->set_flashdata('success', 'Categoria de evento Actualizado!');
 		$this->categoria_evento->update_record($id, $editedcategoria_evento);
 		if($this->input->post('id')!=""){
 			redirect('control/categorias_eventos', 'refresh');
@@ -163,6 +169,7 @@ public function update(){
 
 //delete comfirm		
 public function delete_comfirm(){
+	$this->permiso->verify_access( 'categorias_eventos', 'delete');
 	$this->load->helper('form');
 	$data['content'] = 'control/categorias_eventos/comfirm_delete';
 	$data['title'] = 'Eliminar categoria_evento';
@@ -175,7 +182,7 @@ public function delete_comfirm(){
 
 //delete
 public function delete(){
-
+	$this->permiso->verify_access( 'categorias_eventos', 'delete');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 
@@ -210,6 +217,30 @@ public function delete(){
 	}
 }
 
+
+public function soft_delete(){
+	$permiso = $this->permiso->verify_access_ajax( 'categorias_eventos', 'delete');
+	if(!$permiso){
+		$retorno = array('status' => 3);
+		echo json_encode($retorno);
+		exit;
+	}
+	// 0 Active
+	// 1 Deleted
+	// 2 Draft?
+	$id_categoria_evento = $this->input->post('iditem');
+	if($id_categoria_evento > 0 && $id_categoria_evento != ""){
+		$editedcategoriaevento = array(  
+		'status' => 1,
+		);
+		$this->categoria_evento->update_record($id_categoria_evento, $editedcategoriaevento);
+		$retorno = array('status' => 1);
+		echo json_encode($retorno);
+	}else{
+		$retorno = array('status' => 0);
+		echo json_encode($retorno);
+	}
+}
 
 } //end class
 
