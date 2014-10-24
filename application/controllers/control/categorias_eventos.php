@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class categorias_eventos extends CI_Controller{
 
@@ -29,19 +29,19 @@ public function index(){
 		$data['pagination_links'] = "";
 		$total_pages = ceil($this->categoria_evento->count_rows() / $per_page);
 
-		if ($total_pages > 1){ 
-			for ($i=1;$i<=$total_pages;$i++){ 
-			if ($page == $i) 
-				//si muestro el índice de la página actual, no coloco enlace 
-				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>'; 
-			else 
-				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina 
-				$data['pagination_links']  .= '<li><a href="'.base_url().'control/categorias_eventos/'.$i.'" > '. $i .'</a></li>'; 
-		} 
+		if ($total_pages > 1){
+			for ($i=1;$i<=$total_pages;$i++){
+			if ($page == $i)
+				//si muestro el índice de la página actual, no coloco enlace
+				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>';
+			else
+				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina
+				$data['pagination_links']  .= '<li><a href="'.base_url().'control/categorias_eventos/'.$i.'" > '. $i .'</a></li>';
+		}
 	}
 	//End Pagination
 
-	$data['title'] = 'Categorias eventos';
+	$data['title'] = 'Categorias para encuentros';
 	$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 	$data['content'] = 'control/categorias_eventos/all';
 	$data['query'] = $this->categoria_evento->get_records($per_page,$start);
@@ -53,7 +53,7 @@ public function index(){
 //detail
 public function detail(){
 	$this->permiso->verify_access( 'categorias_eventos', 'view');
-	$data['title'] = 'Categorias eventos';
+	$data['title'] = 'Categorias para encuentros';
 	$data['content'] = 'control/categorias_eventos/detail';
 	$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 	$data['query'] = $this->categoria_evento->get_record($this->uri->segment(4));
@@ -65,7 +65,7 @@ public function detail(){
 public function form_new(){
 	$this->permiso->verify_access( 'categorias_eventos', 'create');
 	$this->load->helper('form');
-	$data['title'] = 'Nueva categoria  de eventos';
+	$data['title'] = 'Nueva categoria para encuentros';
 	$data['content'] = 'control/categorias_eventos/new_categoria_evento';
 	$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 	$this->load->view('control/control_layout', $data);
@@ -80,27 +80,27 @@ public function create(){
 
 	$this->form_validation->set_message('required','El campo %s es requerido.');
 
-	
+
 	if ($this->form_validation->run() === FALSE){
 
 		$this->load->helper('form');
-		$data['title'] = 'Nueva categoria de eventos';
+		$data['title'] = 'Nueva categoria de encuentros';
 		$data['content'] = 'control/categorias_eventos/new_categoria_evento';
 		$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 		$this->load->view('control/control_layout', $data);
 
 	}else{
-		
+
 		$this->load->helper('url');
 		$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
-		$newcategoria_evento = array( 
-			'nombre' => $this->input->post('nombre'), 
+		$newcategoria_evento = array(
+			'nombre' => $this->input->post('nombre'),
 			'slug' => $slug,
-			'status' => 0, 
+			'status' => 0,
 			);
 		#save
 		$this->categoria_evento->add_record($newcategoria_evento);
-		$this->session->set_flashdata('success', 'categoria de eventos creada. <a href="categorias_eventos/detail/'.$this->db->insert_id().'">Ver</a>');
+		$this->session->set_flashdata('success', 'categoria de encuentros, creada!');
 		redirect('control/categorias_eventos', 'refresh');
 
 	}
@@ -113,7 +113,7 @@ public function create(){
 public function editar(){
 	$this->permiso->verify_access( 'categorias_eventos', 'edit');
 	$this->load->helper('form');
-	$data['title']= 'Editar categoria de eventos';	
+	$data['title']= 'Editar categoria de encuentros';
 	$data['content'] = 'control/categorias_eventos/edit_categoria_evento';
 	$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 	$data['query'] = $this->categoria_evento->get_record($this->uri->segment(4));
@@ -124,7 +124,7 @@ public function editar(){
 public function update(){
 	$this->permiso->verify_access('categorias_eventos', 'edit');
 	$this->load->helper('form');
-	$this->load->library('form_validation'); 
+	$this->load->library('form_validation');
 	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
 
 
@@ -134,23 +134,23 @@ public function update(){
 	if ($this->form_validation->run() === FALSE){
 		$this->load->helper('form');
 
-		$data['title'] = 'Nueva categoria de evento';
+		$data['title'] = 'Nueva categoria de encuentros';
 		$data['content'] = 'control/categorias_eventos/edit_categoria_evento';
 		$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 		$data['query'] = $this->categoria_evento->get_record($this->input->post('id'));
 		$this->load->view('control/control_layout', $data);
-	}else{		
+	}else{
 		$id=  $this->input->post('id');
 
 		$this->load->helper('url');
 		$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
 
-		$editedcategoria_evento = array(  
+		$editedcategoria_evento = array(
 		'nombre' => $this->input->post('nombre'),
 		'slug' => $slug,
 		);
 		#save
-		$this->session->set_flashdata('success', 'Categoria de evento Actualizado!');
+		$this->session->set_flashdata('success', 'Categoria de encuentros, actualizada!');
 		$this->categoria_evento->update_record($id, $editedcategoria_evento);
 		if($this->input->post('id')!=""){
 			redirect('control/categorias_eventos', 'refresh');
@@ -167,12 +167,13 @@ public function update(){
 }
 
 
-//delete comfirm		
+
+//delete comfirm
 public function delete_comfirm(){
 	$this->permiso->verify_access( 'categorias_eventos', 'delete');
 	$this->load->helper('form');
 	$data['content'] = 'control/categorias_eventos/comfirm_delete';
-	$data['title'] = 'Eliminar categoria_evento';
+	$data['title'] = 'Eliminar categoria encuentros';
 	$data['menu'] = 'control/categorias_eventos/menu_categoria_evento';
 	$data['query'] = $data['query'] = $this->categoria_evento->get_record($this->uri->segment(4));
 	$this->load->view('control/control_layout', $data);
@@ -208,11 +209,11 @@ public function delete(){
 			if(is_link($path)){
 				unlink($path);
 			}
-		
+
 
 		$this->categoria_evento->delete_record();
 		redirect('control/categorias_eventos', 'refresh');
-		
+
 
 	}
 }
@@ -230,7 +231,7 @@ public function soft_delete(){
 	// 2 Draft?
 	$id_categoria_evento = $this->input->post('iditem');
 	if($id_categoria_evento > 0 && $id_categoria_evento != ""){
-		$editedcategoriaevento = array(  
+		$editedcategoriaevento = array(
 		'status' => 1,
 		);
 		$this->categoria_evento->update_record($id_categoria_evento, $editedcategoriaevento);

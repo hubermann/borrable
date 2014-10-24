@@ -1,8 +1,8 @@
-<?php  
+<?php
 $attributes = array('class' => 'form-horizontal', 'id' => 'edit_nota');
 echo form_open_multipart(base_url('control/notas/update/'),$attributes);
 
-echo form_hidden('id', $query->id); 
+echo form_hidden('id', $query->id);
 ?>
 <legend><?php echo $title ?></legend>
 <div class="well well-large well-transparent">
@@ -16,8 +16,8 @@ echo form_hidden('id', $query->id);
 	<label class="control-label">Categoria</label>
 	<div class="controls">
 	<select name="categoria_id" id="categoria_id">
-		<?php 
-		
+		<?php
+
 		$categorias = $this->categoria_nota->get_records_menu();
 		var_dump($categorias);
 		if($categorias){
@@ -27,10 +27,10 @@ echo form_hidden('id', $query->id);
 				echo '<option value="'.$value->id.'" '.$sel.'>'.$value->nombre.'</option>';
 			}
 		}
-		
+
 		?>
 		</select>
-		
+
 		<?php echo form_error('categoria_id','<p class="error">', '</p>'); ?>
 	</div>
 	</div>
@@ -73,7 +73,7 @@ echo form_hidden('id', $query->id);
 	<div class="control-group">
 	<label class="control-label">Fecha</label>
 	<div class="controls">
-	<?php  
+	<?php
 
 	list($anio, $mes, $dia) = explode("-", $query->fecha);
 	$fecha = $dia."-".$mes."-".$anio;
@@ -82,7 +82,7 @@ echo form_hidden('id', $query->id);
 	<?php echo form_error('fecha','<p class="error">', '</p>'); ?>
 	</div>
 	</div>
-	
+
 	<!-- Text input
 	<div class="control-group">
 	<label class="control-label">Autor_id</label>
@@ -99,15 +99,16 @@ echo form_hidden('id', $query->id);
 	<div class="controls">
 	<select name="destacado" id="destacado">
 		<option value="">Sin destacar</option>
-		<option value="destacado_1">Destacado principal</option>
+		<option value="destacado_principal">Destacado principal</option>
 		<option value="destacado_secundario_1">Destacado secundario 1</option>
 		<option value="destacado_secundario_2">Destacado secundario 2</option>
 		<option value="destacado_secundario_3">Destacado secundario 3</option>
+		<option value="destacado_secundario_4">Destacado secundario 4</option>
 	</select>
-	
+
 	</div>
 	</div>
-	
+
 
 	<!-- Text input-->
 	<div class="control-group">
@@ -125,7 +126,7 @@ echo form_hidden('id', $query->id);
 	<?php echo form_error('fuente_url','<p class="error">', '</p>'); ?>
 	</div>
 	</div>
-	
+
 
 	<div class="control-group">
 	<label class="control-label"></label>
@@ -143,7 +144,7 @@ echo form_hidden('id', $query->id);
 
 <!-- Date Picker -->
        <script type="text/javascript" src="<?php echo base_url('public_folder/js/bootstrap-datepicker.js'); ?>"></script>
-        
+
 <script type="text/javascript">
   $(function() {
       // Replace the <textarea id="editor1"> with a CKEditor
@@ -157,4 +158,4 @@ echo form_hidden('id', $query->id);
   $('#fecha').datepicker({
           format: 'dd-mm-yyyy',
         });
-</script> 
+</script>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class speakers extends CI_Controller{
 
@@ -21,6 +21,7 @@ redirect('dashboard');
 }
 
 public function index(){
+	$this->permiso->verify_access( 'speakers', 'view');
 	$id_evento = $this->uri->segment(4);
 
 	$data['pagination_links'] ="";
@@ -36,7 +37,7 @@ public function index(){
 
 //detail
 public function detail(){
-
+$this->permiso->verify_access( 'speakers', 'view');
 $data['title'] = 'speaker';
 $data['content'] = 'control/speakers/detail';
 $data['menu'] = 'control/speakers/menu_speaker';
@@ -47,6 +48,7 @@ $this->load->view('control/control_layout', $data);
 
 //new
 public function form_new(){
+	$this->permiso->verify_access( 'speakers', 'create');
 $this->load->helper('form');
 $data['title'] = 'Nuevo speaker';
 $data['content'] = 'control/speakers/new_speaker';
@@ -56,7 +58,7 @@ $this->load->view('control/control_layout', $data);
 
 //create
 public function create(){
-
+$this->permiso->verify_access( 'speakers', 'create');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
@@ -67,7 +69,7 @@ public function create(){
 
 	$this->form_validation->set_rules('bio', 'Bio', 'required');
 
-	
+
 	if ($this->form_validation->run() === FALSE){
 
 		$this->load->helper('form');
@@ -78,10 +80,10 @@ public function create(){
 		$this->load->view('control/control_layout', $data);
 
 	}else{
-		
+
 		$this->load->helper('url');
 		$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
-		
+
 		$file  = $this->upload_file();
 		if($_FILES['filename']['size'] > 0){
 			if ( $file['status'] == 0 ){
@@ -90,16 +92,16 @@ public function create(){
 		}else{
 			$file['filename'] = '';
 		}
-		$newspeaker = array( 'evento_id' => $this->input->post('evento_id'), 
-							 'nombre' => $this->input->post('nombre'), 
-							 'slug' => $slug, 
-							 'cargo' => $this->input->post('cargo'), 
-							 'empresa' => $this->input->post('empresa'), 
-							 'pais' => $this->input->post('pais'), 
-							 'bio' => $this->input->post('bio'), 
-							 'cv' => $this->input->post('cv'), 
-							'filename' => $file['filename'], 
-							'status' => 0, 
+		$newspeaker = array( 'evento_id' => $this->input->post('evento_id'),
+							 'nombre' => $this->input->post('nombre'),
+							 'slug' => $slug,
+							 'cargo' => $this->input->post('cargo'),
+							 'empresa' => $this->input->post('empresa'),
+							 'pais' => $this->input->post('pais'),
+							 'bio' => $this->input->post('bio'),
+							 'cv' => $this->input->post('cv'),
+							'filename' => $file['filename'],
+							'status' => 0,
 							);
 		#save
 		$this->speaker->add_record($newspeaker);
@@ -114,8 +116,9 @@ public function create(){
 
 //edit
 public function editar(){
+	$this->permiso->verify_access( 'speakers', 'edit');
 	$this->load->helper('form');
-	$data['title']= 'Editar speaker';	
+	$data['title']= 'Editar speaker';
 	$data['content'] = 'control/speakers/edit_speaker';
 	$data['menu'] = 'control/speakers/menu_speaker';
 	$data['query'] = $this->speaker->get_record($this->uri->segment(4));
@@ -124,8 +127,9 @@ public function editar(){
 
 //update
 public function update(){
+	$this->permiso->verify_access( 'speakers', 'edit');
 	$this->load->helper('form');
-	$this->load->library('form_validation'); 
+	$this->load->library('form_validation');
 	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
 
 	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
@@ -147,9 +151,9 @@ public function update(){
 		$this->load->view('control/control_layout', $data);
 	}else{
 		if($_FILES['filename']['size'] > 0){
-		
+
 			$file  = $this->upload_file();
-		
+
 			if ( $file['status'] != 0 )
 				{
 				//guardo
@@ -158,14 +162,14 @@ public function update(){
 					 if(is_link($path)){
 						unlink($path);
 					 }
-				
-				
+
+
 				$data = array('filename' => $file['filename']);
 				$this->speaker->update_record($this->input->post('id'), $data);
 				}
-		
-		
-}		
+
+
+}
 if($this->input->post('slug') == ""){
 
 	$this->load->helper('url');
@@ -173,11 +177,11 @@ if($this->input->post('slug') == ""){
 }else{
 	$slug = $this->input->post('slug');
 }
-		
+
 
 		$id=  $this->input->post('id');
 
-		$editedspeaker = array(  
+		$editedspeaker = array(
 		'evento_id' => $this->input->post('evento_id'),
 
 		'nombre' => $this->input->post('nombre'),
@@ -209,13 +213,19 @@ if($this->input->post('slug') == ""){
 
 
 public function soft_delete(){
+	$permiso = $this->permiso->verify_access_ajax( 'speakers', 'delete');
+	if(!$permiso){
+		$retorno = array('status' => 3);
+		echo json_encode($retorno);
+		exit;
+	}
 	// 0 Active
 	// 1 Deleted
 	// 2 Draft
 	$id_evento = $this->input->post('idevento');
 	$id_speaker = $this->input->post('idspeaker');
 	if($id_evento > 0 && $id_evento != ""){
-		$editedspeaker = array(  
+		$editedspeaker = array(
 		'status' => 1,
 		);
 		$this->speaker->update_record($id_speaker, $editedsponsor);
@@ -228,8 +238,9 @@ public function soft_delete(){
 
 
 
-//delete comfirm		
+//delete comfirm
 public function delete_comfirm(){
+	$this->permiso->verify_access( 'speakers', 'delete');
 	$this->load->helper('form');
 	$data['content'] = 'control/speakers/comfirm_delete';
 	$data['title'] = 'Eliminar speaker';
@@ -242,7 +253,7 @@ public function delete_comfirm(){
 
 //delete
 public function delete(){
-
+$this->permiso->verify_access( 'speakers', 'delete');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 
@@ -268,11 +279,11 @@ public function delete(){
 			if(is_link($path)){
 				unlink($path);
 			}
-		
+
 
 		$this->speaker->delete_record();
 		redirect('control/speakers', 'refresh');
-		
+
 
 	}
 }
@@ -332,7 +343,7 @@ public function upload_file(){
 		$yukle->set_file_size('');
 		$yukle->set_file_type('');
 		$imagname='';
-	}//fin if(extencion)	
+	}//fin if(extencion)
 
 
 	return $file;

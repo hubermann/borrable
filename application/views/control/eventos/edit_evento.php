@@ -2,19 +2,19 @@
 	#mapa_draw{ height: 300px;}
 	#getCords{padding: .4em 1em .4em 1em; background: #999; float: left;margin: 0 0 0 .3em; color: #fff;}
 	#maininput{float: left; width: 100%;}
-	#maininput input[type="text"] {width: 80%;padding-right: 50px; float: left;}			  	
+	#maininput input[type="text"] {width: 80%;padding-right: 50px; float: left;}
 	#maininput span {width: 50px;}
 	#mapa_draw{ height: 400px; width: 90%;}
-	#coordenadas_mapa #coordenadas{width: 310px; float: left; margin: .3em;}		
+	#coordenadas_mapa #coordenadas{width: 310px; float: left; margin: .3em;}
 	#latFld{visibility: hidden;}
-	#lngFld{visibility: hidden;}	
+	#lngFld{visibility: hidden;}
 	#coordenadas{width: 500px; padding: .1em; color: #ccc; font-size: 11px}
 </style>
 
 <!-- API from google -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-	
-		
+
+
 <script type="text/javascript">
 	//Auto complete function for address input
 	function initialize() {
@@ -51,7 +51,7 @@
 			ubicarMarcador(myLatlng);
 			document.getElementById("latFld").value = parseFloat(latitud);
 			document.getElementById("lngFld").value = parseFloat(longitud);
-		} 
+		}
 
 		else {
 			document.getElementById("input_direccion").value = "No se encuentra direccion";
@@ -85,8 +85,8 @@
 
 	//agrego evento para manejar clicks sobre el mapa
 	google.maps.event.addListener(map, "click", function(event)
-	
-	{	
+
+	{
 
 	// agrego marcador
 	ubicarMarcador(event.latLng);
@@ -97,8 +97,8 @@
 	});
 
 
-         
-         
+
+
 }
 
 
@@ -110,7 +110,7 @@ function ubicarMarcador(location) {
 	limpiarMarcadores();
 
 	var marker = new google.maps.Marker({
-	position: location, 
+	position: location,
 	map: map
 	});
 
@@ -164,16 +164,16 @@ function limpiarMarcadores() {
 	reader.readAsDataURL(input.files[0]);
 	}
 }
-</script><?php  
+</script><?php
 $attributes = array('class' => 'form-horizontal', 'id' => 'edit_evento');
 echo form_open_multipart(base_url('control/eventos/update/'),$attributes);
 
-echo form_hidden('id', $query->id); 
+echo form_hidden('id', $query->id);
 ?>
 <legend><?php echo $title ?></legend>
 <div class="well well-large well-transparent">
 
- 
+
 
 
 			<!-- Text input-->
@@ -182,7 +182,7 @@ echo form_hidden('id', $query->id);
 			<label class="control-label">Categoria</label>
 			<div class="controls">
 			<select name="categoria_id" id="categoria_id">
-			<?php 
+			<?php
 
 			$categorias = $this->categoria_evento->get_records_menu();
 			if($categorias){
@@ -218,7 +218,7 @@ echo form_hidden('id', $query->id);
 			</div>
 			</div>
 
-			<?php  
+			<?php
 
 			list($anio, $mes, $dia) = explode("-", $query->fecha_desde);
 			list($anioh, $mesh, $diah) = explode("-", $query->fecha_hasta);
@@ -258,14 +258,14 @@ echo form_hidden('id', $query->id);
 			<?php echo form_error('horario','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
-			
+
 			<!-- Text input-->
 
 			<div class="control-group">
 			<label class="control-label">Pais</label>
 			<div class="controls">
 			<select name="pais" id="pais">
-			<?php 
+			<?php
 
 			$paises = $this->pais->get_records_menu();
 			if($paises){
@@ -295,35 +295,53 @@ echo form_hidden('id', $query->id);
 			<div class="control-group">
 			<label class="control-label">Coordenadas</label>
 			<div id="maininput">
-			
+
 
 			 <div class="form-group">
           		<input type="text" id="input_direccion" class="form-control" placeholder="Ingrese direccion a buscar.">
-        
+
         	<span id="getCords" onClick="codeAddress();" class="btn btn-default">>></span>
 
 
 		</div>
-				
-				
-				
+
+
+
 		<!-- MAPA -->
 		<div id="mapa_draw"></div>
-		
-	
+
+
 		<!-- COORDENADAS -->
 		<div id="coordenadas_mapa">
 		<input type="text" id="coordenadas" name="coordenadas" readonly="true" value="<?php echo $query->coordenadas; ?>">
 		<input type="text" id="latFld" readonly="true">
 		<input type="text" id="lngFld" readonly="true">
-		
+
 		</div>
-		
+
 		<?php echo form_error('coordenadas','<p class="error">', '</p>'); ?>
 
+	</div>
 
 
-			</div>
+	<!-- Text input -->
+	<div class="control-group">
+	<label class="control-label">Destacado</label>
+	<div class="controls">
+	<select name="destacado" id="destacado">
+		<option value="">Sin destacar</option>
+		<option value="destacado_principal">Destacado principal</option>
+		<option value="destacado_secundario_1">Destacado secundario 1</option>
+		<option value="destacado_secundario_2">Destacado secundario 2</option>
+		<option value="destacado_secundario_3">Destacado secundario 3</option>
+		<option value="destacado_secundario_4">Destacado secundario 4</option>
+	</select>
+
+	</div>
+	</div>
+
+
+	
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Tags <small>separados por coma. (Ej: uno, dos, tres)</small></label>
@@ -361,5 +379,5 @@ echo form_hidden('id', $query->id);
 
 </div>
 <script type="text/javascript">
-	window.onload = initMap(); 
+	window.onload = initMap();
 </script>

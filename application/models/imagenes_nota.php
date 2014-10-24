@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Imagenes_nota extends CI_Model{
 
@@ -13,16 +13,16 @@ class Imagenes_nota extends CI_Model{
 		return $this->db->get();
 
 	}
-	
-	
-	
+
+
+
 	function view_all($id){
 		$this->db->where('nota_id', $id);
 		return  $this->db->get('imagenes_notas');
-		
-		
+
+
 		}
-		
+
 	//all by publiccacion
 	public function imagenes_nota($id_nota){
 		$this->db->select()->from('imagenes_notas')->where('nota_id',$id_nota);
@@ -36,17 +36,17 @@ class Imagenes_nota extends CI_Model{
 		$this->db->limit(1);
 		$c = $this->db->get('imagenes_notas');
 
-		return $c->row(); 
+		return $c->row();
 	}
-	
+
 	public function get_records_menu(){
 			$this->db->select()->from('imagenes_notas')->order_by('id','ASC');
 			return $this->db->get();
-	
+
 		}
-	
+
 	//total rows
-	public function count_rows(){ 
+	public function count_rows(){
 		$this->db->select('id')->where('status', 0)->from('imagenes_notas');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -55,7 +55,7 @@ class Imagenes_nota extends CI_Model{
 
 
 		//add new
-		public function add_record($data){ 
+		public function add_record($data){
 		$this->db->insert('imagenes_notas', $data);
 		}
 
@@ -74,14 +74,13 @@ class Imagenes_nota extends CI_Model{
 			$this->db->where('id', $id_imagen);
 			$this->db->delete('imagenes_notas');
 		}
-		
-		
+
+
 		public function traer_nombre($id){
 			$this->db->where('id' ,$id);
 			$this->db->limit(1);
 			$c = $this->db->get('imagenes_notas');
-
-			return $c->row('filename'); 
+			return $c->row('filename');
 		}
 
 

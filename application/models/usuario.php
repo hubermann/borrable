@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Usuario extends CI_Model{
 
@@ -37,9 +37,9 @@ class Usuario extends CI_Model{
        		$query = $this->db->get('usuarios', 1, 0);
 
        		if ($query->num_rows != 1) return FALSE;
-			
-	       		$db_salt = $query->row('salt'); 
-	       		echo 'hash:'.$db_hash = $query->row('password'); 
+
+	       		$db_salt = $query->row('salt');
+	       		$db_hash = $query->row('password'); 
 	       		if ($db_hash === hash('sha512', $db_salt.$password))
 				{
 					// Contraseña correcta (creo session)
@@ -66,11 +66,11 @@ class Usuario extends CI_Model{
 		$this->db->limit(1);
 		$c = $this->db->get('usuarios');
 
-		return $c->row(); 
+		return $c->row();
 	}
-	
+
 	//total rows
-	public function count_rows(){ 
+	public function count_rows(){
 		$this->db->select('id')->where('status', 0)->from('usuarios');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -80,7 +80,7 @@ class Usuario extends CI_Model{
 
 		//add new
 		public function add_record($data){ $this->db->insert('usuarios', $data);
-				
+
 
 	}
 
@@ -107,9 +107,9 @@ class Usuario extends CI_Model{
 					$this->db->limit(1);
 					$c = $this->db->get('usuarios');
 
-					return $c->row('nombre'); 
+					return $c->row('nombre');
 				}
-		
+
 		*/
 
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class eventos extends CI_Controller{
 
@@ -9,6 +9,7 @@ parent::__construct();
 $this->load->model('evento');
 $this->load->model('pais');
 $this->load->model('categoria_evento');
+$this->load->model('destacados_evento');
 $this->load->model('permiso');
 $this->load->helper('url');
 $this->load->library('session');
@@ -23,6 +24,7 @@ redirect('dashboard');
 }
 
 public function index(){
+	$this->permiso->verify_access( 'eventos', 'view');
 	//Pagination
 	$per_page = 10;
 	$page = $this->uri->segment(3);
@@ -30,19 +32,19 @@ public function index(){
 		$data['pagination_links'] = "";
 		$total_pages = ceil($this->evento->count_rows() / $per_page);
 
-		if ($total_pages > 1){ 
-			for ($i=1;$i<=$total_pages;$i++){ 
-			if ($page == $i) 
-				//si muestro el índice de la página actual, no coloco enlace 
-				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>'; 
-			else 
-				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina 
-				$data['pagination_links']  .= '<li><a href="'.base_url().'control/eventos/'.$i.'" > '. $i .'</a></li>'; 
-		} 
+		if ($total_pages > 1){
+			for ($i=1;$i<=$total_pages;$i++){
+			if ($page == $i)
+				//si muestro el índice de la página actual, no coloco enlace
+				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>';
+			else
+				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina
+				$data['pagination_links']  .= '<li><a href="'.base_url().'control/eventos/'.$i.'" > '. $i .'</a></li>';
+		}
 	}
 	//End Pagination
 
-	$data['title'] = 'eventos';
+	$data['title'] = 'Encuentros';
 	$data['menu'] = 'control/eventos/menu_evento';
 	$data['content'] = 'control/eventos/all';
 	$data['query'] = $this->evento->get_records($per_page,$start);
@@ -53,22 +55,23 @@ public function index(){
 
 //detail
 public function detail(){
-
-$data['title'] = 'evento';
-$data['content'] = 'control/eventos/detail';
-$data['menu'] = 'control/eventos/menu_evento';
-$data['query'] = $this->evento->get_record($this->uri->segment(4));
-$this->load->view('control/control_layout', $data);
+	$this->permiso->verify_access( 'eventos', 'view');
+	$data['title'] = 'Encuentro';
+	$data['content'] = 'control/eventos/detail';
+	$data['menu'] = 'control/eventos/menu_evento';
+	$data['query'] = $this->evento->get_record($this->uri->segment(4));
+	$this->load->view('control/control_layout', $data);
 }
 
 
 //new
 public function form_new(){
-$this->load->helper('form');
-$data['title'] = 'Nuevo evento';
-$data['content'] = 'control/eventos/new_evento';
-$data['menu'] = 'control/eventos/menu_evento';
-$this->load->view('control/control_layout', $data);
+	$this->permiso->verify_access( 'eventos', 'create');
+	$this->load->helper('form');
+	$data['title'] = 'Nuevo encuentro';
+	$data['content'] = 'control/eventos/new_evento';
+	$data['menu'] = 'control/eventos/menu_evento';
+	$this->load->view('control/control_layout', $data);
 }
 
 
@@ -88,13 +91,13 @@ function check_date($str){
             }
             else{ return true; }
         }
-    } 
+    }
 
 
 
 //create
 public function create(){
-
+	$this->permiso->verify_access( 'eventos', 'create');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 	$this->form_validation->set_rules('categoria_id', 'Categoria_id', 'required');
@@ -103,22 +106,22 @@ public function create(){
 	$this->form_validation->set_rules('fecha_desde', 'Fecha desde', 'required|callback_check_date');
 	$this->form_validation->set_rules('fecha_hasta', 'Fecha hasta', 'required|callback_check_date');
 	$this->form_validation->set_message('required','El campo %s es requerido.');
-	
+
 	#$this->form_validation->set_message('date_valid', 'No tiene formato de fecha');
 
 	if ($this->form_validation->run() === FALSE){
 
 		$this->load->helper('form');
-		$data['title'] = 'Nuevo eventos';
+		$data['title'] = 'Nuevo encuentro';
 		$data['content'] = 'control/eventos/new_evento';
 		$data['menu'] = 'control/eventos/menu_evento';
 		$this->load->view('control/control_layout', $data);
 
 	}else{
-		
+
 		$this->load->helper('url');
 		$slug = url_title($this->input->post('titulo'), 'dash', TRUE);
-		
+
 		$file  = $this->upload_file();
 		if($_FILES['filename']['size'] > 0){
 			if ( $file['status'] == 0 ){
@@ -133,25 +136,25 @@ public function create(){
 		$fecha_desde = $anio."-".$mes."-".$dia;
 		$fecha_hasta = $anioh."-".$mesh."-".$diah;
 
-		$newevento = array( 
-			'categoria_id' => $this->input->post('categoria_id'), 
-			'titulo' => $this->input->post('titulo'), 
-			'slug' => $slug, 
-			'descripcion' => $this->input->post('descripcion'), 
-			'fecha_desde' => $fecha_desde, 
-			'fecha_hasta' => $fecha_hasta, 
-			'lugar' => $this->input->post('lugar'), 
-			'horario' => $this->input->post('horario'), 
-			'pais' => $this->input->post('pais'), 
-			'ciudad' => $this->input->post('ciudad'), 
-			'coordenadas' => $this->input->post('coordenadas'), 
-			'tags' => $this->input->post('tags'), 
-			'filename' => $file['filename'], 
-			'status' => 0, 
+		$newevento = array(
+			'categoria_id' => $this->input->post('categoria_id'),
+			'titulo' => $this->input->post('titulo'),
+			'slug' => $slug,
+			'descripcion' => $this->input->post('descripcion'),
+			'fecha_desde' => $fecha_desde,
+			'fecha_hasta' => $fecha_hasta,
+			'lugar' => $this->input->post('lugar'),
+			'horario' => $this->input->post('horario'),
+			'pais' => $this->input->post('pais'),
+			'ciudad' => $this->input->post('ciudad'),
+			'coordenadas' => $this->input->post('coordenadas'),
+			'tags' => $this->input->post('tags'),
+			'filename' => $file['filename'],
+			'status' => 0,
 			);
 		#save
 		$this->evento->add_record($newevento);
-		$this->session->set_flashdata('success', 'evento creado. <a href="eventos/detail/'.$this->db->insert_id().'">Ver</a>');
+		$this->session->set_flashdata('success', 'Encuentros creado!');
 		redirect('control/eventos', 'refresh');
 
 	}
@@ -162,18 +165,23 @@ public function create(){
 
 //edit
 public function editar(){
+	$this->permiso->verify_access( 'eventos', 'edit');
 	$this->load->helper('form');
-	$data['title']= 'Editar evento';	
+	$data['title']= 'Editar evento';
 	$data['content'] = 'control/eventos/edit_evento';
 	$data['menu'] = 'control/eventos/menu_evento';
 	$data['query'] = $this->evento->get_record($this->uri->segment(4));
 	$this->load->view('control/control_layout', $data);
 }
 
+
+
+
 //update
 public function update(){
+	$this->permiso->verify_access( 'eventos', 'edit');
 	$this->load->helper('form');
-	$this->load->library('form_validation'); 
+	$this->load->library('form_validation');
 	$this->form_validation->set_rules('categoria_id', 'Categoria_id', 'required');
 
 	$this->form_validation->set_rules('titulo', 'Titulo', 'required');
@@ -187,33 +195,33 @@ public function update(){
 	if ($this->form_validation->run() === FALSE){
 		$this->load->helper('form');
 
-		$data['title'] = 'Nuevo evento';
+		$data['title'] = 'Nuevo encuentro';
 		$data['content'] = 'control/eventos/edit_evento';
 		$data['menu'] = 'control/eventos/menu_evento';
 		$data['query'] = $this->evento->get_record($this->input->post('id'));
 		$this->load->view('control/control_layout', $data);
 	}else{
 		if($_FILES['filename']['size'] > 0){
-		
+
 			$file  = $this->upload_file();
-		
+
 			if ( $file['status'] != 0 )
 				{
 				//guardo
 				$evento = $this->evento->get_record($this->input->post('id'));
 					 $path = 'images-eventos/'.$evento->filename;
-					
+
 					 if(is_link($path)){
 						unlink($path);
 					 }
-				
-				
+
+
 				$data = array('filename' => $file['filename']);
 				$this->evento->update_record($this->input->post('id'), $data);
 				}
-		
-		
-}		
+
+
+}
 		$id=  $this->input->post('id');
 
 
@@ -223,7 +231,7 @@ public function update(){
 		$fecha_hasta = $anioh."-".$mesh."-".$diah;
 
 
-		$editedevento = array(  
+		$editedevento = array(
 		'categoria_id' => $this->input->post('categoria_id'),
 
 		'titulo' => $this->input->post('titulo'),
@@ -251,13 +259,39 @@ public function update(){
 		#save
 		$this->session->set_flashdata('success', 'evento Actualizado!');
 		$this->evento->update_record($id, $editedevento);
-		
+
+
+		#si viene destacado actualizo
+		if( $this->input->post('destacado') ){
+
+				#nota destacada
+				switch ($this->input->post('destacado')) {
+					case "destacado_principal":
+						$this->destacados_evento->update_destacado_principal($id);
+						break;
+					case "destacado_secundario_1":
+						$this->destacados_evento->update_destacado_secundario_1($id);
+						break;
+					case "destacado_secundario_2":
+						$this->destacados_evento->update_destacado_secundario_2($id);
+						break;
+					case "destacado_secundario_3":
+						$this->destacados_evento->update_destacado_secundario_3($id);
+						break;
+					case "destacado_secundario_4":
+						$this->destacados_evento->update_destacado_secundario_4($id);
+						break;
+
+				}
+		}
+
+
 		if($this->input->post('id')!=""){
 			redirect('control/eventos', 'refresh');
 		}else{
 			redirect('control/eventos', 'refresh');
 		}
-		
+
 
 
 
@@ -280,7 +314,7 @@ public function soft_delete(){
 	// 2 Draft
 	$id_evento = $this->input->post('iditem');
 	if($id_evento > 0 && $id_evento != ""){
-		$editedevento = array(  
+		$editedevento = array(
 		'status' => 1,
 		);
 		$this->evento->update_record($id_evento, $editedevento);
@@ -349,7 +383,7 @@ public function upload_file(){
 		$yukle->set_file_size('');
 		$yukle->set_file_type('');
 		$imagname='';
-	}//fin if(extencion)	
+	}//fin if(extencion)
 
 
 	return $file;

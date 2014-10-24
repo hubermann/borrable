@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class sponsors extends CI_Controller{
 
@@ -19,6 +19,11 @@ redirect('dashboard');
 
 }
 
+
+
+
+
+
 public function index(){
 
 	$id_evento = $this->uri->segment(4);
@@ -31,15 +36,15 @@ public function index(){
 		$data['pagination_links'] = "";
 		$total_pages = ceil($this->sponsor->count_rows() / $per_page);
 
-		if ($total_pages > 1){ 
-			for ($i=1;$i<=$total_pages;$i++){ 
-			if ($page == $i) 
-				//si muestro el índice de la página actual, no coloco enlace 
-				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>'; 
-			else 
-				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina 
-				$data['pagination_links']  .= '<li><a href="'.base_url().'control/sponsors/'.$i.'" > '. $i .'</a></li>'; 
-		} 
+		if ($total_pages > 1){
+			for ($i=1;$i<=$total_pages;$i++){
+			if ($page == $i)
+				//si muestro el índice de la página actual, no coloco enlace
+				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>';
+			else
+				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina
+				$data['pagination_links']  .= '<li><a href="'.base_url().'control/sponsors/'.$i.'" > '. $i .'</a></li>';
+		}
 	}
 	//End Pagination
 	*/
@@ -83,7 +88,7 @@ public function create(){
 	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
 
 	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
-	
+
 	$this->form_validation->set_message('required','El campo %s es requerido.');
 	if ($this->form_validation->run() === FALSE){
 
@@ -95,10 +100,10 @@ public function create(){
 		$this->load->view('control/control_layout', $data);
 
 	}else{
-		
+
 		$this->load->helper('url');
 		$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
-		
+
 		$file  = $this->upload_file();
 		if($_FILES['filename']['size'] > 0){
 			if ( $file['status'] == 0 ){
@@ -107,13 +112,13 @@ public function create(){
 		}else{
 			$file['filename'] = '';
 		}
-		$newsponsor = array( 
-			'evento_id' => $this->input->post('evento_id'), 
-			'nombre' => $this->input->post('nombre'), 
-			'slug' => $slug, 
-			'destacado' => $this->input->post('destacado'), 
-			'filename' => $file['filename'], 
-			'status' => 0, 
+		$newsponsor = array(
+			'evento_id' => $this->input->post('evento_id'),
+			'nombre' => $this->input->post('nombre'),
+			'slug' => $slug,
+			'destacado' => $this->input->post('destacado'),
+			'filename' => $file['filename'],
+			'status' => 0,
 		);
 		#save
 		$this->sponsor->add_record($newsponsor);
@@ -129,7 +134,7 @@ public function create(){
 //edit
 public function editar(){
 	$this->load->helper('form');
-	$data['title']= 'Editar sponsor';	
+	$data['title']= 'Editar sponsor';
 	$data['content'] = 'control/sponsors/edit_sponsor';
 	$data['menu'] = 'control/sponsors/menu_sponsor';
 	$data['query'] = $this->sponsor->get_record($this->uri->segment(4));
@@ -139,7 +144,7 @@ public function editar(){
 //update
 public function update(){
 	$this->load->helper('form');
-	$this->load->library('form_validation'); 
+	$this->load->library('form_validation');
 	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
 
 	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
@@ -155,9 +160,9 @@ public function update(){
 		$this->load->view('control/control_layout', $data);
 	}else{
 		if($_FILES['filename']['size'] > 0){
-		
+
 			$file  = $this->upload_file();
-		
+
 			if ( $file['status'] != 0 ){
 				//guardo
 				$sponsor = $this->sponsor->get_record($this->input->post('id'));
@@ -165,16 +170,16 @@ public function update(){
 				 if(is_link($path)){
 					unlink($path);
 				 }
-				
+
 				$data = array('filename' => $file['filename']);
 				$this->sponsor->update_record($this->input->post('id'), $data);
 				}
-		
-		
-}		
+
+
+}
 		$id=  $this->input->post('id');
 
-		$editedsponsor = array(  
+		$editedsponsor = array(
 
 		'nombre' => $this->input->post('nombre'),
 
@@ -206,7 +211,7 @@ public function soft_delete(){
 	$id_evento = $this->input->post('idevento');
 	$id_sponsor = $this->input->post('idsponsor');
 	if($id_evento > 0 && $id_evento != ""){
-		$editedsponsor = array(  
+		$editedsponsor = array(
 		'status' => 1,
 		);
 		$this->sponsor->update_record($id_sponsor, $editedsponsor);
@@ -218,7 +223,7 @@ public function soft_delete(){
 }
 
 
-//delete comfirm		
+//delete comfirm
 public function delete_comfirm(){
 	$this->load->helper('form');
 	$data['content'] = 'control/sponsors/comfirm_delete';
@@ -258,11 +263,11 @@ public function delete(){
 			if(is_link($path)){
 				unlink($path);
 			}
-		
+
 
 		$this->sponsor->delete_record();
 		redirect('control/sponsors', 'refresh');
-		
+
 
 	}
 }
@@ -322,7 +327,7 @@ public function upload_file(){
 		$yukle->set_file_size('');
 		$yukle->set_file_type('');
 		$imagname='';
-	}//fin if(extencion)	
+	}//fin if(extencion)
 
 
 	return $file;

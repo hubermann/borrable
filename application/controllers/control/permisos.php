@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class permisos extends CI_Controller{
 
@@ -22,7 +22,7 @@ redirect('dashboard');
 }
 
 public function index(){
-	
+	$this->permiso->verify_access( 'permisos', 'view');
 	$data['title'] = 'Permisos';
 	$data['menu'] = 'control/permisos/menu_permiso';
 	$data['content'] = 'control/permisos/all';
@@ -34,7 +34,7 @@ public function index(){
 
 //detail
 public function detail(){
-
+$this->permiso->verify_access( 'permisos', 'view');
 $data['title'] = 'permiso';
 $data['content'] = 'control/permisos/detail';
 $data['menu'] = 'control/permisos/menu_permiso';
@@ -45,6 +45,7 @@ $this->load->view('control/control_layout', $data);
 
 //new
 public function form_new(){
+	$this->permiso->verify_access( 'permisos', 'create');
 $this->load->helper('form');
 $data['title'] = 'Nuevo permiso';
 $data['content'] = 'control/permisos/new_permiso';
@@ -54,7 +55,7 @@ $this->load->view('control/control_layout', $data);
 
 //create
 public function create(){
-
+$this->permiso->verify_access( 'permisos', 'create');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 	$this->form_validation->set_rules('role_id', 'Role_id', 'required');
@@ -80,10 +81,10 @@ if ($this->form_validation->run() === FALSE){
 		$this->load->helper('url');
 		$slug = url_title($this->input->post('titulo'), 'dash', TRUE);
 		*/
-		$newpermiso = array( 'role_id' => $this->input->post('role_id'), 
-		 'modulo' => $this->input->post('modulo'), 
-		 'url' => $this->input->post('url'), 
-		 'permiso' => $this->input->post('permiso'), 
+		$newpermiso = array( 'role_id' => $this->input->post('role_id'),
+		 'modulo' => $this->input->post('modulo'),
+		 'url' => $this->input->post('url'),
+		 'permiso' => $this->input->post('permiso'),
 		);
 		#save
 		$this->permiso->add_record($newpermiso);
@@ -98,8 +99,9 @@ if ($this->form_validation->run() === FALSE){
 
 //edit
 public function editar(){
+	$this->permiso->verify_access( 'permisos', 'edit');
 	$this->load->helper('form');
-	$data['title']= 'Editar permiso';	
+	$data['title']= 'Editar permiso';
 	$data['content'] = 'control/permisos/edit_permiso';
 	$data['menu'] = 'control/permisos/menu_permiso';
 	$data['query'] = $this->permiso->get_record($this->uri->segment(4));
@@ -108,8 +110,9 @@ public function editar(){
 
 //update
 public function update(){
+	$this->permiso->verify_access( 'permisos', 'edit');
 	$this->load->helper('form');
-	$this->load->library('form_validation'); 
+	$this->load->library('form_validation');
 	$this->form_validation->set_rules('role_id', 'Role_id', 'required');
 
 	$this->form_validation->set_rules('modulo', 'Modulo', 'required');
@@ -129,10 +132,10 @@ public function update(){
 		$data['menu'] = 'control/permisos/menu_permiso';
 		$data['query'] = $this->permiso->get_record($this->input->post('id'));
 		$this->load->view('control/control_layout', $data);
-	}else{		
+	}else{
 		$id=  $this->input->post('id');
 
-		$editedpermiso = array(  
+		$editedpermiso = array(
 		'role_id' => $this->input->post('role_id'),
 
 		'modulo' => $this->input->post('modulo'),
@@ -174,18 +177,18 @@ public function update_permiso(){
 	$nuevo_permiso = $this->input->post('varnuevopermiso');
 	$status = $this->permiso->modificar_permiso_rol($role_id, $modulo, $action, $nuevo_permiso);
 
-	
+
 	if($status == 1){
 		echo json_encode(array('status' => "OK"));
 	}else{
 		echo json_encode(array('status' => ""));
 	}
-	
+
 
 }
 
 
-
+/*
 
 public function soft_delete(){
 	// 0 Active
@@ -193,7 +196,7 @@ public function soft_delete(){
 	// 2 Draft
 	$id_permiso = $this->input->post('idpermiso');
 	if($id_permiso > 0 && $id_permiso != ""){
-		$editedpermiso = array(  
+		$editedpermiso = array(
 		'status' => 1,
 		);
 		$this->permiso->update_record($id_permiso, $editedpermiso);
@@ -207,7 +210,7 @@ public function soft_delete(){
 
 
 
-//delete comfirm		
+//delete comfirm
 public function delete_comfirm(){
 	$this->load->helper('form');
 	$data['content'] = 'control/permisos/comfirm_delete';
@@ -247,14 +250,16 @@ public function delete(){
 			if(is_link($path)){
 				unlink($path);
 			}
-		
+
 
 		$this->permiso->delete_record();
 		redirect('control/permisos', 'refresh');
-		
+
 
 	}
 }
+
+*/
 
 
 } //end class

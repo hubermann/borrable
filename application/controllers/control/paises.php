@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class paises extends CI_Controller{
 
@@ -20,6 +20,7 @@ redirect('dashboard');
 }
 
 public function index(){
+	$this->permiso->verify_access( 'paises', 'view');
 	//Pagination
 	$per_page = 4;
 	$page = $this->uri->segment(3);
@@ -27,15 +28,15 @@ public function index(){
 		$data['pagination_links'] = "";
 		$total_pages = ceil($this->pais->count_rows() / $per_page);
 
-		if ($total_pages > 1){ 
-			for ($i=1;$i<=$total_pages;$i++){ 
-			if ($page == $i) 
-				//si muestro el índice de la página actual, no coloco enlace 
-				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>'; 
-			else 
-				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina 
-				$data['pagination_links']  .= '<li><a href="'.base_url().'control/paises/'.$i.'" > '. $i .'</a></li>'; 
-		} 
+		if ($total_pages > 1){
+			for ($i=1;$i<=$total_pages;$i++){
+			if ($page == $i)
+				//si muestro el índice de la página actual, no coloco enlace
+				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>';
+			else
+				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina
+				$data['pagination_links']  .= '<li><a href="'.base_url().'control/paises/'.$i.'" > '. $i .'</a></li>';
+		}
 	}
 	//End Pagination
 
@@ -50,7 +51,7 @@ public function index(){
 
 //detail
 public function detail(){
-
+$this->permiso->verify_access( 'paises', 'view');
 $data['title'] = 'pais';
 $data['content'] = 'control/paises/detail';
 $data['menu'] = 'control/paises/menu_pais';
@@ -61,6 +62,7 @@ $this->load->view('control/control_layout', $data);
 
 //new
 public function form_new(){
+	$this->permiso->verify_access( 'paises', 'create');
 $this->load->helper('form');
 $data['title'] = 'Nuevo pais';
 $data['content'] = 'control/paises/new_pais';
@@ -70,7 +72,7 @@ $this->load->view('control/control_layout', $data);
 
 //create
 public function create(){
-
+$this->permiso->verify_access( 'paises', 'create');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
     $this->form_validation->set_rules('nombre', 'Nombre', 'required');
@@ -85,13 +87,13 @@ public function create(){
 		$this->load->view('control/control_layout', $data);
 
 	}else{
-		
+
 		$this->load->helper('url');
 		$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
 
-		$newpais = array( 'nombre' => $this->input->post('nombre'), 
- 'slug' => $slug, 
- 'status' => 0, 
+		$newpais = array( 'nombre' => $this->input->post('nombre'),
+ 'slug' => $slug,
+ 'status' => 0,
 );
 		#save
 		$this->pais->add_record($newpais);
@@ -106,8 +108,9 @@ public function create(){
 
 //edit
 public function editar(){
+	$this->permiso->verify_access( 'paises', 'edit');
 	$this->load->helper('form');
-	$data['title']= 'Editar pais';	
+	$data['title']= 'Editar pais';
 	$data['content'] = 'control/paises/edit_pais';
 	$data['menu'] = 'control/paises/menu_pais';
 	$data['query'] = $this->pais->get_record($this->uri->segment(4));
@@ -116,8 +119,9 @@ public function editar(){
 
 //update
 public function update(){
+	$this->permiso->verify_access( 'paises', 'edit');
 	$this->load->helper('form');
-	$this->load->library('form_validation'); 
+	$this->load->library('form_validation');
 	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
 
 
@@ -132,12 +136,12 @@ public function update(){
 		$data['menu'] = 'control/paises/menu_pais';
 		$data['query'] = $this->pais->get_record($this->input->post('id'));
 		$this->load->view('control/control_layout', $data);
-	}else{		
+	}else{
 		$id=  $this->input->post('id');
 		$this->load->helper('url');
 		$slug = url_title($this->input->post('nombre'), 'dash', TRUE);
 
-		$editedpais = array(  
+		$editedpais = array(
 		'nombre' => $this->input->post('nombre'),
 
 		'slug' => $slug,
@@ -160,8 +164,9 @@ public function update(){
 }
 
 
-//delete comfirm		
+//delete comfirm
 public function delete_comfirm(){
+	$this->permiso->verify_access( 'paises', 'delete');
 	$this->load->helper('form');
 	$data['content'] = 'control/paises/comfirm_delete';
 	$data['title'] = 'Eliminar pais';
@@ -172,9 +177,10 @@ public function delete_comfirm(){
 
 }
 
+
 //delete
 public function delete(){
-
+$this->permiso->verify_access( 'paises', 'delete');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 
@@ -200,11 +206,11 @@ public function delete(){
 			if(is_link($path)){
 				unlink($path);
 			}
-		
+
 
 		$this->pais->delete_record();
 		redirect('control/paises', 'refresh');
-		
+
 
 	}
 }
