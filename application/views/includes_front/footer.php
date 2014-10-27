@@ -1,7 +1,7 @@
 <!-- FOOTER -->
-<div class="full-container aqua">
+<div class="full-container aqua" style="margin-top:60px;">
 	<footer class="row clearfix nomargin">
-	
+
 		<div class="container">
 
 		<div class="col-md-3 col-xs-12">
@@ -15,6 +15,8 @@
 			</ul>
 		</div><!-- fin box -->
 
+		
+
 		<div class="col-md-3 col-xs-12">
 			<h4>Acerca de Noticas</h4>
 			<ul class="footer_menu">
@@ -27,16 +29,16 @@
 
 
 		<div class="col-md-3 col-xs-12">
-			
+
 		</div><!-- fin box -->
 
 
 		<div class="col-md-3 col-xs-12">
 			logo
 		</div><!-- fin box -->
-		
+
 		</div>
-		
+
 		<!-- divisor -->
 		<div class="container"><div class="col-lg-12"><div id="divisor"></div></div></div>
 		<!-- social + suscribe -->
@@ -51,18 +53,18 @@
 				        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
 				    </div>
 				</div>
-				</form>	
-				<!-- / form suscribe -->			
+				</form>
+				<!-- / form suscribe -->
 
 			</div><!-- fin box -->
 
 			<div class="col-md-3 col-sm-6">
-					
+
 
 			</div><!-- fin box -->
 
 			<div class="col-md-3 col-sm-6">
-					
+
 
 			</div><!-- fin box -->
 
@@ -75,7 +77,7 @@
 						<li><a href="#" class="cube_social"><i class="fa fa-youtube"></i></a></li>
 
 
-						
+
 					</ul>
 
 			</div><!-- fin box -->

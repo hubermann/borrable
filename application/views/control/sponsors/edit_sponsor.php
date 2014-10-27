@@ -12,17 +12,17 @@
 
 
 
-<?php  
+<?php
 $attributes = array('class' => 'form-horizontal', 'id' => 'edit_sponsor');
 echo form_open_multipart(base_url('control/sponsors/update/'),$attributes);
 
-echo form_hidden('id', $query->id); 
-echo form_hidden('evento_id', $query->evento_id); 
+echo form_hidden('id', $query->id);
+echo form_hidden('evento_id', $query->evento_id);
 ?>
 <legend><?php echo $title ?></legend>
 <div class="well well-large well-transparent">
 
- 
+
 
 
 <!-- Text input-->
@@ -31,8 +31,8 @@ echo form_hidden('evento_id', $query->evento_id);
 <label class="control-label">Categoria id</label>
 	<div class="controls">
 	<select name="categoria_id" id="categoria_id">
-		<?php 
-		/* 
+		<?php
+		/*
 		$categorias = $this->categoria->get_records_menu();
 		if($categorias){
 
@@ -44,13 +44,13 @@ echo form_hidden('evento_id', $query->evento_id);
 		*/
 		?>
 		</select>
-		
+
 		<?php echo form_error('categoria_id','<p class="error">', '</p>'); ?>
 	</div>
 </div>
 -->
 
-			
+
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Nombre</label>
@@ -59,20 +59,20 @@ echo form_hidden('evento_id', $query->evento_id);
 			<?php echo form_error('nombre','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
-			
+
 
 
 			<!-- Text input-->
 			<div class="checkbox">
 		    <label>
-		    <?php 
+		    <?php
 		    if($query->destacado==1){
 		    	$checked = "checked";
 		    }else{
 		    	$checked = "";
 		    }
 		    ?>
-		      <input type="checkbox" name="destacado" <?php echo $checked; ?>> Sponsor Destacado
+		      <input type="checkbox" name="destacado" id="destacado" <?php echo $checked; ?>> Sponsor Destacado
 		    </label>
 		  	</div>
 

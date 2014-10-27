@@ -4,22 +4,22 @@
 
 
 <div class="box-body table-responsive">
-<?php  
+<?php
 $id_evento = $this->uri->segment(4);
 if($id_evento==""){redirect("/control/eventos"); }
-
+$evento = $this->evento->get_record($id_evento);
 
 ?>
-<!--
 <ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#">Library</a></li>
-  <li class="active">Data</li>
+	<li><a href="<?php echo base_url('control/eventos'); ?>">Encuentros</a></li>
+	<li><a href="<?php echo base_url('control/eventos/detail/'.$id_evento); ?>"><?php echo $evento->titulo; ?></a></li>
+	<li class="active">Sponsors</li>
+	<li><a href="<?php echo base_url('control/sponsors/form_new/'.$id_evento); ?>">Agregar sponsor</a></li>
 </ol>
- -->
-<p><a href="<?php echo base_url('control/sponsors/form_new/'.$id_evento); ?>" class="btn">Crear nuevo</a></p>
-<?php 
+
+<?php
 if(count($query->result())){
+	$urldelete = base_url('control/sponsors/soft_delete');
 	echo '<table class="table table-striped">
 
 		<thead>
@@ -49,10 +49,10 @@ if(count($query->result())){
 
 		echo '</td>';
 
-		echo '<td> 
+		echo '<td>
 		<div class="btn-group">
-		<a class="btn btn-small"  onclick="confirm_delete('.$row->id.', '.$id_evento.')"><i class="fa fa-trash-o"></i></a>
-		<a class="btn btn-small" href="'.base_url('control/sponsors/editar/'.$row->id.'').'"><i class="fa fa-edit"></i></a>		
+		<a class="btn btn-small" onclick="confirm_delete('.$row->id.', \'sponsors\', \''.$urldelete.'\')"><i class="fa fa-trash-o"></i></a>
+		<a class="btn btn-small" href="'.base_url('control/sponsors/editar/'.$row->id.'').'"><i class="fa fa-edit"></i></a>
 		<!--<a class="btn btn-small" href="'.base_url('control/sponsors/detail/'.$row->id.'').'">detalle</a>-->
 		</div>
 		</td>';
@@ -60,7 +60,7 @@ if(count($query->result())){
 
 		echo '</tr>';
 
-	endforeach; 
+	endforeach;
 	echo '</table>';
 }else{
 	echo 'No hay resultados.';
@@ -74,39 +74,3 @@ if(count($query->result())){
 
 </div><!-- box header -->
 </div>
-
-<script type="text/javascript">
-	function confirm_delete(id_sponsor, id_evento){
-		var titulo = $('#titulo'+id_sponsor).html();
-            bootbox.confirm("<h4 >Seguro desea eliminar el sponsors: "+titulo+"</h4>", function(result) {
-                if(result==true){
-                    //soft delete
-
-					var datos = {idevento:id_evento, idsponsor:id_sponsor}
-					console.log(datos);
-                    $.ajax({
-                        url: "<?php echo base_url('control/sponsors/soft_delete'); ?>",
-                        type: "post",
-                        dataType: "json",
-                        data: datos,
-                        success: function(data){
-                            //alert("success"+data);
-
-                            if(data["status"] == 1){
-                            	
-                            	//$('#avisos').html('<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>Evento eliminado!</div>');
-                            	$('#row'+id_sponsor).hide('slow');
-                            }
-
-                            
-                        },
-                        error:function(){
-                            alert("failure");
-                           
-                        }
-                    });
-                }
-                window.setTimeout(function() { $(".alert-success").alert('close'); }, 4000);
-        });
-        }
-</script>

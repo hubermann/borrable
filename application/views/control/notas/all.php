@@ -9,6 +9,9 @@
 
 
 <?php
+
+
+
 if(count($query->result())){
 	echo '
 	<div class="box-body table-responsive no-padding">
@@ -34,10 +37,15 @@ if(count($query->result())){
 		$nombre_categoria = $this->categoria_nota->traer_nombre($row->categoria_id);
 		//main image
 		$imagen_principal ="";
-		if($row->main_image!= 0 ||$row->main_image!=""){
-			$nombre_imagen = $this->imagenes_nota->traer_nombre($row->main_image);
 
-			$imagen_principal= '<img src="'.base_url('images-notas/'.$nombre_imagen).'" width="100"/>';
+		if($row->main_image !='0' || !empty($row->main_image) ){
+
+		$nombre_imagen = $this->imagenes_nota->traer_nombre($row->main_image);
+
+
+        $imagen_principal= '<img src="'.base_url('images-notas/'.$nombre_imagen).'" width="100"/>';
+
+
 		}
 		echo '<td id="titulo'.$row->id.'">'.$row->titulo.' </td>';
 		echo '<td>'.$row->extracto.' </td>';

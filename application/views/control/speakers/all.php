@@ -1,14 +1,24 @@
 
-<h2><?php echo $title; ?></h2>
-
-<?php  
+<?php
 $id_evento = $this->uri->segment(4);
 if($id_evento==""){redirect("/control/eventos"); }
+$evento = $this->evento->get_record($id_evento);
 ?>
-<p><a href="<?php echo base_url('control/speakers/form_new/'.$id_evento); ?>" class="btn">Crear nuevo</a></p>
-<?php 
+<h3><?php echo ucfirst($title); ?></h3>
+
+
+<ol class="breadcrumb">
+	<li><a href="<?php echo base_url('control/eventos'); ?>">Encuentros</a></li>
+  <li><a href="<?php echo base_url('control/eventos/detail/'.$id_evento); ?>"><?php echo $evento->titulo; ?></a></li>
+  <li class="active">Speakers</li>
+	<li><a href="<?php echo base_url('control/speakers/form_new/'.$id_evento); ?>">Agregar speaker</a></li>
+
+</ol>
+
+<?php
 if(count($query->result())){
 	echo '<table class="table table-striped">';
+	$urldelete = base_url('control/speakers/soft_delete');
 	foreach ($query->result() as $row):
 
 		/* $nombre_categoria = $this->categoria->traer_nombre($row->categoria_id); */
@@ -27,10 +37,10 @@ if(count($query->result())){
 
 		echo '</td>';
 
-		echo '<td> 
+		echo '<td>
 		<div class="btn-group">
-		<a  onclick="confirm_delete('.$row->id.')" class="btn btn-small" ><i class="fa fa-trash-o"></i></a>
-		<a class="btn btn-small" href="'.base_url('control/speakers/editar/'.$row->id.'').'"><i class="fa fa-edit"></i></a>		
+		<a onclick="confirm_delete('.$row->id.', \'speakers\', \''.$urldelete.'\')" class="btn btn-small" ><i class="fa fa-trash-o"></i></a>
+		<a class="btn btn-small" href="'.base_url('control/speakers/editar/'.$row->id.'').'"><i class="fa fa-edit"></i></a>
 		<!--<a class="btn btn-small" href="'.base_url('control/speakers/detail/'.$row->id.'').'"><i class="fa fa-chain"></i></a>-->
 		</div>
 		</td>';
@@ -38,7 +48,7 @@ if(count($query->result())){
 
 		echo '</tr>';
 
-	endforeach; 
+	endforeach;
 	echo '</table>';
 }else{
 	echo 'No hay resultados.';
@@ -49,38 +59,3 @@ if(count($query->result())){
 <?php echo $pagination_links;  ?>
 </ul>
 </div>
-
-<script type="text/javascript">
-	function confirm_delete(id){
-		var titulo = $('#titulo'+id).html();
-            bootbox.confirm("<h4 >Seguro desea eliminar el spaker: "+titulo+"</h4>", function(result) {
-                if(result==true){
-                    //soft delete
-                    console.log(titulo);
-					var datos = {idevento:id}
-					console.log(datos);
-                    $.ajax({
-                        url: "<?php echo base_url('control/speakers/soft_delete'); ?>",
-                        type: "post",
-                        dataType: "json",
-                        data: datos,
-                        success: function(data){
-                            //alert("success"+data);
-
-                            if(data["status"] == 1){
-                            	
-                            	//$('#avisos').html('<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>Evento eliminado!</div>');
-                            	$('#row'+id).hide('slow');
-                            }
-  
-                        },
-                        error:function(){
-                            alert("failure");
-                           
-                        }
-                    });
-                }
-                window.setTimeout(function() { $(".alert-success").alert('close'); }, 4000);
-        });
-        }
-</script>

@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Pais extends CI_Model{
 
@@ -26,11 +26,11 @@ class Pais extends CI_Model{
 		$this->db->limit(1);
 		$c = $this->db->get('paises');
 
-		return $c->row(); 
+		return $c->row();
 	}
-	
+
 	//total rows
-	public function count_rows(){ 
+	public function count_rows(){
 		$this->db->select('id')->from('paises');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -40,7 +40,7 @@ class Pais extends CI_Model{
 
 		//add new
 		public function add_record($data){ $this->db->insert('paises', $data);
-				
+
 
 	}
 
@@ -61,16 +61,16 @@ class Pais extends CI_Model{
 		}
 
 
-		/*
+
 		public function traer_nombre($id){
-					$this->db->where('paises_categoria_id' ,$id);
+					$this->db->where('id' ,$id);
 					$this->db->limit(1);
 					$c = $this->db->get('paises');
 
-					return $c->row('nombre'); 
+					return $c->row('nombre');
 				}
-		
-		*/
+
+
 
 }
 

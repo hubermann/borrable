@@ -16,13 +16,15 @@
         <link rel="stylesheet" href="<?php echo base_url('public_folder/css/main.css'); ?>">
         <link rel="stylesheet" href="<?php echo base_url('public_folder/css/front.css'); ?>">
         <link rel="stylesheet" href="<?php echo base_url('public_folder/css/fonts.css'); ?>">
-
+        <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    
         <script src="<?php echo base_url('public_folder/js/vendor/modernizr-2.6.2.min.js'); ?>"></script>
         <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
         <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
         <style type="text/css">
-      
-        
+
+
         </style>
     </head>
 <body>
@@ -30,72 +32,71 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-
 <div class="full-container aqua">
-	<div class="row clearfix nomargin">
-	
-		<div class="container" id="topheader">
-			<ul id="tabs"> 
-				<li id="tab1"><a href="<?php echo base_url('notas'); ?>">Notas</a></li> 
-				<li class="active" id="tab2"><a href="<?php echo base_url('encuentros'); ?>">Encuentros</a></li> 
-			 </ul>
+		<div class="row clearfix nomargin">
+
+			<div class="container" id="topheader">
+				<ul id="tabs">
+					<li id="tab1"><a href="http://comunidadrh.dev/notas">Notas</a></li>
+					<li class="active" id="tab2"><a href="http://comunidadrh.dev/encuentros">Encuentros</a></li>
+				 </ul>
+			</div>
+
 		</div>
-
-    </div>
-</div>
-
-<!-- HEADER -->
-<header class="container">
-	<div class="row clearfix nomargin">
-		<!-- LOGO -->
-		<div class="col-md-4 col-xs-12 column">
-			<div id="logo"><img src="http://lorempixel.com/200/140/city/"></div>
-		</div>
-
-		<!-- BANNER HEADER -->
-		<div class="col-md-8 col-xs-12 column">
-			<div id="header_adv"><img src="http://www.onemedplace.com/blog/wp-content/uploads/2011/12/730x92.jpg" alt="" class="img-responsive"></div>
-		</div>
-
 	</div>
-	
-	<div class="row clearfix nomargin" id="wrapp_main_menu">
-		
-		<!-- MAIN MENU -->
-		<div class="col-md-9 col-xs-12 column" id="mainmenu">
-			<ul>
-			<li><a href="<?php echo base_url('/'); ?>">inicio</a></li>
-			<li><a href="#">informes</a></li>
-			<li><a href="#">casos</a></li>
-			<li><a href="#">negocios</a></li>
-			<li><a href="#">tendencias</a></li>
-			<li><a href="#">suplementos</a></li>
-			<li><a href="#">tecnologia</a></li>
-			<li><a href="#">videos</a></li>
-			</ul>
+
+	<!-- HEADER -->
+	<header class="container">
+		<div class="row clearfix nomargin">
+			<!-- LOGO -->
+			<div class="col-md-4 col-xs-12 column">
+				<div id="logo"><img src="public_folder/img/logoCRH.png" width="140" height="115"></div>
+			</div>
+
+			<!-- BANNER HEADER -->
+			<div class="col-md-8 col-xs-12 column">
+				<div id="header_adv"><img src="public_folder/img/banner_ad_728x90.jpg" alt="ad" class="img-responsive"></div>
+			</div>
+
 		</div>
 
-		<!-- SEARCH HEADER -->
-		<div class="col-md-3 col-xs-12 column">
-			<form  role="search">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Buscar" name="srch-term" id="srch-term">
-            <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-            </div>
-        </div>
-        </form>
-		</div>
-		<div class="col-md-12 column"><div id="border_main_menu"></div></div>
+		<div class="row clearfix nomargin" id="wrapp_main_menu">
+
+			<!-- MAIN MENU -->
+			<div class="col-md-9 col-xs-12 column" id="mainmenu">
+				<ul>
+				<li><a class="active" href="http://comunidadrh.dev/">inicio</a></li>
+				<li><a href="#">informes</a></li>
+				<li><a href="#">casos</a></li>
+				<li><a href="#">negocios</a></li>
+				<li><a href="#">tendencias</a></li>
+				<li><a href="#">suplementos</a></li>
+				<li><a href="#">tecnologia</a></li>
+				<li><a href="#">videos</a></li>
+				</ul>
+			</div>
+
+			<!-- SEARCH HEADER -->
+			<div class="col-md-3 col-xs-12 column">
+				<form  role="search">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Buscar" name="srch-term" id="srch-term">
+				<div class="input-group-btn">
+					<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+				</div>
+			</div>
+			</form>
+			</div>
+			<div class="col-md-12 column"><div id="border_main_menu"></div></div>
 
 
-	</div><!-- end wrapp_main_menu -->
-</header>
+		</div><!-- end wrapp_main_menu -->
+	</header>
 <!-- END HEADER -->
 
 <!-- MAIN CONTENT -->
 <section class="container" id="fondoblanco">
-	<?php if(isset($content)){$this->load->view($content);} ?>	
+	<?php if(isset($content)){$this->load->view($content);} ?>
 </section>
 <!-- END MAIN SECTION -->
 

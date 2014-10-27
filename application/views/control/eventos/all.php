@@ -10,7 +10,7 @@
 
 
 
-<?php 
+<?php
 if(count($query->result())){
 	$urldelete = base_url('control/eventos/soft_delete');
 	echo '
@@ -23,10 +23,9 @@ if(count($query->result())){
 	<tr>
 		<th>Categoria</th>
 		<th>Titulo</th>
-		<th>Descripcion</th>
 		<th>Fecha inicio</th>
-		<th>Fecha fin</th>
-		<th>Lugar</th>
+
+
 		<th>Sponsors</th>
 		<th>Img</th>
 		<th>Opciones</th>
@@ -36,7 +35,7 @@ if(count($query->result())){
 
 	foreach ($query->result() as $row):
 
-		$nombre_categoria = $this->categoria_evento->traer_nombre($row->categoria_id); 
+		$nombre_categoria = $this->categoria_evento->traer_nombre($row->categoria_id);
 
 		list($anio, $mes, $dia) = explode("-", $row->fecha_desde);
 		list($anioh, $mesh, $diah) = explode("-", $row->fecha_hasta);
@@ -47,14 +46,11 @@ if(count($query->result())){
 		echo '<td>'.$nombre_categoria.' </td>';
 		echo '<td id="titulo'.$row->id.'">'.$row->titulo.' </td>';
 
-		echo '<td>'.$row->descripcion.' </td>';
 		echo '<td>'.$fecha_desde.' </td>';
-		echo '<td>'.$fecha_hasta.' </td>';
-		echo '<td>'.$row->lugar.' </td>';
-		echo '<td> 
+		echo '<td>
 					<a href="'.base_url('control/sponsors/evento/'.$row->id).'">Sponsors</a>
 					<a href="'.base_url('control/speakers/evento/'.$row->id).'">Speakers</a>
-			  </td>';		
+			  </td>';
 
 
 		if($row->filename){
@@ -65,10 +61,10 @@ if(count($query->result())){
 
 		echo '</td>';
 
-		echo '<td> 
+		echo '<td>
 		<div>
 		<a onclick="confirm_delete('.$row->id.', \'eventos\', \''.$urldelete.'\')" class="btn btn-small" ><i class="fa fa-trash-o"></i></a>
-		<a class="btn btn-small" href="'.base_url('control/eventos/editar/'.$row->id.'').'"><i class="fa fa-edit"></i></a>		
+		<a class="btn btn-small" href="'.base_url('control/eventos/editar/'.$row->id.'').'"><i class="fa fa-edit"></i></a>
 		<a class="btn btn-small" href="'.base_url('control/eventos/detail/'.$row->id.'').'"><i class="fa fa-chain"></i></a>
 		</div>
 		</td>';
@@ -76,7 +72,7 @@ if(count($query->result())){
 
 		echo '</tr>';
 
-	endforeach; 
+	endforeach;
 	echo '	</tbody>
 			</table>';
 }else{
@@ -112,4 +108,3 @@ if (isset($pagination_links)){
                 });
             });
         </script>
-

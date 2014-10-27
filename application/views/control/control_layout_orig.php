@@ -31,7 +31,7 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    
+
         <!-- HEADER -->
     <header class="container">
       <!-- Static navbar -->
@@ -48,8 +48,7 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              
-        
+
 
 
               <li <?php if($this->uri->segment(2) == "algo"){echo 'class="active"';} ?>>
@@ -58,7 +57,7 @@
               <li <?php if($this->uri->segment(2) == "algo"){echo 'class="active"';} ?>>
               <a href="<?php echo base_url('control/categorias_eventos'); ?>">Cat Eventos</a>
               </li>
-              
+
               <!--
               <li>
               <a href="<?php echo base_url('control/'); ?>">Link</a>
@@ -76,6 +75,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="<?php echo base_url('control/logout'); ?>">Cerrar sesion</a></li>
+
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -89,23 +89,23 @@
   <div class="row">
     <div id="avisos" class="col-lg-12">
 
-    <?php 
-      if($this->session->flashdata('success')): 
+    <?php
+      if($this->session->flashdata('success')):
       echo '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
       '.$this->session->flashdata('success').'</div>';
       endif;
 
-      if($this->session->flashdata('warning')): 
+      if($this->session->flashdata('warning')):
       echo '<div class="alert alert-warning"  role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
       '.$this->session->flashdata('warning').'</div>';
       endif;
 
-      if($this->session->flashdata('error')): 
+      if($this->session->flashdata('error')):
       echo '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
       '.$this->session->flashdata('error').'</div>';
       endif;
     ?>
-    
+
     </div>
   </div>
 </div>
@@ -114,12 +114,16 @@
   <div class="row">
     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
     <!-- menu column -->
+
     <?php $this->load->view($menu); ?>
+
     </div>
 
 
     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+
     <?php $this->load->view($content); ?>
+
     </div>
 
   </div>
@@ -149,7 +153,7 @@
         <script src="<?php echo base_url('public_folder/js/main.js'); ?>"></script>
         <script src="<?php echo base_url('public_folder/js/bootstrap-datepicker.js'); ?>"></script>
 
-        
+
         <script>
         window.setTimeout(function() { $(".alert-success").alert('close'); }, 4000);
         window.setTimeout(function() { $(".alert-warning").alert('close'); }, 4000);

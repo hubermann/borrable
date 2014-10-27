@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="<?php echo base_url('public_folder/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>">
 
         <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script> 
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
 
 
@@ -70,7 +70,7 @@
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
-                                       
+
                                     </ul>
                                 </li>
                                 <li class="footer"><a href="#">See All Messages</a></li>
@@ -209,7 +209,7 @@
                 <!-- sidebar: style can be found in sidebar.less -->
 
                 <section class="sidebar">
-                   
+
 
                     <!-- search form -->
                     <form action="#" method="get" class="sidebar-form">
@@ -226,7 +226,7 @@
                     <?php include_once('includes/menu_admin.php'); ?>
 
 
-      
+
 
                 </section>
                 <!-- /.sidebar -->
@@ -234,7 +234,7 @@
 
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
-                
+
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -247,21 +247,21 @@
                         <li class="active">Data tables</li>
                     </ol>
                 </section>
-                
-    <div id="avisos">
-    <?php 
 
-      if($this->session->flashdata('success')): 
+    <div id="avisos">
+    <?php
+
+      if($this->session->flashdata('success')):
       echo '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
       '.$this->session->flashdata('success').'</div>';
       endif;
 
-      if($this->session->flashdata('warning')): 
+      if($this->session->flashdata('warning')):
       echo '<div class="alert alert-warning"  role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
       '.$this->session->flashdata('warning').'</div>';
       endif;
 
-      if($this->session->flashdata('error')): 
+      if($this->session->flashdata('error')):
       echo '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
       '.$this->session->flashdata('error').'</div>';
       endif;
@@ -277,9 +277,9 @@
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
-  
+
         <script src="<?php echo base_url('public_folder/js/bootstrap.js'); ?>"></script>
-     
+
 
         <!-- jQuery 2.0.2 -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -288,13 +288,13 @@
        <script src="<?php echo base_url('public_folder/js/backend.js'); ?>"></script>
         <!-- Date Picker -->
         <script type="text/javascript" src="<?php echo base_url('public_folder/js/bootstrap-datepicker.js'); ?>"></script>
-        
+
         <!-- Bootstrap -->
         <script src="<?php echo base_url('public_folder/js/bootstrap.js'); ?>"></script>
-        
+
         <!-- editor -->
         <script src="<?php echo base_url('public_folder/js/plugins/ckeditor/ckeditor.js'); ?>"></script>
-      
+
         <!-- modal confirm -->
         <script src="<?php echo base_url('public_folder/js/bootbox.min.js'); ?>"></script>
 
@@ -306,7 +306,7 @@
         <script src="<?php echo base_url('public_folder/js/AdminLTE/app.js'); ?>"></script>
 
 
-        
+
 
         <!-- page script -->
         <script type="text/javascript">

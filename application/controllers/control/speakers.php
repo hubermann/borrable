@@ -5,16 +5,18 @@ class speakers extends CI_Controller{
 
 public function __construct(){
 
-parent::__construct();
-$this->load->model('speaker');
-$this->load->model('pais');
-$this->load->helper('url');
-$this->load->library('session');
+	parent::__construct();
+	$this->load->model('speaker');
+	$this->load->model('evento');
+	$this->load->model('pais');
+	$this->load->model('permiso');
+	$this->load->helper('url');
+	$this->load->library('session');
 
-//Si no hay session redirige a Login
-if(! $this->session->userdata('logged_in')){
-redirect('dashboard');
-}
+	//Si no hay session redirige a Login
+	if(! $this->session->userdata('logged_in')){
+	redirect('dashboard');
+	}
 
 
 
@@ -37,28 +39,28 @@ public function index(){
 
 //detail
 public function detail(){
-$this->permiso->verify_access( 'speakers', 'view');
-$data['title'] = 'speaker';
-$data['content'] = 'control/speakers/detail';
-$data['menu'] = 'control/speakers/menu_speaker';
-$data['query'] = $this->speaker->get_record($this->uri->segment(4));
-$this->load->view('control/control_layout', $data);
+	$this->permiso->verify_access( 'speakers', 'view');
+	$data['title'] = 'speaker';
+	$data['content'] = 'control/speakers/detail';
+	$data['menu'] = 'control/speakers/menu_speaker';
+	$data['query'] = $this->speaker->get_record($this->uri->segment(4));
+	$this->load->view('control/control_layout', $data);
 }
 
 
 //new
 public function form_new(){
 	$this->permiso->verify_access( 'speakers', 'create');
-$this->load->helper('form');
-$data['title'] = 'Nuevo speaker';
-$data['content'] = 'control/speakers/new_speaker';
-$data['menu'] = 'control/speakers/menu_speaker';
-$this->load->view('control/control_layout', $data);
+	$this->load->helper('form');
+	$data['title'] = 'Nuevo speaker';
+	$data['content'] = 'control/speakers/new_speaker';
+	$data['menu'] = 'control/speakers/menu_speaker';
+	$this->load->view('control/control_layout', $data);
 }
 
 //create
 public function create(){
-$this->permiso->verify_access( 'speakers', 'create');
+	$this->permiso->verify_access( 'speakers', 'create');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
@@ -222,13 +224,13 @@ public function soft_delete(){
 	// 0 Active
 	// 1 Deleted
 	// 2 Draft
-	$id_evento = $this->input->post('idevento');
-	$id_speaker = $this->input->post('idspeaker');
-	if($id_evento > 0 && $id_evento != ""){
+	$id_speaker = $this->input->post('iditem');
+
+	if($id_speaker > 0 && $id_speaker != ""){
 		$editedspeaker = array(
 		'status' => 1,
 		);
-		$this->speaker->update_record($id_speaker, $editedsponsor);
+		$this->speaker->update_record($id_speaker, $editedspeaker);
 		$retorno = array('status' => 1);
 		echo json_encode($retorno);
 	}else{
@@ -237,56 +239,6 @@ public function soft_delete(){
 }
 
 
-
-//delete comfirm
-public function delete_comfirm(){
-	$this->permiso->verify_access( 'speakers', 'delete');
-	$this->load->helper('form');
-	$data['content'] = 'control/speakers/comfirm_delete';
-	$data['title'] = 'Eliminar speaker';
-	$data['menu'] = 'control/speakers/menu_speaker';
-	$data['query'] = $data['query'] = $this->speaker->get_record($this->uri->segment(4));
-	$this->load->view('control/control_layout', $data);
-
-
-}
-
-//delete
-public function delete(){
-$this->permiso->verify_access( 'speakers', 'delete');
-	$this->load->helper('form');
-	$this->load->library('form_validation');
-
-	$this->form_validation->set_rules('comfirm', 'comfirm', 'required');
-	$this->form_validation->set_message('required','Por favor, confirme para eliminar.');
-
-
-	if ($this->form_validation->run() === FALSE){
-		#validation failed
-		$this->load->helper('form');
-
-		$data['content'] = 'control/speakers/comfirm_delete';
-		$data['title'] = 'Eliminar speaker';
-		$data['menu'] = 'control/speakers/menu_speaker';
-		$data['query'] = $this->speaker->get_record($this->input->post('id'));
-		$this->load->view('control/control_layout', $data);
-	}else{
-		#validation passed
-		$this->session->set_flashdata('success', 'speaker eliminado!');
-
-		$prod = $this->speaker->get_record($this->input->post('id'));
-			$path = 'images-speakers/'.$prod->filename;
-			if(is_link($path)){
-				unlink($path);
-			}
-
-
-		$this->speaker->delete_record();
-		redirect('control/speakers', 'refresh');
-
-
-	}
-}
 
 public function upload_file(){
 

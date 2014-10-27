@@ -164,7 +164,12 @@ function limpiarMarcadores() {
 	reader.readAsDataURL(input.files[0]);
 	}
 }
-</script><?php
+</script>
+
+
+
+
+<?php
 $attributes = array('class' => 'form-horizontal', 'id' => 'edit_evento');
 echo form_open_multipart(base_url('control/eventos/update/'),$attributes);
 
@@ -297,7 +302,7 @@ echo form_hidden('id', $query->id);
 			<div id="maininput">
 
 
-			 <div class="form-group">
+			 <div class="control-group">
           		<input type="text" id="input_direccion" class="form-control" placeholder="Ingrese direccion a buscar.">
 
         	<span id="getCords" onClick="codeAddress();" class="btn btn-default">>></span>
@@ -305,7 +310,7 @@ echo form_hidden('id', $query->id);
 
 		</div>
 
-
+<div class="control-group">
 
 		<!-- MAPA -->
 		<div id="mapa_draw"></div>
@@ -322,7 +327,7 @@ echo form_hidden('id', $query->id);
 		<?php echo form_error('coordenadas','<p class="error">', '</p>'); ?>
 
 	</div>
-
+</div>
 
 	<!-- Text input -->
 	<div class="control-group">
@@ -341,7 +346,7 @@ echo form_hidden('id', $query->id);
 	</div>
 
 
-	
+
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Tags <small>separados por coma. (Ej: uno, dos, tres)</small></label>

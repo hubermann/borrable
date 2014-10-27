@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Modulo extends CI_Model{
 
@@ -20,7 +20,7 @@ class Modulo extends CI_Model{
 		$this->db->limit(1);
 		$c = $this->db->get('noticias');
 
-		return $c->row(); 
+		return $c->row();
 	}
 
 	public function find_by_name($name){
@@ -30,9 +30,9 @@ class Modulo extends CI_Model{
 
 		return $c->row('id');
 	}
-	
+
 	//total rows
-	public function count_rows(){ 
+	public function count_rows(){
 		$this->db->select('id')->where('status', 0)->from('noticias');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -41,9 +41,8 @@ class Modulo extends CI_Model{
 
 
 		//add new
-		public function add_record($data){ $this->db->insert('noticias', $data);
-				
-
+		public function add_record($data){
+			$this->db->insert('noticias', $data);
 	}
 
 
@@ -69,9 +68,9 @@ class Modulo extends CI_Model{
 					$this->db->limit(1);
 					$c = $this->db->get('noticias');
 
-					return $c->row('nombre'); 
+					return $c->row('nombre');
 				}
-		
+
 		*/
 
 }

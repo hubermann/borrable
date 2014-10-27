@@ -39,7 +39,7 @@ class Usuario extends CI_Model{
        		if ($query->num_rows != 1) return FALSE;
 
 	       		$db_salt = $query->row('salt');
-	       		$db_hash = $query->row('password'); 
+	       		$db_hash = $query->row('password');
 	       		if ($db_hash === hash('sha512', $db_salt.$password))
 				{
 					// Contraseña correcta (creo session)
@@ -79,7 +79,8 @@ class Usuario extends CI_Model{
 
 
 		//add new
-		public function add_record($data){ $this->db->insert('usuarios', $data);
+		public function add_record($data){
+			$this->db->insert('usuarios', $data);
 
 
 	}

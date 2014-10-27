@@ -7,6 +7,8 @@ public function __construct(){
 
 parent::__construct();
 $this->load->model('sponsor');
+$this->load->model('evento');
+$this->load->model('permiso');
 $this->load->helper('url');
 $this->load->library('session');
 
@@ -25,7 +27,7 @@ redirect('dashboard');
 
 
 public function index(){
-
+	$this->permiso->verify_access( 'sponsors', 'view');
 	$id_evento = $this->uri->segment(4);
 
 	//Pagination
@@ -62,27 +64,28 @@ public function index(){
 
 //detail
 public function detail(){
-
-$data['title'] = 'sponsor';
-$data['content'] = 'control/sponsors/detail';
-$data['menu'] = 'control/sponsors/menu_sponsor';
-$data['query'] = $this->sponsor->get_record($this->uri->segment(4));
-$this->load->view('control/control_layout', $data);
+	$this->permiso->verify_access( 'sponsors', 'view');
+	$data['title'] = 'sponsor';
+	$data['content'] = 'control/sponsors/detail';
+	$data['menu'] = 'control/sponsors/menu_sponsor';
+	$data['query'] = $this->sponsor->get_record($this->uri->segment(4));
+	$this->load->view('control/control_layout', $data);
 }
 
 
 //new
 public function form_new(){
-$this->load->helper('form');
-$data['title'] = 'Nuevo sponsor';
-$data['content'] = 'control/sponsors/new_sponsor';
-$data['menu'] = 'control/sponsors/menu_sponsor';
-$this->load->view('control/control_layout', $data);
+	$this->permiso->verify_access( 'sponsors', 'create');
+	$this->load->helper('form');
+	$data['title'] = 'Nuevo sponsor';
+	$data['content'] = 'control/sponsors/new_sponsor';
+	$data['menu'] = 'control/sponsors/menu_sponsor';
+	$this->load->view('control/control_layout', $data);
 }
 
 //create
 public function create(){
-
+	$this->permiso->verify_access( 'sponsors', 'create');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
@@ -133,6 +136,7 @@ public function create(){
 
 //edit
 public function editar(){
+	$this->permiso->verify_access( 'sponsors', 'edit');
 	$this->load->helper('form');
 	$data['title']= 'Editar sponsor';
 	$data['content'] = 'control/sponsors/edit_sponsor';
@@ -143,6 +147,7 @@ public function editar(){
 
 //update
 public function update(){
+	$this->permiso->verify_access( 'sponsors', 'edit');
 	$this->load->helper('form');
 	$this->load->library('form_validation');
 	$this->form_validation->set_rules('evento_id', 'Evento_id', 'required');
@@ -175,8 +180,10 @@ public function update(){
 				$this->sponsor->update_record($this->input->post('id'), $data);
 				}
 
-
 }
+
+		$destacado = ( $this->input->post('destacado') == "on" ? 1 : 0 );
+
 		$id=  $this->input->post('id');
 
 		$editedsponsor = array(
@@ -185,7 +192,7 @@ public function update(){
 
 		'slug' => $this->input->post('slug'),
 
-		'destacado' => $this->input->post('destacado'),
+		'destacado' => $destacado,
 		);
 		#save
 		$this->session->set_flashdata('success', 'sponsor Actualizado!');
@@ -205,12 +212,17 @@ public function update(){
 
 
 public function soft_delete(){
+	$permiso = $this->permiso->verify_access_ajax('sponsors', 'delete');
+	if(!$permiso){
+		$retorno = array('status' => 3);
+		echo json_encode($retorno);
+		exit;
+	}
 	// 0 Active
 	// 1 Deleted
 	// 2 Draft
-	$id_evento = $this->input->post('idevento');
-	$id_sponsor = $this->input->post('idsponsor');
-	if($id_evento > 0 && $id_evento != ""){
+	$id_sponsor = $this->input->post('iditem');
+	if($id_sponsor > 0 && $id_sponsor != ""){
 		$editedsponsor = array(
 		'status' => 1,
 		);
@@ -223,54 +235,6 @@ public function soft_delete(){
 }
 
 
-//delete comfirm
-public function delete_comfirm(){
-	$this->load->helper('form');
-	$data['content'] = 'control/sponsors/comfirm_delete';
-	$data['title'] = 'Eliminar sponsor';
-	$data['menu'] = 'control/sponsors/menu_sponsor';
-	$data['query'] = $data['query'] = $this->sponsor->get_record($this->uri->segment(4));
-	$this->load->view('control/control_layout', $data);
-
-
-}
-
-//delete
-public function delete(){
-
-	$this->load->helper('form');
-	$this->load->library('form_validation');
-
-	$this->form_validation->set_rules('comfirm', 'comfirm', 'required');
-	$this->form_validation->set_message('required','Por favor, confirme para eliminar.');
-
-
-	if ($this->form_validation->run() === FALSE){
-		#validation failed
-		$this->load->helper('form');
-
-		$data['content'] = 'control/sponsors/comfirm_delete';
-		$data['title'] = 'Eliminar sponsor';
-		$data['menu'] = 'control/sponsors/menu_sponsor';
-		$data['query'] = $this->sponsor->get_record($this->input->post('id'));
-		$this->load->view('control/control_layout', $data);
-	}else{
-		#validation passed
-		$this->session->set_flashdata('success', 'sponsor eliminado!');
-
-		$prod = $this->sponsor->get_record($this->input->post('id'));
-			$path = 'images-sponsors/'.$prod->filename;
-			if(is_link($path)){
-				unlink($path);
-			}
-
-
-		$this->sponsor->delete_record();
-		redirect('control/sponsors', 'refresh');
-
-
-	}
-}
 
 public function upload_file(){
 

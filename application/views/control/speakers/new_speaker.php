@@ -1,13 +1,16 @@
-<?php  
+<?php
 
 if(!isset($id_evento)){
 	$id_evento = $this->uri->segment(4);
+	$evento = $this->evento->get_record($id_evento);
 }
 if($id_evento==""){redirect("/control/eventos"); }
 ?>
 <ol class="breadcrumb">
-  <li><a href="<?php echo base_url('control/eventos'); ?>">Eventos</a></li>
-  <li class="active">Sponsors</li>
+  <li><a href="<?php echo base_url('control/eventos'); ?>">Encuentros</a></li>
+	<li><a href="<?php echo base_url('control/eventos/detail/'.$id_evento); ?>"><?php echo $evento->titulo; ?></a></li>
+  <li><a href="<?php echo base_url('control/speakers/evento/'.$id_evento); ?>">Speakers</a></li>
+	<li class="active">Nuevo speaker</li>
 </ol>
 
 <script>
@@ -20,7 +23,7 @@ if($id_evento==""){redirect("/control/eventos"); }
 	reader.readAsDataURL(input.files[0]);
 	}
 }
-</script><?php  
+</script><?php
 
 $attributes = array('class' => 'form-horizontal', 'id' => 'new_speaker');
 echo form_open_multipart(base_url('control/speakers/create/'),$attributes);
@@ -37,9 +40,9 @@ echo form_hidden('evento_id',$id_evento);
 <div class="control-group">
 <label class="control-label">Categoria</label>
 	<div class="controls">
-		
+
 		<select name="categoria_id" id="categoria_id">
-		<?php  
+		<?php
 		/*
 		$categorias = $this->Categoria->get_records_menu();
 		if($categorias){
@@ -64,8 +67,8 @@ echo form_hidden('evento_id',$id_evento);
 			<?php echo form_error('nombre','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
-			
-			
+
+
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Cargo</label>
@@ -88,7 +91,7 @@ echo form_hidden('evento_id',$id_evento);
 				<div class="controls">
 
 				<select name="pais" id="pais" >
-				<?php  
+				<?php
 
 				$pais = $this->pais->get_records_menu();
 				if($pais){

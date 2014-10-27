@@ -5,19 +5,19 @@ class notas extends CI_Controller{
 
 public function __construct(){
 
-parent::__construct();
-$this->load->model('nota');
-$this->load->model('imagenes_nota');
-$this->load->model('categoria_nota');
-$this->load->model('destacados_nota');
-$this->load->model('permiso');
-$this->load->helper('url');
-$this->load->library('session');
+	parent::__construct();
+	$this->load->model('nota');
+	$this->load->model('imagenes_nota');
+	$this->load->model('categoria_nota');
+	$this->load->model('destacados_nota');
+	$this->load->model('permiso');
+	$this->load->helper('url');
+	$this->load->library('session');
 
-//Si no hay session redirige a Login
-if(! $this->session->userdata('logged_in')){
-redirect('dashboard');
-}
+	//Si no hay session redirige a Login
+	if(! $this->session->userdata('logged_in')){
+	redirect('dashboard');
+	}
 
 
 
@@ -102,13 +102,17 @@ if ($this->form_validation->run() === FALSE){
 		$this->load->helper('url');
 		$slug = url_title($this->input->post('titulo'), 'dash', TRUE);
 
+		#autor
+		$logueado = $this->session->userdata('logged_in');
+
+
 		$newnota = array( 'titulo' => $this->input->post('titulo'),
 		 'extracto' => $this->input->post('extracto'),
 		 'slug' => $slug,
 		 'contenido' => $this->input->post('contenido'),
 		 'fecha' => $fecha,
 		 'categoria_id' => $this->input->post('categoria_id'),
-		 'autor_id' => $this->input->post('autor_id'),
+		 'autor_id' => $logueado['role_id'],
 		 'fuente_nombre' => $this->input->post('fuente_nombre'),
 		 'fuente_url' => $this->input->post('fuente_url'),
 		 'main_image' => 0,
@@ -173,6 +177,8 @@ public function update(){
 
 		$id=  $this->input->post('id');
 
+
+		#autor no se actualiza, se guarda quie la creo a la nota
 		$editednota = array(
 			'titulo' => $this->input->post('titulo'),
 			'extracto' => $this->input->post('extracto'),
@@ -180,7 +186,6 @@ public function update(){
 			'contenido' => $this->input->post('contenido'),
 			'fecha' => $fecha,
 			'categoria_id' => $this->input->post('categoria_id'),
-			'autor_id' => $this->input->post('autor_id'),
 			'fuente_nombre' => $this->input->post('fuente_nombre'),
 			'fuente_url' => $this->input->post('fuente_url'),
 			);
@@ -190,7 +195,7 @@ public function update(){
 
 		#si viene destacado actualizo
 		if( $this->input->post('destacado') ){
-
+echo $this->input->post('destacado');
 				#nota destacada
 				switch ($this->input->post('destacado')) {
 					case "destacado_principal":
@@ -208,15 +213,19 @@ public function update(){
 					case "destacado_secundario_4":
 						$this->destacados_nota->update_destacado_secundario_4($id);
 						break;
+						#La opcion de actualizar "Sin destacar" solo esta disponible en update
+					case "sin_destacar":
+						$this->destacados_nota->update_destacado_sin_destacar($id);
+						break;
 
 				}
 		}
 
 
 		if($this->input->post('id')!=""){
-			redirect('control/notas', 'refresh');
+			#redirect('control/notas', 'refresh');
 		}else{
-			redirect('control/notas', 'refresh');
+			#redirect('control/notas', 'refresh');
 		}
 
 

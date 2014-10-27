@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'plokij';
+$db['default']['password'] = 'mysqlplokij';
 $db['default']['database'] = 'comunidadrh';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

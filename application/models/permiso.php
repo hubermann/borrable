@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Permiso extends CI_Model{
 
@@ -28,7 +28,7 @@ class Permiso extends CI_Model{
 		// traer role del user
 		$role_user = $this->usuario->check_role_usuario($this->session->userdata('logged_in')['id']);
 
-		if( $role_user < 1 || $role_user == "" ){ 
+		if( $role_user < 1 || $role_user == "" ){
 			$this->session->set_flashdata('error', 'No tiene acceso a esta opcion.');
 			redirect('/control');  }
 
@@ -44,7 +44,7 @@ class Permiso extends CI_Model{
 		}else{
 			$this->session->set_flashdata('error', 'No tiene acceso a esta opcion.');
 			redirect('/control');}
-		
+
 		$this->session->set_flashdata('error', 'No tiene acceso a esta opcion.');
 			redirect('/control');
 	}
@@ -57,7 +57,7 @@ class Permiso extends CI_Model{
 		// traer role del user
 		$role_user = $this->usuario->check_role_usuario($this->session->userdata('logged_in')['id']);
 
-		if( $role_user < 1 || $role_user == "" ){ 
+		if( $role_user < 1 || $role_user == "" ){
 			$this->session->set_flashdata('error', 'No tiene acceso a esta opcion.');
 			redirect('/control');  }
 
@@ -73,7 +73,7 @@ class Permiso extends CI_Model{
 		}else{
 			return FALSE;
 		}
-		
+
 		return FALSE;
 	}
 
@@ -94,9 +94,9 @@ class Permiso extends CI_Model{
 		$c = $this->db->get('permisos');
 
 		if($c->row('permiso')==1){return TRUE;}else{return FALSE;}
-		
+
 		return FALSE;
-					
+
 	}
 
 
@@ -108,18 +108,26 @@ class Permiso extends CI_Model{
 		$this->db->limit(1);
 		$c = $this->db->get('permisos');
 		#echo "llego rol: $role_id - Modulo: $modulo - Accion:$action";
+
+		//si tiene permiso retorno TRUE
 		if($c->row('permiso')== 1){
 			return TRUE;
-		}else{
-			$newpermiso = array( 'role_id' => $role_id, 
-		 	'modulo' => $modulo, 
-		 	'url' => $action, 
-		 	'permiso' => 0, 
+
+		//No tiene permiso, retorno FALSE
+		}elseif($c->row('permiso')== 0){
+			return FALSE;
+
+		//No existe el permiso en la BD. Lo creo.
+	}elseif( empty($c->row('permiso')) ){
+			$newpermiso = array( 'role_id' => $role_id,
+			'modulo' => $modulo,
+			'url' => $action,
+			'permiso' => 0,
 			);
 			#save
 			$this->permiso->add_record($newpermiso);
-			return FALSE;
 		}
+		//por defecto es false
 		return FALSE;
 	}
 
@@ -131,7 +139,7 @@ class Permiso extends CI_Model{
 		$this->db->where('url' ,$action);
 		$this->db->limit(1);
 		$c = $this->db->get('permisos');
-		
+
 		$edited = array( 'permiso' => $nuevo_permiso);
 		$this->update_record($c->row('id'), $edited);
 		return TRUE;
@@ -146,11 +154,11 @@ class Permiso extends CI_Model{
 		$this->db->limit(1);
 		$c = $this->db->get('permisos');
 
-		return $c->row(); 
+		return $c->row();
 	}
-	
+
 	//total rows
-	public function count_rows(){ 
+	public function count_rows(){
 		$this->db->select('id')->where('status', 0)->from('permisos');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -159,9 +167,8 @@ class Permiso extends CI_Model{
 
 
 		//add new
-		public function add_record($data){ $this->db->insert('permisos', $data);
-				
-
+		public function add_record($data){
+			$this->db->insert('permisos', $data);
 	}
 
 
@@ -187,9 +194,9 @@ class Permiso extends CI_Model{
 					$this->db->limit(1);
 					$c = $this->db->get('permisos');
 
-					return $c->row('nombre'); 
+					return $c->row('nombre');
 				}
-		
+
 		*/
 
 }

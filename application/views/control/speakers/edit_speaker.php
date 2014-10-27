@@ -8,17 +8,25 @@
 	reader.readAsDataURL(input.files[0]);
 	}
 }
-</script><?php  
+</script><?php
 $attributes = array('class' => 'form-horizontal', 'id' => 'edit_speaker');
 echo form_open_multipart(base_url('control/speakers/update/'),$attributes);
 
-echo form_hidden('id', $query->id); 
-echo form_hidden('evento_id', $query->evento_id); 
+echo form_hidden('id', $query->id);
+echo form_hidden('evento_id', $query->evento_id);
+
+$evento = $this->evento->get_record($query->evento_id);
+
 ?>
 <legend><?php echo $title ?></legend>
 <div class="well well-large well-transparent">
 
- 
+<ol class="breadcrumb">
+	<li><a href="<?php echo base_url('control/eventos'); ?>">Encuentros</a></li>
+	<li><a href="<?php echo base_url('control/eventos/detail/'.$query->evento_id); ?>"><?php echo $evento->titulo; ?></a></li>
+	<li><a href="<?php echo base_url('control/speakers/evento/'.$query->evento_id); ?>">Speakers</a></li>
+	<li class="active">Modificar speaker</li>
+</ol>
 
 
 <!-- Text input-->
@@ -27,8 +35,8 @@ echo form_hidden('evento_id', $query->evento_id);
 <label class="control-label">Categoria id</label>
 	<div class="controls">
 	<select name="categoria_id" id="categoria_id">
-		<?php 
-		/* 
+		<?php
+		/*
 		$categorias = $this->categoria->get_records_menu();
 		if($categorias){
 
@@ -40,13 +48,13 @@ echo form_hidden('evento_id', $query->evento_id);
 		*/
 		?>
 		</select>
-		
+
 		<?php echo form_error('categoria_id','<p class="error">', '</p>'); ?>
 	</div>
 </div>
 -->
 
-			
+
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Nombre</label>
@@ -84,7 +92,7 @@ echo form_hidden('evento_id', $query->evento_id);
 			<label class="control-label">Pais</label>
 			<div class="controls">
 			<select name="pais" id="pais">
-			<?php 
+			<?php
 
 			$paises = $this->pais->get_records_menu();
 			if($paises){

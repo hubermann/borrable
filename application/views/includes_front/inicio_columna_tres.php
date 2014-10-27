@@ -1,10 +1,10 @@
 <!-- col container comes from inicio.php -->
 
 <div id="videos">
-	
+
 	<h3>Videos</h3>
 
-	
+
 <div class="media"><!-- inicio box video -->
 	<a href="#">
 	 	<img src="http://hubermann.com/maca15/300/1-246.jpg" alt="" class="img-responsive">

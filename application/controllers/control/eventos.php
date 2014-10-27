@@ -5,19 +5,21 @@ class eventos extends CI_Controller{
 
 public function __construct(){
 
-parent::__construct();
-$this->load->model('evento');
-$this->load->model('pais');
-$this->load->model('categoria_evento');
-$this->load->model('destacados_evento');
-$this->load->model('permiso');
-$this->load->helper('url');
-$this->load->library('session');
+	parent::__construct();
+	$this->load->model('evento');
+	$this->load->model('speaker');
+	$this->load->model('sponsor');
+	$this->load->model('pais');
+	$this->load->model('categoria_evento');
+	$this->load->model('destacados_evento');
+	$this->load->model('permiso');
+	$this->load->helper('url');
+	$this->load->library('session');
 
-//Si no hay session redirige a Login
-if(! $this->session->userdata('logged_in')){
-redirect('dashboard');
-}
+	//Si no hay session redirige a Login
+	if(! $this->session->userdata('logged_in')){
+	redirect('dashboard');
+	}
 
 
 

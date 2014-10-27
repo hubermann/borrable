@@ -65,7 +65,8 @@ echo form_hidden('id', $query->id);
 	<div class="control-group">
 	<label class="control-label">Contenido</label>
 	<div class="controls">
-	<input value="<?php echo $query->contenido; ?>" type="text" class="form-control" name="contenido" />
+
+	<textarea name="contenido" rows="8" class="form-control" cols="40"><?php echo $query->contenido; ?></textarea>
 	<?php echo form_error('contenido','<p class="error">', '</p>'); ?>
 	</div>
 	</div>
@@ -83,23 +84,19 @@ echo form_hidden('id', $query->id);
 	</div>
 	</div>
 
-	<!-- Text input
-	<div class="control-group">
-	<label class="control-label">Autor_id</label>
-	<div class="controls">
-	<input value="<?php echo $query->autor_id; ?>" type="text" class="form-control" name="autor_id" />
-	<?php echo form_error('autor_id','<p class="error">', '</p>'); ?>
-	</div>
-	</div>
-	-->
+<?php
+$destacado_principal = $this->destacados_nota->get_destacado_principal();
+
+?>
 
 	<!-- Text input -->
 	<div class="control-group">
 	<label class="control-label">Destacado</label>
 	<div class="controls">
+
 	<select name="destacado" id="destacado">
-		<option value="">Sin destacar</option>
-		<option value="destacado_principal">Destacado principal</option>
+		<option value="sin_destacar">Sin destacar</option>
+		<option value="destacado_principal" <?php if($query->id == $destacado_principal){echo "selected";} ?>>Destacado principal</option>
 		<option value="destacado_secundario_1">Destacado secundario 1</option>
 		<option value="destacado_secundario_2">Destacado secundario 2</option>
 		<option value="destacado_secundario_3">Destacado secundario 3</option>

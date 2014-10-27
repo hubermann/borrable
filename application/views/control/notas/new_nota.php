@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 $attributes = array('class' => 'form-horizontal', 'id' => 'new_nota');
 echo form_open_multipart(base_url('control/notas/create/'),$attributes);
@@ -18,7 +18,7 @@ echo form_hidden('nota[id]');
 	<div class="controls">
 
 	<select name="categoria_id" id="categoria_id">
-	<?php  
+	<?php
 
 	$categorias = $this->categoria_nota->get_records_menu();
 	if($categorias){
@@ -71,14 +71,7 @@ echo form_hidden('nota[id]');
 	</div>
 	</div>
 
-	<!-- Text input-->
-	<div class="control-group">
-	<label class="control-label">Autor_id</label>
-	<div class="controls">
-	<input value="<?php echo set_value('autor_id'); ?>" class="form-control" type="text" name="autor_id" />
-	<?php echo form_error('autor_id','<p class="error">', '</p>'); ?>
-	</div>
-	</div>
+	
 	<!-- Text input-->
 	<div class="control-group">
 	<label class="control-label">Fuente_nombre</label>
@@ -129,4 +122,4 @@ CKEDITOR.replace('contenido');
 $('#fecha').datepicker({
 format: 'dd-mm-yyyy',
 });
-</script> 
+</script>

@@ -77,6 +77,7 @@ class Imagenes_nota extends CI_Model{
 
 
 		public function traer_nombre($id){
+		
 			$this->db->where('id' ,$id);
 			$this->db->limit(1);
 			$c = $this->db->get('imagenes_notas');
