@@ -25,7 +25,9 @@ echo "<hr>";
 var_dump($destacado_secundario_4);
 echo "<hr>";
 
-
+if($destacado_principal != 0){
+echo "Destacado princiapl es dif a cero";
+}
 
 ?>
 

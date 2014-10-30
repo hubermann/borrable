@@ -28,5 +28,6 @@ $route['control/sponsors/evento/(:num)'] = 'control/sponsors/index/$1';
 $route['control/speakers/evento/(:num)'] = 'control/speakers/index/$1';
 
 $route['control/paises/(:num)'] = 'paises/index/$';
+$route['control/videos/(:num)'] = 'control/videos/index/$';
 /* append */
 /* Location: ./application/config/routes.php */

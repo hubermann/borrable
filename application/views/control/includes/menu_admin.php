@@ -1,5 +1,6 @@
+
 <ul class="sidebar-menu">
-<?php  
+<?php
 
 
 
@@ -116,6 +117,31 @@ if($this->uri->segment(2)=="roles"){
 	';
 }
 
+######## videos
+if($this->uri->segment(2)=="videos"){
+	echo '
+	<!-- links videos -->
+<li class="treeview active">
+<a href="#">
+<i class="fa fa-bar-chart-o"></i>
+<span>Videos</span></a>
+<i class="fa fa-angle-left pull-right"></i>
+<ul class="treeview-menu">
+<li><a href="'.base_url('control/videos').'"><i class="fa fa-angle-double-right"></i> Ver Todos</a></li>
+<li><a href="'.base_url('control/videos/form_new').'"><i class="fa fa-angle-double-right"></i> Crear nuevo</a></li>
+</ul>
+</li>
+	';
+}else{
+	echo '
+	<li>
+				<a href="'.base_url('control/videos').'">
+						<i class="fa fa-dashboard"></i> <span>videos</span>
+				</a>
+		</li>
+	';
+}
+
 ######## permisos
 if($this->uri->segment(2)=="permisos"){
 	echo '
@@ -151,7 +177,7 @@ if($this->uri->segment(2)=="permisos"){
 </a>
 <ul class="treeview-menu">
 <li><a href="<?php echo base_url('control/logout'); ?>"><i class="fa fa-angle-double-right"></i> Cerrar sesion </a></li>
-</ul> 
+</ul>
 </li>
-    
+
 </ul>
