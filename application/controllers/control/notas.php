@@ -195,7 +195,7 @@ public function update(){
 
 		#si viene destacado actualizo
 		if( $this->input->post('destacado') ){
-echo $this->input->post('destacado');
+ 		$this->input->post('destacado');
 				#nota destacada
 				switch ($this->input->post('destacado')) {
 					case "destacado_principal":
@@ -223,9 +223,9 @@ echo $this->input->post('destacado');
 
 
 		if($this->input->post('id')!=""){
-			#redirect('control/notas', 'refresh');
+			redirect('control/notas', 'refresh');
 		}else{
-			#redirect('control/notas', 'refresh');
+			redirect('control/notas', 'refresh');
 		}
 
 

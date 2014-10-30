@@ -8,7 +8,23 @@
 
 $destacado_principal = $this->destacados_nota->get_destacado_principal();
 
+$destacado_secundario_1 = $this->destacados_nota->get_destacado_secundario_1();
+$destacado_secundario_2 = $this->destacados_nota->get_destacado_secundario_2();
+$destacado_secundario_3 = $this->destacados_nota->get_destacado_secundario_3();
+$destacado_secundario_4 = $this->destacados_nota->get_destacado_secundario_4();
+
+
 var_dump($destacado_principal);
+echo "<hr>";
+var_dump($destacado_secundario_1);
+echo "<hr>";
+var_dump($destacado_secundario_2);
+echo "<hr>";
+var_dump($destacado_secundario_3);
+echo "<hr>";
+var_dump($destacado_secundario_4);
+echo "<hr>";
+
 
 
 ?>

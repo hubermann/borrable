@@ -78,7 +78,7 @@ class Destacados_Nota extends CI_Model{
 
 	public function update_destacado_sin_destacar($id_nota){
 		if(!empty($id_nota)){
-			echo "PROCEDO";
+
 			$destacado_principal = $this->get_destacado_principal();
 			$destacado_secundario_1 = $this->get_destacado_secundario_1();
 			$destacado_secundario_2 = $this->get_destacado_secundario_2();
