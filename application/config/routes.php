@@ -8,7 +8,10 @@ $route['encuentros/(:num)'] = 'front/encuentros/$1';
 
 $route['notas'] = 'front/notas/$1';
 $route['notas/(:num)'] = 'front/notas/$1';
-
+$route['tendencias'] = 'front/notas_por/tendencias';
+$route['tendencias/(:num)'] = 'front/notas_por_slug/tendencias';
+$route['informes'] = 'front/notas_por_slug/informes';
+$route['informes/(:num)'] = 'front/notas_por_slug/informes';
 
 $route['404_override'] = '';
 

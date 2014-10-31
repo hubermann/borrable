@@ -14,7 +14,12 @@ class Nota extends CI_Model{
 
 	}
 
-
+//all
+public function get_records_by_cat($category, $num,$start){
+	$this->db->select()->from('notas')->where('categoria_id', $category)->where('status', 0)->order_by('id','ASC')->limit($num,$start);
+	$query = $this->db->get();
+	return $query->result();
+}
 
 	//detail
 	public function get_record($id){
@@ -28,6 +33,13 @@ class Nota extends CI_Model{
 	//total rows
 	public function count_rows(){
 		$this->db->select('id')->where('status', 0)->from('notas');
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	//total rows by category
+	public function count_rows_by_cat($category){
+		$this->db->select('id')->where('status', 0)->where('categoria_id', $category)->from('notas');
 		$query = $this->db->get();
 		return $query->num_rows();
 	}

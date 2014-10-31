@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Categoria_nota extends CI_Model{
 
@@ -27,11 +27,20 @@ class Categoria_nota extends CI_Model{
 		$this->db->limit(1);
 		$c = $this->db->get('categorias_notas');
 
-		return $c->row(); 
+		return $c->row();
 	}
-	
+
+	//detail
+	public function get_by_slug($slug){
+		$this->db->where('slug' ,$slug);
+		$this->db->limit(1);
+		$c = $this->db->get('categorias_notas');
+
+		return $c->row('id'); 
+	}
+
 	//total rows
-	public function count_rows(){ 
+	public function count_rows(){
 		$this->db->select('id')->where('status', 0)->from('categorias_notas');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -41,7 +50,7 @@ class Categoria_nota extends CI_Model{
 
 		//add new
 		public function add_record($data){ $this->db->insert('categorias_notas', $data);
-				
+
 
 	}
 
@@ -62,16 +71,16 @@ class Categoria_nota extends CI_Model{
 		}
 
 
-		
+
 		public function traer_nombre($id){
 			$this->db->where('id' ,$id);
 			$this->db->limit(1);
 			$c = $this->db->get('categorias_notas');
 
-			return $c->row('nombre'); 
+			return $c->row('nombre');
 		}
-		
-		
+
+
 
 }
 
