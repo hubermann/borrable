@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class videos extends CI_Controller{
 
@@ -29,15 +29,15 @@ public function index(){
 		$data['pagination_links'] = "";
 		$total_pages = ceil($this->video->count_rows() / $per_page);
 
-		if ($total_pages > 1){ 
-			for ($i=1;$i<=$total_pages;$i++){ 
-			if ($page == $i) 
-				//si muestro el índice de la página actual, no coloco enlace 
-				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>'; 
-			else 
-				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina 
-				$data['pagination_links']  .= '<li><a href="'.base_url().'control/videos/'.$i.'" > '. $i .'</a></li>'; 
-		} 
+		if ($total_pages > 1){
+			for ($i=1;$i<=$total_pages;$i++){
+			if ($page == $i)
+				//si muestro el índice de la página actual, no coloco enlace
+				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>';
+			else
+				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina
+				$data['pagination_links']  .= '<li><a href="'.base_url().'control/videos/'.$i.'" > '. $i .'</a></li>';
+		}
 	}
 	//End Pagination
 
@@ -78,7 +78,6 @@ public function create(){
 	$this->load->library('form_validation');
 $this->form_validation->set_rules('titulo', 'Titulo', 'required');
 
-$this->form_validation->set_rules('fecha', 'Fecha', 'required');
 
 $this->form_validation->set_rules('url_video', 'Url_video', 'required');
 
@@ -105,10 +104,10 @@ if ($this->form_validation->run() === FALSE){
 		}else{
 			$file['filename'] = '';
 		}
-		$newvideo = array( 'titulo' => $this->input->post('titulo'), 
- 'fecha' => $this->input->post('fecha'), 
- 'url_video' => $this->input->post('url_video'), 
-'filename' => $file['filename'], 
+		$newvideo = array( 'titulo' => $this->input->post('titulo'),
+ 'fecha' => $this->input->post('fecha'),
+ 'url_video' => $this->input->post('url_video'),
+'filename' => $file['filename'],
 );
 		#save
 		$this->video->add_record($newvideo);
@@ -125,7 +124,7 @@ if ($this->form_validation->run() === FALSE){
 public function editar(){
 	$this->permiso->verify_access( 'videos', 'edit');
 	$this->load->helper('form');
-	$data['title']= 'Editar video';	
+	$data['title']= 'Editar video';
 	$data['content'] = 'control/videos/edit_video';
 	$data['menu'] = 'control/videos/menu_video';
 	$data['query'] = $this->video->get_record($this->uri->segment(4));
@@ -135,10 +134,9 @@ public function editar(){
 //update
 public function update(){
 	$this->load->helper('form');
-	$this->load->library('form_validation'); 
+	$this->load->library('form_validation');
 $this->form_validation->set_rules('titulo', 'Titulo', 'required');
 
-$this->form_validation->set_rules('fecha', 'Fecha', 'required');
 
 $this->form_validation->set_rules('url_video', 'Url_video', 'required');
 
@@ -155,9 +153,9 @@ $this->form_validation->set_rules('url_video', 'Url_video', 'required');
 		$this->load->view('control/control_layout', $data);
 	}else{
 		if($_FILES['filename']['size'] > 0){
-		
+
 			$file  = $this->upload_file();
-		
+
 			if ( $file['status'] != 0 )
 				{
 				//guardo
@@ -166,17 +164,17 @@ $this->form_validation->set_rules('url_video', 'Url_video', 'required');
 					 if(is_link($path)){
 						unlink($path);
 					 }
-				
-				
+
+
 				$data = array('filename' => $file['filename']);
 				$this->video->update_record($this->input->post('id'), $data);
 				}
-		
-		
-}		
+
+
+}
 		$id=  $this->input->post('id');
 
-		$editedvideo = array(  
+		$editedvideo = array(
 'titulo' => $this->input->post('titulo'),
 
 'fecha' => $this->input->post('fecha'),
@@ -286,7 +284,7 @@ public function upload_file(){
 		$yukle->set_file_size('');
 		$yukle->set_file_type('');
 		$imagname='';
-	}//fin if(extencion)	
+	}//fin if(extencion)
 
 
 	return $file;

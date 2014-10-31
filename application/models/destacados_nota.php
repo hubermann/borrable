@@ -26,19 +26,19 @@ class Destacados_Nota extends CI_Model{
 	public function get_destacado_secundario_2(){
 		$this->db->select('destacado_secundario_2');
 		$c = $this->db->get('destacados_notas');
-		return $c->row();
+		return $c->row('destacado_secundario_2');
 	}
 
 	public function get_destacado_secundario_3(){
 		$this->db->select('destacado_secundario_3');
 		$c = $this->db->get('destacados_notas');
-		return $c->row();
+		return $c->row('destacado_secundario_3');
 	}
 
 	public function get_destacado_secundario_4(){
 		$this->db->select('destacado_secundario_4');
 		$c = $this->db->get('destacados_notas');
-		return $c->row();
+		return $c->row('destacado_secundario_4');
 	}
 
 	//update

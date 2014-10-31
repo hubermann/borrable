@@ -1,18 +1,31 @@
 
 <h2><?php echo $title; ?></h2>
 
-<?php 
+<?php
 if(count($query->result())){
+	$urldelete = base_url('control/videos/soft_delete');
 	echo '<table class="table table-striped">';
+
+
+	echo '
+	<thead>
+	<tr>
+		<th>Titulo</th>
+
+		<th>Img</th>
+		<th>Opciones</th>
+	</tr>
+	</thead>
+	<tbody>';
+
 	foreach ($query->result() as $row):
 
 		/* $nombre_categoria = $this->categoria->traer_nombre($row->categoria_id); */
 
 		echo '<tr id="row'.$row->id.'">';
-echo '<td>'.$row->titulo.' </td>';
-echo '<td>'.$row->fecha.' </td>';
-echo '<td>'.$row->url_video.' </td>';
-echo '<td>'.$row->filename.' </td>';
+		echo '<td id="titulo'.$row->id.'">'.$row->titulo.' </td>';
+
+
 
 		if($row->filename){
 		echo '<td><img src="'.base_url('images-videos/'.$row->filename).'" width="100" /></td>';
@@ -22,10 +35,10 @@ echo '<td>'.$row->filename.' </td>';
 
 		echo '</td>';
 
-		echo '<td> 
+		echo '<td>
 		<div class="btn-group">
-		<a class="btn btn-small" onclick="confirm_delete('.$row->id.')" href="'.base_url('control/videos/delete_comfirm/'.$row->id.'').'"><i class="fa fa-trash-o"></i></a>
-		<a class="btn btn-small" href="'.base_url('control/videos/editar/'.$row->id.'').'"><i class="fa fa-edit"></i></a>		
+		<a onclick="confirm_delete('.$row->id.', \'videos\', \''.$urldelete.'\')" class="btn btn-small"><i class="fa fa-trash-o"></i></a>
+		<a class="btn btn-small" href="'.base_url('control/videos/editar/'.$row->id.'').'"><i class="fa fa-edit"></i></a>
 		<!--<a class="btn btn-small" href="'.base_url('control/videos/detail/'.$row->id.'').'"><i class="fa fa-chain"></i></a>-->
 		</div>
 		</td>';
@@ -33,7 +46,7 @@ echo '<td>'.$row->filename.' </td>';
 
 		echo '</tr>';
 
-	endforeach; 
+	endforeach;
 	echo '</table>';
 }else{
 	echo 'No hay resultados.';
@@ -63,16 +76,16 @@ echo '<td>'.$row->filename.' </td>';
                             //alert("success"+data);
 
                             if(data["status"] == 1){
-                            	
+
                             	//$('#avisos').html('<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>Evento eliminado!</div>');
                             	$('#row'+id).hide('slow');
                             }
 
-                            
+
                         },
                         error:function(){
                             alert("failure");
-                           
+
                         }
                     });
                 }

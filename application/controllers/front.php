@@ -5,7 +5,7 @@ class Front extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->model(array('evento','destacados_nota','destacados_evento'));
+		$this->load->model(array('evento','destacados_nota','destacados_evento', 'nota','imagenes_nota'));
 		$this->load->model('pais');
 		$this->load->model('categoria_evento');
 		$this->load->model('speaker');

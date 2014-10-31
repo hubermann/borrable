@@ -98,7 +98,7 @@ if ($this->form_validation->run() === FALSE){
 );
 		#save
 		$this->categoria_nota->add_record($newcategoria_nota);
-		$this->session->set_flashdata('success', 'Categoria para notas, creada!);
+		$this->session->set_flashdata('success', 'Categoria para notas, creada!');
 		redirect('control/categorias_notas', 'refresh');
 
 	}

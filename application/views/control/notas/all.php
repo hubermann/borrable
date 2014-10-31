@@ -21,7 +21,6 @@ if(count($query->result())){
 	<thead>
 	<tr>
 		<th>Titulo</th>
-		<th>Extracto</th>
 		<th>Fecha</th>
 		<th>Categoria</th>
 		<th>Imagen principal</th>
@@ -48,7 +47,7 @@ if(count($query->result())){
 
 		}
 		echo '<td id="titulo'.$row->id.'">'.$row->titulo.' </td>';
-		echo '<td>'.$row->extracto.' </td>';
+
 		echo '<td>'.$row->fecha.' </td>';
 		echo '<td>'.$nombre_categoria.' </td>';
 

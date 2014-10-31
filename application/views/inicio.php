@@ -14,84 +14,141 @@ $destacado_secundario_3 = $this->destacados_nota->get_destacado_secundario_3();
 $destacado_secundario_4 = $this->destacados_nota->get_destacado_secundario_4();
 
 
-var_dump($destacado_principal);
-echo "<hr>";
-var_dump($destacado_secundario_1);
-echo "<hr>";
-var_dump($destacado_secundario_2);
-echo "<hr>";
-var_dump($destacado_secundario_3);
-echo "<hr>";
-var_dump($destacado_secundario_4);
-echo "<hr>";
 
 if($destacado_principal != 0){
-echo "Destacado princiapl es dif a cero";
+//Destacado princiapl es dif a cero
+$destacada_principal = $this->nota->get_record($destacado_principal);
+	if($destacada_principal->main_image !='0' || !empty($destacada_principal->main_image) ){
+	$img_dest_principal = $this->imagenes_nota->traer_nombre($destacada_principal->main_image);
+		$imagen_principal= '<img src="'.base_url('images-notas/'.$img_dest_principal).'" class="img-responsive"/>';
+
+		echo '<div class="media" id="main_destacado_home"><!-- inicio box destacado -->
+			<div class="imagen">
+				<a href="'.base_url('nota/'.$destacada_principal->id.'/'.$destacada_principal->slug).'">
+					'.$imagen_principal.'
+				</a>
+			</div>
+			<h1 class="media-heading">'.$destacada_principal->titulo.'</h1>
+		</div><!-- fin box destacado -->';
+	}
+
+
 }
 
+// DESTACADA SECUNDARIO 1
+if($destacado_secundario_1 != 0 || !empty($destacado_secundario_1)){
+	$dest_secundario_1 = $this->nota->get_record($destacado_secundario_1);
+	//imagen
+	if($dest_secundario_1->main_image !='0' || !empty($dest_secundario_1->main_image) ){
+		$img_sec_uno = $this->imagenes_nota->traer_nombre($dest_secundario_1->main_image);
+		$img_secundario_uno = '<img src="'.base_url('images-notas/'.$img_sec_uno).'" alt="" class="img-responsive">';
+	}else{
+		$img_secundario_uno ="";
+	}
+	$destacado_chico_uno = '
+	<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
+	<div class="media destacado-chico"><!-- inicio destacado chico -->
+		<a href="'.base_url('nota/'.$dest_secundario_1->id.'/'.$dest_secundario_1->slug).'">
+			'.$img_secundario_uno.'
+		</a>
+		<div class="media-body">
+		<h4 class="titulo-destacado-chico">Media heading</h4>
+		<p>'.$dest_secundario_1->titulo.'</p>
+		</div>
+	</div><!-- fin destacado chico -->
+	</div>';
+}else{$destacado_chico_uno="";}
+
+// DESTACADA SECUNDARIO 2
+if($destacado_secundario_2 != 0 || !empty($destacado_secundario_2)){
+	$dest_secundario_2 = $this->nota->get_record($destacado_secundario_2);
+	//imagen
+	if($dest_secundario_2->main_image !='0' || !empty($dest_secundario_2->main_image) ){
+		$img_sec_dos = $this->imagenes_nota->traer_nombre($dest_secundario_2->main_image);
+		$img_secundario_dos = '<img src="'.base_url('images-notas/'.$img_sec_dos).'" alt="" class="img-responsive">';
+	}else{
+		$img_secundario_dos ="";
+	}
+	$destacado_chico_dos = '
+	<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
+	<div class="media destacado-chico"><!-- inicio destacado chico -->
+		<a href="'.base_url('nota/'.$dest_secundario_2->id.'/'.$dest_secundario_2->slug).'">
+			'.$img_secundario_dos.'
+		</a>
+		<div class="media-body">
+		<h4 class="titulo-destacado-chico">Media heading</h4>
+		<p>'.$dest_secundario_2->titulo.'</p>
+		</div>
+	</div><!-- fin destacado chico -->
+	</div>';
+}else{$destacado_chico_dos="";}
+
+// DESTACADA SECUNDARIO 3
+if($destacado_secundario_3 != 0 || !empty($destacado_secundario_3)){
+	$dest_secundario_3 = $this->nota->get_record($destacado_secundario_3);
+	//imagen
+	if($dest_secundario_3->main_image !='0' || !empty($dest_secundario_3->main_image) ){
+		$img_sec_tres = $this->imagenes_nota->traer_nombre($dest_secundario_3->main_image);
+		$img_secundario_tres = '<img src="'.base_url('images-notas/'.$img_sec_tres).'" alt="" class="img-responsive">';
+	}else{
+		$img_secundario_tres ="";
+	}
+	$destacado_chico_tres = '
+	<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
+	<div class="media destacado-chico"><!-- inicio destacado chico -->
+		<a href="'.base_url('nota/'.$dest_secundario_3->id.'/'.$dest_secundario_3->slug).'">
+			'.$img_secundario_tres.'
+		</a>
+		<div class="media-body">
+		<h4 class="titulo-destacado-chico">Media heading</h4>
+		<p>'.$dest_secundario_3->titulo.'</p>
+		</div>
+	</div><!-- fin destacado chico -->
+	</div>';
+}else{$destacado_chico_tres="";}
+
+// DESTACADA SECUNDARIO 4
+if($destacado_secundario_4 != 0 || !empty($destacado_secundario_4)){
+	$dest_secundario_4 = $this->nota->get_record($destacado_secundario_4);
+	//imagen
+	if($dest_secundario_4->main_image !='0' || !empty($dest_secundario_4->main_image) ){
+		$img_sec_cuatro = $this->imagenes_nota->traer_nombre($dest_secundario_4->main_image);
+		$img_secundario_cuatro = '<img src="'.base_url('images-notas/'.$img_sec_cuatro).'" alt="" class="img-responsive">';
+	}else{
+		$img_secundario_cuatro ="";
+	}
+	$destacado_chico_cuatro = '
+	<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
+	<div class="media destacado-chico"><!-- inicio destacado chico -->
+		<a href="'.base_url('nota/'.$dest_secundario_4->id.'/'.$dest_secundario_4->slug).'">
+			'.$img_secundario_cuatro.'
+		</a>
+		<div class="media-body">
+		<h4 class="titulo-destacado-chico">Media heading</h4>
+		<p>'.$dest_secundario_4->titulo.'</p>
+		</div>
+	</div><!-- fin destacado chico -->
+	</div>';
+}else{$destacado_chico_cuatro="";}
 ?>
 
-	<div class="media" id="main_destacado_home"><!-- inicio box destacado -->
-		<div class="imagen">
-			<a href="#">
-				<img src="public_folder/img/img_photo_placeholder_1.jpg" alt="" class="img-responsive">
-			</a>
-		</div>
-		<h1 class="media-heading">12 terrible excuses employees actually used for being late</h1>
 
-	</div><!-- fin box destacado -->
 
 
 
 
 	<div class="row no-gutters">
-		<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
-			<div class="media destacado-chico"><!-- inicio destacado chico -->
-				<a href="#">
-					<img src="public_folder/img/img_thumb_placeholder_1.png" alt="" class="img-responsive">
-				</a>
-				<div class="media-body">
-				<h4 class="titulo-destacado-chico">Media heading</h4>
-				<p>Body language: 7 signs a job candidate’s lying to you</p>
-				</div>
-			</div><!-- fin destacado chico -->
-		</div>
 
-		<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
-			<div class="media destacado-chico"><!-- inicio destacado chico -->
-				<a href="#">
-					<img src="public_folder/img/img_thumb_placeholder_2.png" alt="" class="img-responsive">
-				</a>
-				<div class="media-body">
-				<h4 class="titulo-destacado-chico">Media heading</h4>
-				<p>5 secrets to weeding out bad candidates using social media</p>
-				</div>
-			</div><!-- fin destacado chico -->
-		</div>
 
-		<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
-			<div class="media destacado-chico"><!-- inicio destacado chico -->
-				<a href="#">
-					<img src="public_folder/img/img_thumb_placeholder_3.png" alt="" class="img-responsive">
-				</a>
-				<div class="media-body">
-				<h4 class="titulo-destacado-chico">Media heading</h4>
-				<p>One interview curveball tech founder throws job candidates</p>
-				</div>
-			</div><!-- fin destacado chico -->
-		</div>
+			<?php echo $destacado_chico_uno; ?>
 
-		<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
-			<div class="media destacado-chico"><!-- inicio destacado chico -->
-				<a href="#">
-					<img src="public_folder/img/img_thumb_placeholder_4.png" alt="" class="img-responsive">
-				</a>
-				<div class="media-body">
-				<h4 class="titulo-destacado-chico">Media heading</h4>
-				<p>No, you can’t stop them from talking about their pay: Court</p>
-				</div>
-			</div><!-- fin destacado chico -->
-		</div>
+
+
+		<?php echo $destacado_chico_dos; ?>
+
+		<?php echo $destacado_chico_tres; ?>
+
+		<?php echo $destacado_chico_cuatro; ?>
 
 	</div>
 

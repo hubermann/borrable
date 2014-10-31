@@ -8,7 +8,7 @@
 	reader.readAsDataURL(input.files[0]);
 	}
 }
-</script><?php  
+</script><?php
 
 $attributes = array('class' => 'form-horizontal', 'id' => 'new_video');
 echo form_open_multipart(base_url('control/videos/create/'),$attributes);
@@ -25,9 +25,9 @@ echo form_hidden('video[id]');
 <div class="control-group">
 <label class="control-label">Categoria</label>
 	<div class="controls">
-		
+
 		<select name="categoria_id" id="categoria_id">
-		<?php  
+		<?php
 		/*
 		$categorias = $this->Categoria->get_records_menu();
 		if($categorias){
@@ -52,7 +52,7 @@ echo form_hidden('video[id]');
 			<?php echo form_error('titulo','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
-			<!-- Text input-->
+			<!-- Text input
 			<div class="control-group">
 			<label class="control-label">Fecha</label>
 			<div class="controls">
@@ -60,6 +60,7 @@ echo form_hidden('video[id]');
 			<?php echo form_error('fecha','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
+		-->
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Url_video</label>

@@ -8,16 +8,16 @@
 	reader.readAsDataURL(input.files[0]);
 	}
 }
-</script><?php  
+</script><?php
 $attributes = array('class' => 'form-horizontal', 'id' => 'edit_video');
 echo form_open_multipart(base_url('control/videos/update/'),$attributes);
 
-echo form_hidden('id', $query->id); 
+echo form_hidden('id', $query->id);
 ?>
 <legend><?php echo $title ?></legend>
 <div class="well well-large well-transparent">
 
- 
+
 
 
 <!-- Text input-->
@@ -26,8 +26,8 @@ echo form_hidden('id', $query->id);
 <label class="control-label">Categoria id</label>
 	<div class="controls">
 	<select name="categoria_id" id="categoria_id">
-		<?php 
-		/* 
+		<?php
+		/*
 		$categorias = $this->categoria->get_records_menu();
 		if($categorias){
 
@@ -39,7 +39,7 @@ echo form_hidden('id', $query->id);
 		*/
 		?>
 		</select>
-		
+
 		<?php echo form_error('categoria_id','<p class="error">', '</p>'); ?>
 	</div>
 </div>
@@ -53,7 +53,7 @@ echo form_hidden('id', $query->id);
 			<?php echo form_error('titulo','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
-			<!-- Text input-->
+			<!-- Text input
 			<div class="control-group">
 			<label class="control-label">Fecha</label>
 			<div class="controls">
@@ -61,6 +61,7 @@ echo form_hidden('id', $query->id);
 			<?php echo form_error('fecha','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
+		-->
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Url_video</label>
