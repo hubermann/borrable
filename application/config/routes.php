@@ -8,10 +8,28 @@ $route['encuentros/(:num)'] = 'front/encuentros/$1';
 
 $route['notas'] = 'front/notas/$1';
 $route['notas/(:num)'] = 'front/notas/$1';
+
 $route['tendencias'] = 'front/notas_por/tendencias';
 $route['tendencias/(:num)'] = 'front/notas_por_slug/tendencias';
+
 $route['informes'] = 'front/notas_por_slug/informes';
 $route['informes/(:num)'] = 'front/notas_por_slug/informes';
+
+$route['notas'] = 'front/notas_por_slug/notas';
+$route['notas/(:num)'] = 'front/notas_por_slug/notas';
+
+$route['negocios'] = 'front/notas_por_slug/negocios';
+$route['negocios/(:num)'] = 'front/notas_por_slug/negocios';
+
+$route['casos'] = 'front/notas_por_slug/casos';
+$route['casos/(:num)'] = 'front/notas_por_slug/casos';
+
+$route['suplementos'] = 'front/notas_por_slug/suplementos';
+$route['suplementos/(:num)'] = 'front/notas_por_slug/suplementos';
+
+$route['tecnologia'] = 'front/notas_por_slug/tecnologia';
+$route['tecnologia/(:num)'] = 'front/notas_por_slug/tecnologia';
+
 
 $route['404_override'] = '';
 
