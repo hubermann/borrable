@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="<?php echo base_url('public_folder/css/fonts.css'); ?>">
         <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    
+
         <script src="<?php echo base_url('public_folder/js/vendor/modernizr-2.6.2.min.js'); ?>"></script>
         <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
         <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
@@ -65,14 +65,14 @@
 			<!-- MAIN MENU -->
 			<div class="col-md-9 col-xs-12 column" id="mainmenu">
 				<ul>
-				<li><a class="active" href="http://comunidadrh.dev/">inicio</a></li>
-				<li><a href="#">informes</a></li>
-				<li><a href="#">casos</a></li>
-				<li><a href="#">negocios</a></li>
-				<li><a href="#">tendencias</a></li>
-				<li><a href="#">suplementos</a></li>
-				<li><a href="#">tecnologia</a></li>
-				<li><a href="#">videos</a></li>
+				<li><a class="active" href="<?php echo base_url('/'); ?>">inicio</a></li>
+				<li><a href="<?php echo base_url('informes'); ?>">informes</a></li>
+				<li><a href="<?php echo base_url('casos'); ?>">casos</a></li>
+				<li><a href="<?php echo base_url('negocios'); ?>">negocios</a></li>
+				<li><a href="<?php echo base_url('tendencias'); ?>">tendencias</a></li>
+				<li><a href="<?php echo base_url('suplementos'); ?>">suplementos</a></li>
+				<li><a href="<?php echo base_url('tecnologia'); ?>">tecnologia</a></li>
+				<li><a href="<?php echo base_url('videos'); ?>">videos</a></li>
 				</ul>
 			</div>
 

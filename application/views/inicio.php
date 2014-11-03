@@ -212,43 +212,45 @@ if($destacado_secundario_4 != 0 || !empty($destacado_secundario_4)){
 
 	<h3>Opinion</h3>
 
+<?php
+// OPINIONES
+$id_opiniones =  $this->categoria_nota->get_by_slug('opinion');
+$opiniones = $this->nota->get_records_by_cat($id_opiniones, 3,1);
+if($opiniones){
+	foreach($opiniones as $opinion){
+		//extracto
+		if(strlen($opinion->extracto) > 60){
+			$extracto_opinion = substr($opinion->extracto, 0, 60).'...';
+		}else{
+			$extracto_opinion = $opinion->extracto;
+		}
+		//imagen
+		//imagen
+		if($opinion->main_image !='0' || !empty($opinion->main_image) ){
+			$img_opinion = $this->imagenes_nota->traer_nombre($opinion->main_image);
+			$img_opinion = '<img src="'.base_url('images-notas/'.$img_opinion).'" alt="" />';
+		}else{
+			$img_opinion ="";
+		}
+		echo '<div class="media"><!-- inicio box opinion -->
+			<a class="pull-left" href="#">
+			<div class="cube-img">
+			'.$img_opinion.'
+			</div>
+			</a>
+			<div class="media-body">
+			<h4 class="titulo-opinion-box">'.$opinion->titulo.'</h4>
+			<p>'.$extracto_opinion.'</p>
+			</div>
+		</div><!-- fin box opinion -->';
+	}
 
-	<div class="media"><!-- inicio box opinion -->
-	  <a class="pull-left" href="#">
-	  <div class="cube-img">
-		 <img src="public_folder/img/opinion_1.jpg" alt="">
-	  </div>
-	  </a>
-	  <div class="media-body">
-		<h4 class="titulo-opinion-box">Ken Blachard</h4>
-		<p>NLRB: Employees can have their protest – and free BBQ, too</p>
-	  </div>
-	</div><!-- fin box opinion -->
+}
 
 
-	<div class="media"><!-- inicio box opinion -->
-	  <a class="pull-left" href="#">
-	  <div class="cube-img">
-		<img src="public_folder/img/opinion_2.jpg" alt="">
-	  </div>
-	  </a>
-	  <div class="media-body">
-		<h4 class="titulo-opinion-box">Philip Kottler</h4>
-		<p>NLRB: Employees can have their protest – and free BBQ, too</p>
-	  </div>
-	</div><!-- fin box opinion -->
+?>
 
-	<div class="media"><!-- inicio box opinion -->
-	  <a class="pull-left" href="#">
-	  <div class="cube-img">
-		<img src="public_folder/img/opinion_3.jpg" alt="">
-	  </div>
-	  </a>
-	  <div class="media-body">
-		<h4 class="titulo-opinion-box">Ken Blachard</h4>
-		<p>NLRB: Employees can have their protest – and free BBQ, too</p>
-	  </div>
-	</div><!-- fin box opinion -->
+
 
 
 
