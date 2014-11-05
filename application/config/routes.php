@@ -19,6 +19,9 @@ $route['tendencias/(:num)'] = 'front/notas_por_slug/tendencias';
 $route['informes'] = 'front/notas_por_slug/informes';
 $route['informes/(:num)'] = 'front/notas_por_slug/informes';
 
+$route['tecnologia'] = 'front/notas_por_slug/tecnologia';
+$route['tecnologia/(:num)'] = 'front/notas_por_slug/tecnologia';
+
 $route['notas'] = 'front/notas_por_slug/notas';
 $route['notas/(:num)'] = 'front/notas_por_slug/notas';
 

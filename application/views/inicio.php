@@ -169,22 +169,35 @@ if(!empty($recientes)){
 		$recientes_adicionales="";
 		if($count==1){
 			// 1
+			$img_reciente ="";
+			if($reciente->main_image !='0' || !empty($reciente->main_image) ){
+				$img_reciente = $this->imagenes_nota->traer_nombre($reciente->main_image);
+				$img_reciente = '<img src="'.base_url('images-notas/'.$img_reciente).'" alt="placeholder" height="300"/>';
+			}
 			echo '<div class="col-lg-4" >
-			<div class="imagen">
-				<img src="public_folder/img/img_photo_placeholder_5.jpg" alt="placeholder" height="300"/>
+			<div class="imagen"><a href="'.base_url('nota/'.$reciente->id.'/'.$reciente->slug).'">
+				'.$img_reciente.'</a>
 			</div>
-			<h4>Top 8 ways managers drive good employees out the door.</h4>
-			<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Maecenas aliquet, elit vitae egestas lacinia, nibh purus accumsan metus, ut mollis est eros tempus sem</p>
+			<h4><a href="'.base_url('nota/'.$reciente->id.'/'.$reciente->slug).'">'.$reciente->titulo.'</a></h4>
+			<p>'.$reciente->extracto.'</p>
 			</div>
 			<div class="col-lg-1"style="max-width: 30px;"></div>';
 		}else{
 			// 2
+			$img_reciente ="";
+			if($reciente->main_image !='0' || !empty($reciente->main_image) ){
+				$img_reciente = $this->imagenes_nota->traer_nombre($reciente->main_image);
+				$img_reciente = '<img src="'.base_url('images-notas/'.$img_reciente).'" alt="" class="img-responsive">';
+			}
+			$nombre_categoria = $this->categoria_nota->traer_nombre($reciente->categoria_id);
+			$nombre_categoria = strtolower($nombre_categoria);
 		$recientes_adicionales .= '
 					<div class="row box-reciente">
-						<div class="col-lg-4 thumb"><img src="public_folder/img/img_thumb_placeholder_1.png" alt="" class="img-responsive"></div>
+						<div class="col-lg-4 thumb">'.$img_reciente.'</div>
 						<div class="col-lg-8 info">
-						<h4>NLRB: Employees can have their protest – and free BBQ, too</h4>
-							<p>Suplemento:</p><a href="#">Selección</a><span class="dot">•</span><p class="vistas">12</p><span class="dot">•</span><p>Jul 06</p>
+						<h4><a href="'.base_url('nota/'.$reciente->id.'/'.$reciente->slug).'">'.$reciente->titulo.'</a></h4>
+
+							<p>Suplemento:</p><a href="'.base_url($nombre_categoria).'">'.ucfirst($nombre_categoria).'</a><span class="dot">•</span><p class="vistas">12</p><span class="dot">•</span><p>Jul 06</p>
 						</div>
 					</div>
 			';
@@ -192,7 +205,6 @@ if(!empty($recientes)){
 		$count++;
 
 	}
-
 
 
 

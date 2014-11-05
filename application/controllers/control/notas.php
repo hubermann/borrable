@@ -27,7 +27,7 @@ public function __construct(){
 public function index(){
 	$this->permiso->verify_access( 'notas', 'view');
 	//Pagination
-	$per_page = 10;
+	$per_page = 20;
 	$page = $this->uri->segment(3);
 	if(!$page){ $start =0; $page =1; }else{ $start = ($page -1 ) * $per_page; }
 		$data['pagination_links'] = "";
@@ -368,10 +368,10 @@ public function upload_file(){
 
 
 		if($yukle->is_ok()){
-		#$yukle->resize(600,0);
-		#$yukle->set_thumbnail_name('tn_'.$random.'_'.$name_whitout_whitespaces);
-		#$yukle->create_thumbnail();
-		#$yukle->set_thumbnail_size(180, 0);
+		$yukle->resize(870,0);
+		$yukle->set_thumbnail_name('tn_'.$random.'_'.$name_whitout_whitespaces);
+		$yukle->create_thumbnail();
+		$yukle->set_thumbnail_size(180, 0);
 
 			//UPLOAD ok
 			$file['filename'] = $imagname;

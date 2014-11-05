@@ -9,7 +9,7 @@ class Nota extends CI_Model{
 	}
 	//all
 	public function get_records($num,$start){
-		$this->db->select()->from('notas')->where('status', 0)->order_by('id','ASC')->limit($num,$start);
+		$this->db->select()->from('notas')->where('status', 0)->order_by('id','DESC')->limit($num,$start);
 		return $this->db->get();
 
 	}
@@ -17,6 +17,20 @@ class Nota extends CI_Model{
 //all
 public function get_records_by_cat($category, $num,$start){
 	$this->db->select()->from('notas')->where('categoria_id', $category)->where('status', 0)->order_by('id','ASC')->limit($num,$start);
+	$query = $this->db->get();
+	return $query->result();
+}
+
+
+//all
+public function get_relacionadas($category,$excludes, $limite){
+	$this->db->select()
+	->from('notas')
+	->where('categoria_id', $category)
+	->where_not_in('id', $excludes)
+	->where('status', 0)
+	->order_by('id','ASC')
+	->limit($limite);
 	$query = $this->db->get();
 	return $query->result();
 }

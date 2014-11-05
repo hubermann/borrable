@@ -39,13 +39,13 @@ if($notas){
 		<div class="col-md-3 col-sm-6 col-xs-12 box_nota">
 
 			<div class="efecto-hulk"><!-- efecto-hulk -->
-			<a class="hover-wrap" href="#">
+			<a class="hover-wrap" href="'.base_url('nota/'.$nota->id.'/'.$nota->slug).'">
 					<span class="overlay-img"></span>
 						<span class="overlay-img-thumb font-icon-plus"></span>
 				</a>
 			<div class="thumbnail">
 				<div class="wrapp_thumbnail">
-					<a href="#">'.$imagen_principal.'</a>
+					<a href="'.base_url('nota/'.$nota->id.'/'.$nota->slug).'">'.$imagen_principal.'</a>
 				</div>
 			</div>
 			<div class="caption">

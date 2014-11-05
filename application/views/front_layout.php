@@ -50,7 +50,7 @@
 		<div class="row clearfix nomargin">
 			<!-- LOGO -->
 			<div class="col-md-4 col-xs-12 column">
-				<div id="logo"><img src="public_folder/img/logoCRH.png" width="140" height="115"></div>
+				<div id="logo"><img src="<?php echo base_url('public_folder/img/logoCRH.png'); ?>" width="140" height="115"></div>
 			</div>
 
 			<!-- BANNER HEADER -->

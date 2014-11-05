@@ -17,7 +17,7 @@
 					</ul>
 				</div>
 
-			
+
 				<!-- fin box -->
 				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
 					<h4>Acerca de Noticas</h4>
@@ -35,7 +35,7 @@
 				<!-- fin box -->
 				<div class="col-lg-3 col-md-3 col-sm-3"> </div>
 				<!-- fin box -->
-				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4" style="text-align:right;"> <img src="public_folder/img/logoCRH_FOOTER.png" alt="ad">
+				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4" style="text-align:right;"> <img src="<?php echo base_url('public_folder/img/logoCRH_FOOTER.png'); ?>" alt="ad">
 					<br>
 					<br> <a style="color:white;" href="#">Privacy Policy</a> | <a style="color:white;" href="#">Terms of Service</a> </div>
 				<!-- fin box -->

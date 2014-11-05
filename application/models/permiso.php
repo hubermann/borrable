@@ -118,7 +118,7 @@ class Permiso extends CI_Model{
 			return FALSE;
 
 		//No existe el permiso en la BD. Lo creo.
-	}elseif( empty($c->row('permiso')) ){
+	}elseif( $c->row('permiso')=="" ){
 			$newpermiso = array( 'role_id' => $role_id,
 			'modulo' => $modulo,
 			'url' => $action,

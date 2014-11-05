@@ -265,7 +265,7 @@ public function upload_file(){
 
 
 		if($yukle->is_ok()){
-			#$yukle->resize(600,0);
+			$yukle->resize(640,0);
 			#$yukle->set_thumbnail_name('tn_'.$random.'_'.$name_whitout_whitespaces);
 			#$yukle->create_thumbnail();
 			#$yukle->set_thumbnail_size(180, 0);
