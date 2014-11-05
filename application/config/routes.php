@@ -2,11 +2,16 @@
 
 
 $route['default_controller'] = "front";
+
+$route['inicio'] = 'front/inicio';
+
 $route['encuentros'] = 'front/encuentros/$1';
 $route['encuentros/(:num)'] = 'front/encuentros/$1';
 
 $route['notas'] = 'front/notas/$1';
 $route['notas/(:num)'] = 'front/notas/$1';
+$route['nota/(:num)'] = 'front/detalle_nota/$1';
+$route['nota/(:num)/(:any)'] = 'front/detalle_nota/$1';
 
 $route['tendencias'] = 'front/notas_por_slug/tendencias';
 $route['tendencias/(:num)'] = 'front/notas_por_slug/tendencias';
@@ -49,5 +54,6 @@ $route['control/speakers/evento/(:num)'] = 'control/speakers/index/$1';
 
 $route['control/paises/(:num)'] = 'paises/index/$';
 $route['control/videos/(:num)'] = 'control/videos/index/$';
+$route['control/notas/(:num)'] = 'control/notas/index/$';
 /* append */
 /* Location: ./application/config/routes.php */

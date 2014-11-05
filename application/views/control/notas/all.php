@@ -29,7 +29,7 @@ if(count($query->result())){
 	</thead>
 	<tbody>';
 
-    $urldelete = base_url('control/notas/soft_delete');
+  $urldelete = base_url('control/notas/soft_delete');
 	echo '<table class="table table-striped">';
 	foreach ($query->result() as $row):
 

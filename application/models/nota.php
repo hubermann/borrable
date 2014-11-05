@@ -44,12 +44,16 @@ public function get_records_by_cat($category, $num,$start){
 		return $query->num_rows();
 	}
 
+	public function recientes_home($excludes, $limite){
+		#$this->output->enable_profiler(TRUE);
+		$this->db->select()->where('status', 0)->where_not_in('id', $excludes)->from('notas')->limit($limite);
+		$query = $this->db->get();
+		return $query->result();
+	}
 
-
-		//add new
-		public function add_record($data){ $this->db->insert('notas', $data);
-
-
+	//add new
+	public function add_record($data){
+		$this->db->insert('notas', $data);
 	}
 
 

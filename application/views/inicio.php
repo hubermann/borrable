@@ -4,6 +4,7 @@
 			<!-- col container comes from inicio.php -->
 
 <?php
+$excludes = array();
 ###### DESTACADO PRINCIPAL ######
 
 $destacado_principal = $this->destacados_nota->get_destacado_principal();
@@ -16,8 +17,9 @@ $destacado_secundario_4 = $this->destacados_nota->get_destacado_secundario_4();
 
 
 if($destacado_principal != 0){
-//Destacado princiapl es dif a cero
-$destacada_principal = $this->nota->get_record($destacado_principal);
+	$excludes[] =$destacado_principal;
+	//Destacado princiapl es dif a cero
+	$destacada_principal = $this->nota->get_record($destacado_principal);
 	if($destacada_principal->main_image !='0' || !empty($destacada_principal->main_image) ){
 	$img_dest_principal = $this->imagenes_nota->traer_nombre($destacada_principal->main_image);
 		$imagen_principal= '<img src="'.base_url('images-notas/'.$img_dest_principal).'" class="img-responsive"/>';
@@ -37,6 +39,7 @@ $destacada_principal = $this->nota->get_record($destacado_principal);
 
 // DESTACADA SECUNDARIO 1
 if($destacado_secundario_1 != 0 || !empty($destacado_secundario_1)){
+	$excludes[] =$destacado_secundario_1;
 	$dest_secundario_1 = $this->nota->get_record($destacado_secundario_1);
 	//imagen
 	if($dest_secundario_1->main_image !='0' || !empty($dest_secundario_1->main_image) ){
@@ -61,6 +64,7 @@ if($destacado_secundario_1 != 0 || !empty($destacado_secundario_1)){
 
 // DESTACADA SECUNDARIO 2
 if($destacado_secundario_2 != 0 || !empty($destacado_secundario_2)){
+	$excludes[] =$destacado_secundario_2;
 	$dest_secundario_2 = $this->nota->get_record($destacado_secundario_2);
 	//imagen
 	if($dest_secundario_2->main_image !='0' || !empty($dest_secundario_2->main_image) ){
@@ -85,6 +89,7 @@ if($destacado_secundario_2 != 0 || !empty($destacado_secundario_2)){
 
 // DESTACADA SECUNDARIO 3
 if($destacado_secundario_3 != 0 || !empty($destacado_secundario_3)){
+	$excludes[]=$destacado_secundario_3;
 	$dest_secundario_3 = $this->nota->get_record($destacado_secundario_3);
 	//imagen
 	if($dest_secundario_3->main_image !='0' || !empty($dest_secundario_3->main_image) ){
@@ -109,6 +114,7 @@ if($destacado_secundario_3 != 0 || !empty($destacado_secundario_3)){
 
 // DESTACADA SECUNDARIO 4
 if($destacado_secundario_4 != 0 || !empty($destacado_secundario_4)){
+	$excludes[]=$destacado_secundario_4;
 	$dest_secundario_4 = $this->nota->get_record($destacado_secundario_4);
 	//imagen
 	if($dest_secundario_4->main_image !='0' || !empty($dest_secundario_4->main_image) ){
@@ -139,10 +145,7 @@ if($destacado_secundario_4 != 0 || !empty($destacado_secundario_4)){
 
 	<div class="row no-gutters">
 
-
-			<?php echo $destacado_chico_uno; ?>
-
-
+		<?php echo $destacado_chico_uno; ?>
 
 		<?php echo $destacado_chico_dos; ?>
 
@@ -155,50 +158,57 @@ if($destacado_secundario_4 != 0 || !empty($destacado_secundario_4)){
 
 	<div class="row no-gutters">
 		<h3>Lo más reciente</h3>
-		<div class="col-lg-4" >
-		<div class="imagen">
-			<img src="public_folder/img/img_photo_placeholder_5.jpg" alt="placeholder" height="300"/>
-		</div>
-		<h4>Top 8 ways managers drive good employees out the door.</h4>
-		<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Maecenas aliquet, elit vitae egestas lacinia, nibh purus accumsan metus, ut mollis est eros tempus sem</p>
-		</div>
-		<div class="col-lg-1"style="max-width: 30px;"></div>
+
+<?php
+
+$recientes = $this->nota->recientes_home($excludes, 6);
+
+if(!empty($recientes)){
+	$count = 1;
+	foreach($recientes as $reciente){
+		$recientes_adicionales="";
+		if($count==1){
+			// 1
+			echo '<div class="col-lg-4" >
+			<div class="imagen">
+				<img src="public_folder/img/img_photo_placeholder_5.jpg" alt="placeholder" height="300"/>
+			</div>
+			<h4>Top 8 ways managers drive good employees out the door.</h4>
+			<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Maecenas aliquet, elit vitae egestas lacinia, nibh purus accumsan metus, ut mollis est eros tempus sem</p>
+			</div>
+			<div class="col-lg-1"style="max-width: 30px;"></div>';
+		}else{
+			// 2
+		$recientes_adicionales .= '
+					<div class="row box-reciente">
+						<div class="col-lg-4 thumb"><img src="public_folder/img/img_thumb_placeholder_1.png" alt="" class="img-responsive"></div>
+						<div class="col-lg-8 info">
+						<h4>NLRB: Employees can have their protest – and free BBQ, too</h4>
+							<p>Suplemento:</p><a href="#">Selección</a><span class="dot">•</span><p class="vistas">12</p><span class="dot">•</span><p>Jul 06</p>
+						</div>
+					</div>
+			';
+		}
+		$count++;
+
+	}
+
+
+
+
+}
+
+
+?>
+
+
+
+
 		<div class="col-lg-7">
-			<div class="row box-reciente">
-				<div class="col-lg-4 thumb"><img src="public_folder/img/img_thumb_placeholder_1.png" alt="" class="img-responsive"></div>
-				<div class="col-lg-8 info">
-				<h4>NLRB: Employees can have their protest – and free BBQ, too</h4>
-					<p>Suplemento:</p><a href="#">Selección</a><span class="dot">•</span><p class="vistas">12</p><span class="dot">•</span><p>Jul 06</p>
-				</div>
-			</div>
-			<div class="row box-reciente">
-				<div class="col-lg-4 thumb"><img src="public_folder/img/img_thumb_placeholder_2.png" alt="" class="img-responsive"></div>
-				<div class="col-lg-8 info">
-				<h4>NLRB: Employees can have their protest – and free BBQ, too</h4>
-					<p>Suplemento:</p><a href="#">Selección</a><span class="dot">•</span><p class="vistas">12</p><span class="dot">•</span><p>Jul 06</p>
-				</div>
-			</div>
-			<div class="row box-reciente">
-				<div class="col-lg-4 thumb"><img src="public_folder/img/img_thumb_placeholder_3.png" alt="" class="img-responsive"></div>
-				<div class="col-lg-8 info">
-				<h4>NLRB: Employees can have their protest – and free BBQ, too</h4>
-					<p>Suplemento:</p><a href="#">Selección</a><span class="dot">•</span><p class="vistas">12</p><span class="dot">•</span><p>Jul 06</p>
-				</div>
-			</div>
-			<div class="row box-reciente">
-				<div class="col-lg-4 thumb"><img src="public_folder/img/img_thumb_placeholder_4.png" alt="" class="img-responsive"></div>
-				<div class="col-lg-8 info">
-				<h4>NLRB: Employees can have their protest – and free BBQ, too</h4>
-					<p>Suplemento:</p><a href="#">Selección</a><span class="dot">•</span><p class="vistas">12</p><span class="dot">•</span><p>Jul 06</p>
-				</div>
-			</div>
-			<div class="row box-reciente">
-				<div class="col-lg-4 thumb"><img src="public_folder/img/img_thumb_placeholder_1.png" alt="" class="img-responsive"></div>
-				<div class="col-lg-8 info">
-				<h4>NLRB: Employees can have their protest – and free BBQ, too</h4>
-					<p>Suplemento:</p><a href="#">Selección</a><span class="dot">•</span><p class="vistas">12</p><span class="dot">•</span><p>Jul 06</p>
-				</div>
-			</div>
+			<?php echo $recientes_adicionales; ?>
+
+
+
 		</div>
 	</div>
 </div>
@@ -233,7 +243,7 @@ if($opiniones){
 			$img_opinion ="";
 		}
 		echo '<div class="media"><!-- inicio box opinion -->
-			<a class="pull-left" href="#">
+			<a class="pull-left" href="'.base_url('nota/'.$opinion->id.'/'.$opinion->slug).'">
 			<div class="cube-img">
 			'.$img_opinion.'
 			</div>
@@ -262,23 +272,32 @@ if($opiniones){
 	<div class="moduleHome" id="informes">
 
 		<h3>Informes</h3>
-		<div class="box-informe"><!-- inicio box informe -->
-			<a class="linkReciente" href="#">
-				Recruiting: Take care not to overlook the quiet candidates
-			</a>
-		</div><!-- fin box informe -->
 
-		<div class="box-informe"><!-- inicio box informe -->
-			<a class="linkReciente" href="#">
-				Does new NLRB ruling mean you can’t fire someone for insubordination?
-			</a>
-		</div><!-- fin box informe -->
 
-		<div class="box-informe"><!-- inicio box informe -->
-			<a class="linkReciente" href="#">
-				Does new NLRB ruling mean you can’t fire someone for insubordination?
-			</a>
-		</div><!-- fin box informe -->
+		<?php
+		// informes
+		$id_informes =  $this->categoria_nota->get_by_slug('informes');
+		$informes = $this->nota->get_records_by_cat($id_informes, 3,1);
+		if($informes){
+			foreach($informes as $informe){
+
+
+
+				echo '<div class="box-informe"><!-- inicio box informe -->
+					<a class="linkReciente" href="'.base_url('nota/'.$informe->id.'/'.$informe->slug).'">
+						'.$informe->titulo.'
+					</a>
+				</div><!-- fin box informe -->';
+			}
+
+		}
+
+
+		?>
+
+
+
+
 
 	</div>
 
@@ -295,36 +314,38 @@ if($opiniones){
 	<div id="videos">
 
 		<h3>Videos</h3>
-		<div class="media"><!-- inicio box video -->
-			<a href="#">
-				<img src="http://hubermann.com/maca15/300/1-246.jpg" alt="" class="img-responsive">
-			</a>
-			<div class="media-body">
-				<p class="fecha-video-box">12 de Diciembre de 2013</p>
-				<h4 class="titulo-video-box">Media heading</h4>
+
+<?php
+
+$videos= $this->video->get_videos_home(4);
+
+if(!empty($videos)){
+
+	foreach($videos as $video){
+		$fecha_video ="";
+		//IMAGEN
+		$imgvideo ="";
+		if(!empty($video->filename)){
+			$imgvideo = '<img src="'.base_url('images-videos/'.$video->filename).'" alt="" class="img-responsive">';
+		}
+		echo '<div class="media">
+				<!-- inicio box video -->
+				<a href="'.base_url('video/'.$video->id).'"> '.$imgvideo.' </a>
+				<div class="media-body">
+					<p class="fecha-video-box">'.$fecha_video.'</p>
+					<h4 class="titulo-video-box">'.$video->titulo.'</h4> </div>
 			</div>
-		</div><!-- fin box video -->
+		</div>';
+	}
 
 
-	<div class="media"><!-- inicio box video -->
-		<a href="#">
-			<img src="http://hubermann.com/maca15/300/1-246.jpg" alt="" class="img-responsive">
-		</a>
-		<div class="media-body">
-			<p class="fecha-video-box">12 de Diciembre de 2013</p>
-			<h4 class="titulo-video-box">Media heading</h4>
-		</div>
-	</div><!-- fin box video -->
+}
 
-	<div class="media"><!-- inicio box video -->
-		<a href="#">
-			<img src="http://hubermann.com/maca15/300/1-246.jpg" alt="" class="img-responsive">
-		</a>
-		<div class="media-body">
-			<p class="fecha-video-box">12 de Diciembre de 2013</p>
-			<h4 class="titulo-video-box">Media heading</h4>
-		</div>
-	</div><!-- fin box video -->
+?>
+
+
+
+
 
 
 	</div>		<hr>

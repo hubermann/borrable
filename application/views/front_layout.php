@@ -37,8 +37,8 @@
 
 			<div class="container" id="topheader">
 				<ul id="tabs">
-					<li id="tab1"><a href="http://comunidadrh.dev/notas">Notas</a></li>
-					<li class="active" id="tab2"><a href="http://comunidadrh.dev/encuentros">Encuentros</a></li>
+					<li id="tab1"><a href="<?php echo base_url('notas'); ?>">Notas</a></li>
+					<li class="active" id="tab2"><a href="<?php echo base_url('encuentros'); ?>">Encuentros</a></li>
 				 </ul>
 			</div>
 

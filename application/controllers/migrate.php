@@ -1,6 +1,7 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 
 class Migrate extends CI_Controller{
+  /*
     public function index(){
     	echo "Start...";
         $this->load->library("migration");
@@ -9,6 +10,7 @@ class Migrate extends CI_Controller{
           show_error($this->migration->error_string());
       }else{
       	echo 'Realizada la migracion '.$this->uri->segment(2);
-      }   
+      }
     }
+    */
 }

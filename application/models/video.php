@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Video extends CI_Model{
 
@@ -14,17 +14,24 @@ class Video extends CI_Model{
 
 	}
 
+	public function get_videos_home($cantidad){
+		$this->db->select()->from('videos')->where('status', 0)->order_by('id','ASC')->limit($cantidad);
+		$query = $this->db->get();
+		
+		return $query->result();
+	}
+
 	//detail
 	public function get_record($id){
 		$this->db->where('id' ,$id);
 		$this->db->limit(1);
 		$c = $this->db->get('videos');
 
-		return $c->row(); 
+		return $c->row();
 	}
-	
+
 	//total rows
-	public function count_rows(){ 
+	public function count_rows(){
 		$this->db->select('id')->where('status', 0)->from('videos');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -34,7 +41,7 @@ class Video extends CI_Model{
 
 		//add new
 		public function add_record($data){ $this->db->insert('videos', $data);
-				
+
 
 	}
 
@@ -61,9 +68,9 @@ class Video extends CI_Model{
 					$this->db->limit(1);
 					$c = $this->db->get('videos');
 
-					return $c->row('nombre'); 
+					return $c->row('nombre');
 				}
-		
+
 		*/
 
 }

@@ -5,7 +5,14 @@ class Front extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->model(array('evento','destacados_nota','destacados_evento', 'nota','imagenes_nota','categoria_nota'));
+		$this->load->model(array('evento',
+		'destacados_nota',
+		'destacados_evento',
+		'nota',
+		'imagenes_nota',
+		'categoria_nota',
+		'video'
+		));
 		$this->load->model('pais');
 		$this->load->model('categoria_evento');
 		$this->load->model('speaker');
@@ -50,6 +57,12 @@ class Front extends CI_Controller {
 	public function index()
 	{
 		$data['content'] = "inicio";
+		$this->load->view('splash', $data);
+	}
+
+	public function inicio()
+	{
+		$data['content'] = "inicio";
 		$this->load->view('front_layout', $data);
 	}
 
@@ -66,6 +79,20 @@ class Front extends CI_Controller {
 		$data['content'] = "notas";
 		$this->load->view('front_layout', $data);
 	}
+
+
+	public function detalle_nota(){
+		$id_nota = $this->uri->segment(2);
+		if(empty($id_nota)){redirect('notas');}
+
+		$data['nota'] = $this->nota->get_record($id_nota);
+
+		$data['content'] = "detalle_nota";
+		$this->load->view('front_layout', $data);
+
+
+	}
+
 }
 
 /* End of file welcome.php */

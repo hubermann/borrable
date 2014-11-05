@@ -48,7 +48,7 @@ echo form_hidden('id', $query->id);
 	<div class="control-group">
 	<label class="control-label">Extracto</label>
 	<div class="controls">
-	<input value="<?php echo $query->extracto; ?>" type="text" class="form-control" name="extracto" />
+	<textarea name="extracto" class="form-control"><?php echo $query->extracto; ?></textarea>
 	<?php echo form_error('extracto','<p class="error">', '</p>'); ?>
 	</div>
 	</div>

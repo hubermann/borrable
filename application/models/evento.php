@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Evento extends CI_Model{
 
@@ -14,17 +14,24 @@ class Evento extends CI_Model{
 
 	}
 
+	//all
+	public function get_records_with_exclude($excludes, $num,$start){
+		$this->db->select()->from('eventos')->where('status', 0)->order_by('id','ASC')->limit($num,$start);
+		return $this->db->get();
+
+	}
+
 	//detail
 	public function get_record($id){
 		$this->db->where('id' ,$id);
 		$this->db->limit(1);
 		$c = $this->db->get('eventos');
 
-		return $c->row(); 
+		return $c->row();
 	}
-	
+
 	//total rows
-	public function count_rows(){ 
+	public function count_rows(){
 		$this->db->select('id')->from('eventos')->where('status', 0);
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -33,7 +40,7 @@ class Evento extends CI_Model{
 
 
 	//add new
-	public function add_record($data){ 
+	public function add_record($data){
 			$this->db->insert('eventos', $data);
 	}
 
@@ -60,9 +67,9 @@ class Evento extends CI_Model{
 					$this->db->limit(1);
 					$c = $this->db->get('eventos');
 
-					return $c->row('nombre'); 
+					return $c->row('nombre');
 				}
-		
+
 		*/
 
 }
