@@ -39,6 +39,7 @@ if($videos){
 						<span class="overlay-img-thumb font-icon-plus"></span>
 				</a>
 			<div class="thumbnail">
+			'.$video->code_youtube.'
 				<div class="wrapp_thumbnail">
 					<a href="#">'.$imagen_principal.'</a>
 				</div>

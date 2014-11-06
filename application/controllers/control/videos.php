@@ -108,6 +108,7 @@ if ($this->form_validation->run() === FALSE){
  'fecha' => $this->input->post('fecha'),
  'url_video' => $this->input->post('url_video'),
 'filename' => $file['filename'],
+'code_youtube' => $this->input->post('code_youtube'),
 );
 		#save
 		$this->video->add_record($newvideo);
@@ -180,6 +181,7 @@ $this->form_validation->set_rules('url_video', 'Url_video', 'required');
 'fecha' => $this->input->post('fecha'),
 
 'url_video' => $this->input->post('url_video'),
+'code_youtube' => $this->input->post('code_youtube'),
 );
 		#save
 		$this->session->set_flashdata('success', 'video Actualizado!');

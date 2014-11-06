@@ -70,6 +70,15 @@ echo form_hidden('id', $query->id);
 			<?php echo form_error('url_video','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
+			<!-- Text input-->
+			<div class="control-group">
+			<label class="control-label">Codigo youtube</label>
+			<div class="controls">
+				<textarea name="code_youtube" rows="8" cols="40"><?php echo $query->code_youtube; ?></textarea>
+	
+			<?php echo form_error('code_youtube','<p class="error">', '</p>'); ?>
+			</div>
+			</div>
 	<!-- Text input-->
 <div class="control-group">
 	<label class="control-label">Imagen</label>

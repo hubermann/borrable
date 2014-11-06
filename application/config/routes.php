@@ -34,8 +34,11 @@ $route['casos/(:num)'] = 'front/notas_por_slug/casos';
 $route['suplementos'] = 'front/notas_por_slug/suplementos';
 $route['suplementos/(:num)'] = 'front/notas_por_slug/suplementos';
 
-$route['videos'] = 'front/videos/$1';
-$route['videos/(:num)'] = 'front/videos/$1';
+$route['videos'] = 'front/notas_por_slug/videos';
+$route['videos/(:num)'] = 'front/notas_por_slug/videos';
+
+#$route['videos'] = 'front/videos/$1';
+#$route['videos/(:num)'] = 'front/videos/$1';
 
 
 $route['404_override'] = '';

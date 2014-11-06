@@ -47,12 +47,12 @@ if($nota){
             </p>
 						<i><?php echo $fecha; ?></i>
 					</div>
-					<ul class="share">
+				<!--	<ul class="share">
 						<li><a href="#" class="btnSocial fb"><i class="fa fa-facebook"></i></a></li>
 						<li><a href="#" class="btnSocial tw"><i class="fa fa-twitter"></i></a></li>
 						<li><a href="#" class="btnSocial gplus"><i class="fa fa-google-plus"></i></a></li>
 						<li><a href="#" class="btnSocial in"><i class="fa fa-linkedin"></i></a></li>
-					</ul>
+					</ul> -->
 				</footer>
 				<article class="cuerpo">
 					<p>
@@ -68,6 +68,7 @@ if($nota){
 
 
   //imagenes
+  /*
   $query_imagenes = $this->imagenes_nota->imagenes_nota($nota->id);
 
 
@@ -90,7 +91,7 @@ if($nota){
   echo '</section>';
 
   }
-
+*/
   ?>
 
 

@@ -13,7 +13,7 @@ function confirma_eliminar(idvar, urldel) {
               $("#"+idvar).remove();
 
             }
-        }); 
+        });
     }
 }
 
@@ -30,35 +30,35 @@ function update_main(idimagen,idpreview){
     xhr.onload = function () {
         if (xhr.status === 200) {
                 var output = JSON.parse(xhr.responseText);
-    
-    
+
+
                 if (typeof output == "object") {
-    
+
                     if (output.status === "OK") {
-                                       
+
                         //Eliminar box
                         $("#wrapp_thumb"+idimagen+"  img").css("border", "2px solid green");
-    
+
                         //divpreview.parentNode.removeChild(divpreview);
-    
+
                     } else {
                         // Response is HTML
                         notificar("error", "Error al modificar! ");
                     }
-    
 
-    
+
+
                 } else {
                     //si recibo error, aqui lo notifico.
                     notificar_main("error", "Error! " + output.status);
                 }
-    
-    
+
+
         } else {
           alert('An error occurred!');
         }
       };
-      
+
       // Send the Data.
       xhr.send(formData);
 
@@ -76,14 +76,14 @@ function update_main(idimagen,idpreview){
 
 <div class="panel panel-default">
     <div class="panel-body">
-    <?php 
+    <?php
 
     $atts = array('id' => 'form_imagenes', 'class' => "navbar-form navbar-left", 'role'=> 'search');
     echo form_open_multipart(base_url('control/notas/add_imagen'), $atts);
-    echo form_hidden('id', $this->uri->segment(4)); 
-    echo '<input type="file" class="form-control" name="adjunto" id="adjunto" />
+    echo form_hidden('id', $this->uri->segment(4));
+    echo '<input type="file" class="form-control" name="adjunto" id="adjunto" style="width:250px;float:left;" />
     <input type="hidden" id="idnota" value="'.$this->uri->segment(4).'" />
-    <button onclick="validateImage();" class="btn btn-default"><span class="glyphicon glyphicon-camera"></span> Agregar Imagen</button>
+    <button onclick="validateImage();" class="btn btn-default" ><span class="glyphicon glyphicon-camera"></span> Agregar Imagen</button>
     ';
     echo form_close();
     ?>
@@ -109,11 +109,11 @@ if($query_imagenes->result()!=""){
         <img src="'.base_url('images-notas/'.$imagen->filename).'" width="120" alt="" /></div>
         <p onclick="confirma_eliminar('.$imagen->id.')" class="btn btn-default" role="button">Quitar imagen</p>
         <p onclick="update_main('.$imagen->id.','.$imagen->id.')" class="btn btn-default" role="button">Principal</p>
-        
+
         </div>
         </div>';
-    } 
-    echo '</div>';  
+    }
+    echo '</div>';
 }#fin if
 
 ?>

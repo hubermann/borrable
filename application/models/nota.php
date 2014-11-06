@@ -60,7 +60,7 @@ public function get_relacionadas($category,$excludes, $limite){
 
 	public function recientes_home($excludes, $limite){
 		#$this->output->enable_profiler(TRUE);
-		$this->db->select()->where('status', 0)->where_not_in('id', $excludes)->from('notas')->limit($limite);
+		$this->db->select()->where('status', 0)->where_not_in('id', $excludes)->from('notas')->order_by('fecha','ASC')->limit($limite);
 		$query = $this->db->get();
 		return $query->result();
 	}

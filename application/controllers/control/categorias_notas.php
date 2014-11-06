@@ -23,7 +23,7 @@ public function __construct(){
 public function index(){
 	$this->permiso->verify_access( 'categorias_notas', 'view');
 	//Pagination
-	$per_page = 4;
+	$per_page = 20;
 	$page = $this->uri->segment(3);
 	if(!$page){ $start =0; $page =1; }else{ $start = ($page -1 ) * $per_page; }
 		$data['pagination_links'] = "";

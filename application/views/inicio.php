@@ -30,7 +30,7 @@ if($destacado_principal != 0){
 					'.$imagen_principal.'
 				</a>
 			</div>
-			<h1 class="media-heading">'.$destacada_principal->titulo.'</h1>
+			<h1 class="media-heading"><a href="'.base_url('nota/'.$destacada_principal->id.'/'.$destacada_principal->slug).'">'.$destacada_principal->titulo.'</a></h1>
 		</div><!-- fin box destacado -->';
 	}
 
@@ -156,18 +156,21 @@ if($destacado_secundario_4 != 0 || !empty($destacado_secundario_4)){
 	</div>
 
 
-	<div class="row no-gutters">
-		<h3>Lo más reciente</h3>
+<div class="row no-gutters">
+<h3>Lo más reciente</h3>
 
 <?php
 
-$recientes = $this->nota->recientes_home($excludes, 6);
+$recientes = $this->nota->recientes_home($excludes, 7);
+
 
 if(!empty($recientes)){
+	$recientes_adicionales="";
 	$count = 1;
 	foreach($recientes as $reciente){
-		$recientes_adicionales="";
+
 		if($count==1){
+			$count++;
 			// 1
 			$img_reciente ="";
 			if($reciente->main_image !='0' || !empty($reciente->main_image) ){
@@ -191,24 +194,30 @@ if(!empty($recientes)){
 			}
 			$nombre_categoria = $this->categoria_nota->traer_nombre($reciente->categoria_id);
 			$nombre_categoria = strtolower($nombre_categoria);
-		$recientes_adicionales .= '
+			list($anio, $mes, $dia) = explode("-", $reciente->fecha);
+			$fecha_reciente = $dia."-".$mes."-".$anio;
+			$recientes_adicionales .= '
 					<div class="row box-reciente">
-						<div class="col-lg-4 thumb">'.$img_reciente.'</div>
-						<div class="col-lg-8 info">
-						<h4><a href="'.base_url('nota/'.$reciente->id.'/'.$reciente->slug).'">'.$reciente->titulo.'</a></h4>
-
-							<p>Suplemento:</p><a href="'.base_url($nombre_categoria).'">'.ucfirst($nombre_categoria).'</a><span class="dot">•</span><p class="vistas">12</p><span class="dot">•</span><p>Jul 06</p>
+							<div class="col-lg-4 thumb">
+								<a href="'.base_url('nota/'.$reciente->id.'/'.$reciente->slug).'">'.$img_reciente.'
+								</a>
+							</div>
+							<div class="col-lg-8 info">
+								<h4><a href="'.base_url('nota/'.$reciente->id.'/'.$reciente->slug).'">'.$reciente->titulo.'</a></h4>
+								<p>Suplemento:</p><a href="'.base_url($nombre_categoria).'">'.ucfirst($nombre_categoria).'</a><span class="dot">•</span>
+								<!-- <p class="vistas">12</p><span class="dot">•</span>-->
+								<p>'.$fecha_reciente.'</p>
+							</div>
 						</div>
-					</div>
 			';
 		}
-		$count++;
+
 
 	}
 
 
 
-}
+}// !empty
 
 
 ?>
@@ -216,12 +225,11 @@ if(!empty($recientes)){
 
 
 
-		<div class="col-lg-7">
+<div class="col-lg-7">
 			<?php echo $recientes_adicionales; ?>
+</div>
 
 
-
-		</div>
 	</div>
 </div>
 
@@ -237,7 +245,7 @@ if(!empty($recientes)){
 <?php
 // OPINIONES
 $id_opiniones =  $this->categoria_nota->get_by_slug('opinion');
-$opiniones = $this->nota->get_records_by_cat($id_opiniones, 3,1);
+$opiniones = $this->nota->get_records_by_cat($id_opiniones, 2,0);
 if($opiniones){
 	foreach($opiniones as $opinion){
 		//extracto
@@ -289,7 +297,7 @@ if($opiniones){
 		<?php
 		// informes
 		$id_informes =  $this->categoria_nota->get_by_slug('informes');
-		$informes = $this->nota->get_records_by_cat($id_informes, 3,1);
+		$informes = $this->nota->get_records_by_cat($id_informes, 5,0);
 		if($informes){
 			foreach($informes as $informe){
 
@@ -323,35 +331,51 @@ if($opiniones){
 		<div class="col-lg-2"><!-- columna tres -->
 			<!-- col container comes from inicio.php -->
 
-	<div id="videos">
+<div id="videos">
 
-		<h3>Videos</h3>
+<h3>Videos</h3>
+
 
 <?php
+// videos
+$videos="";
+$id_videos =  $this->categoria_nota->get_by_slug('videos');
+if($id_videos){
+	$videos = $this->nota->get_records_by_cat($id_videos, 3,0);
+}
 
-$videos= $this->video->get_videos_home(4);
+
 
 if(!empty($videos)){
-
 	foreach($videos as $video){
-		$fecha_video ="";
-		//IMAGEN
-		$imgvideo ="";
-		if(!empty($video->filename)){
-			$imgvideo = '<img src="'.base_url('images-videos/'.$video->filename).'" alt="" class="img-responsive">';
+		//extracto
+		if(strlen($video->extracto) > 60){
+			$extracto_video = substr($video->extracto, 0, 60).'...';
+		}else{
+			$extracto_video = $video->extracto;
+		}
+		//imagen
+		//imagen
+		if($video->main_image !='0' || !empty($video->main_image) ){
+			$img_video = $this->imagenes_nota->traer_nombre($video->main_image);
+			$img_video = '<img src="'.base_url('images-notas/'.$img_video).'" class="img-responsive" />';
+		}else{
+			$img_video ="";
 		}
 		echo '<div class="media">
-				<!-- inicio box video -->
-				<a href="'.base_url('video/'.$video->id).'"> '.$imgvideo.' </a>
-				<div class="media-body">
-					<p class="fecha-video-box">'.$fecha_video.'</p>
-					<h4 class="titulo-video-box">'.$video->titulo.'</h4> </div>
-			</div>
-		</div>';
+					<!-- inicio box video -->
+						<a href="'.base_url('nota/'.$video->id.'/'.$video->slug).'"> '.$img_video.' </a>
+						<div class="media-body">
+							<p class="fecha-video-box">12 de Diciembre de 2013</p>
+							<a href="'.base_url('nota/'.$video->id.'/'.$video->slug).'""><h4 class="titulo-video-box">'.$video->titulo.'</h4></a>  </div>
+
+					</div>
+					';
 	}
 
-
 }
+
+
 
 ?>
 
@@ -359,8 +383,10 @@ if(!empty($videos)){
 
 
 
-
 	</div>		<hr>
-		</div>
+
+
+
+	</div>
 
 	</div><!-- fin row clearfix -->
