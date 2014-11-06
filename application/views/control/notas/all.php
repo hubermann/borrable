@@ -41,8 +41,11 @@ if(count($query->result())){
 
 		$nombre_imagen = $this->imagenes_nota->traer_nombre($row->main_image);
 
+if(!empty($nombre_imagen)){
+  $imagen_principal= '<img src="'.base_url('images-notas/'.$nombre_imagen).'" width="100"/>';
+}
 
-        $imagen_principal= '<img src="'.base_url('images-notas/'.$nombre_imagen).'" width="100"/>';
+
 
 
 		}

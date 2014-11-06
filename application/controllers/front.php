@@ -57,7 +57,7 @@ class Front extends CI_Controller {
 	public function index()
 	{
 		$data['content'] = "inicio";
-		$this->load->view('splash', $data);
+		$this->load->view('front_layout', $data);
 	}
 
 	public function inicio()

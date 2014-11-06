@@ -341,7 +341,7 @@ if($opiniones){
 $videos="";
 $id_videos =  $this->categoria_nota->get_by_slug('videos');
 if($id_videos){
-	$videos = $this->nota->get_records_by_cat($id_videos, 3,0);
+	$videos = $this->nota->get_records_by_cat($id_videos, 4,0);
 }
 
 
@@ -358,7 +358,10 @@ if(!empty($videos)){
 		//imagen
 		if($video->main_image !='0' || !empty($video->main_image) ){
 			$img_video = $this->imagenes_nota->traer_nombre($video->main_image);
-			$img_video = '<img src="'.base_url('images-notas/'.$img_video).'" class="img-responsive" />';
+			if(!empty($img_video)){
+				$img_video = '<img src="'.base_url('images-notas/'.$img_video).'" class="img-responsive" />';
+			}
+
 		}else{
 			$img_video ="";
 		}

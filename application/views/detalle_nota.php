@@ -33,9 +33,9 @@ if($nota){
 				<header>
 					<h1><?php echo $titulo; ?></h1>
 				</header>
-				<figure class="image">
+			<!--	<figure class="image">
 					<?php echo $imagen_principal; ?>
-				</figure>
+				</figure>-->
 				<footer>
 					<figure class="profile">
 					<!--	<img src="public_folder/img/guestIcon.jpg" alt="Profile"/> -->
@@ -58,6 +58,11 @@ if($nota){
 					<p>
 					  <?php echo $descripcion; ?>
 					</p>
+          <p>
+            <?php if(!empty($fuente_url)){
+              echo ' Fuente: <a href="'.$fuente_url.'" target="_blank">'.$fuente.'</a>';
+            } ?>
+          </p>
 				</article>
 
 			</section>
