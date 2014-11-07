@@ -4,6 +4,8 @@ if($nota){
 
   $titulo = $nota->titulo;
   $nombre_categoria = $this->categoria_nota->traer_nombre($nota->categoria_id);
+   $categoria_nota = $this->categoria_nota->get_record($nota->categoria_id);
+
   //main image
   $imagen_principal ="";
 
@@ -43,7 +45,7 @@ if($nota){
 					<div class="info">
 						<!--<p>Matt Cynamon</p>-->
             <p>
-              <?php echo $nombre_categoria; ?>
+              <a href="<?php echo base_url($categoria_nota->slug); ?>"><?php echo $nombre_categoria; ?></a>
             </p>
 						<i><?php echo $fecha; ?></i>
 					</div>
@@ -172,7 +174,7 @@ if(!empty($notas_relacionadas)){
         <div class="cube-img"> '.$img_relacionada.' </div>
       </a>
       <div class="media-body">
-        <p>'.$nota_relacionada->titulo.'</p>
+        <p><a href="'.base_url('nota/'.$nota_relacionada->id.'/'.$nota_relacionada->slug).'">'.$nota_relacionada->titulo.'</a></p>
       </div>
     </div>';
   }

@@ -25,8 +25,6 @@ class Front extends CI_Controller {
 
 		if(empty($categoria)){redirect('/');}
 
-
-
 		//Pagination
 		$per_page = 12;
 		$page = $this->uri->segment(2);
@@ -51,7 +49,56 @@ class Front extends CI_Controller {
 		$data['notas'] = $this->nota->get_records_by_cat($categoria, $per_page,$start);
 		$data['content'] = "notas";
 		$this->load->view('front_layout', $data);
-	}
+	}// END function by slug
+
+	public function busqueda(){
+		$busqueda =$this->searchterm_handler($this->input->get_post('srch-term', TRUE));
+
+		//Pagination
+		$per_page = 12;
+		$page = $this->uri->segment(2);
+		if(!$page){ $start =0; $page =1; }else{ $start = ($page -1 ) * $per_page; }
+			$data['pagination_links'] = "";
+			$total_pages = ceil($this->nota->count_rows_busqueda($busqueda) / $per_page);
+
+			if ($total_pages > 1){
+				for ($i=1;$i<=$total_pages;$i++){
+				if ($page == $i)
+					//si muestro el índice de la página actual, no coloco enlace
+					$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>';
+				else
+					//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina
+					$data['pagination_links']  .= '<li><a href="'.base_url('busqueda/'.$i).'" > '. $i .'</a></li>';
+			}
+		}
+		//End Pagination
+
+		$data['title'] = 'Busqueda:'.$busqueda;
+
+		$data['notas'] = $this->nota->get_records_busqueda($busqueda, $per_page,$start);
+		$data['content'] = "resultados_busqueda";
+		$this->load->view('front_layout', $data);
+	}// fin busuqeda
+
+
+public function searchterm_handler($searchterm)
+{
+    if($searchterm)
+    {
+        $this->session->set_userdata('searchterm', $searchterm);
+        return $searchterm;
+    }
+    elseif($this->session->userdata('searchterm'))
+    {
+        $searchterm = $this->session->userdata('searchterm');
+        return $searchterm;
+    }
+    else
+    {
+        $searchterm ="";
+        return $searchterm;
+    }
+}
 
 
 	public function index()

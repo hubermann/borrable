@@ -51,7 +51,7 @@
 		<div class="row clearfix nomargin">
 			<!-- LOGO -->
 			<div class="col-md-4 col-xs-12 column">
-				<div id="logo"><img src="<?php echo base_url('public_folder/img/logoCRH.png'); ?>" width="140" height="115"></div>
+				<div id="logo"><a href="<?php echo base_url('/'); ?>"><img src="<?php echo base_url('public_folder/img/logoCRH.png'); ?>" width="140" height="115"></a></div>
 			</div>
 
 			<!-- BANNER HEADER -->
@@ -66,20 +66,20 @@
 			<!-- MAIN MENU -->
 			<div class="col-md-9 col-xs-12 column" id="mainmenu">
 				<ul>
-				<li><a class="active" href="<?php echo base_url('/'); ?>">inicio</a></li>
-				<li><a href="<?php echo base_url('informes'); ?>">informes</a></li>
-				<li><a href="<?php echo base_url('casos'); ?>">casos</a></li>
-				<li><a href="<?php echo base_url('negocios'); ?>">negocios</a></li>
-				<li><a href="<?php echo base_url('tendencias'); ?>">tendencias</a></li>
-				<li><a href="<?php echo base_url('suplementos'); ?>">suplementos</a></li>
-				<li><a href="<?php echo base_url('tecnologia'); ?>">tecnologia</a></li>
-				<li><a href="<?php echo base_url('videos'); ?>">videos</a></li>
+				<li><a href="<?php echo base_url('/'); ?>" <?php if(count($this->uri->segment(1))==0 || $this->uri->segment(1)=="" ){echo 'class="active"';} ?> >inicio</a></li>
+				<li><a href="<?php echo base_url('informes'); ?>" <?php if($this->uri->segment(1)=="informes" ){echo 'class="active"';} ?>>informes</a></li>
+				<li><a href="<?php echo base_url('casos'); ?>" <?php if($this->uri->segment(1)=="casos" ){echo 'class="active"';} ?>>casos</a></li>
+				<li><a href="<?php echo base_url('negocios'); ?>" <?php if($this->uri->segment(1)=="negocios" ){echo 'class="active"';} ?>>negocios</a></li>
+				<li><a href="<?php echo base_url('tendencias'); ?>" <?php if($this->uri->segment(1)=="tendencias" ){echo 'class="active"';} ?>>tendencias</a></li>
+				<li><a href="<?php echo base_url('suplementos'); ?>" <?php if($this->uri->segment(1)=="suplementos" ){echo 'class="active"';} ?>>suplementos</a></li>
+				<li><a href="<?php echo base_url('tecnologia'); ?>" <?php if($this->uri->segment(1)=="tecnologia" ){echo 'class="active"';} ?>>tecnologia</a></li>
+				<li><a href="<?php echo base_url('videos'); ?>" <?php if($this->uri->segment(1)=="videos" ){echo 'class="active"';} ?>>videos</a></li>
 				</ul>
 			</div>
 
 			<!-- SEARCH HEADER -->
 			<div class="col-md-3 col-xs-12 column">
-				<form  role="search">
+				<form method="post"action="<?php echo base_url('busqueda'); ?>" role="search">
 			<div class="input-group">
 				<input type="text" class="form-control" placeholder="Buscar" name="srch-term" id="srch-term">
 				<div class="input-group-btn">

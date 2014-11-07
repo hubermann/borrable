@@ -15,6 +15,17 @@ class Nota extends CI_Model{
 	}
 
 //all
+public function get_records_busqueda($busqueda,$num,$start){
+	$this->db->select()->from('notas')
+	->like('titulo', $busqueda)
+	->or_like('extracto', $busqueda)
+	->or_like('contenido', $busqueda)
+	->where('status', 0)
+	->order_by('id','DESC')->limit($num,$start);
+	$query = $this->db->get();
+	return $query->result();
+}
+//all
 public function get_records_by_cat($category, $num,$start){
 	$this->db->select()->from('notas')->where('categoria_id', $category)->where('status', 0)->order_by('id','ASC')->limit($num,$start);
 	$query = $this->db->get();
@@ -47,6 +58,17 @@ public function get_relacionadas($category,$excludes, $limite){
 	//total rows
 	public function count_rows(){
 		$this->db->select('id')->where('status', 0)->from('notas');
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	//total rows
+	public function count_rows_busqueda($busqueda){
+		$this->db->select()->from('notas')
+		->like('titulo', $busqueda)
+		->or_like('extracto', $busqueda)
+		->or_like('contenido', $busqueda)
+		->where('status', 0);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}

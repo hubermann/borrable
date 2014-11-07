@@ -13,7 +13,9 @@
 
 <div class="row clearfix nomargin" id="boxes_notas"><!-- boxes -->
 
+
 <?php
+
 if($notas){
 	foreach($notas as $nota){
 
@@ -24,6 +26,7 @@ if($notas){
 			if(!empty($nombre_imagen)){
 				$imagen_principal= '<img src="'.base_url('images-notas/'.$nombre_imagen).'" />';
 			}
+
 		}
 
 		//extracto
@@ -73,7 +76,5 @@ if($notas){
 <ul class="pagination pagination-small pagination-centered">
 	<?php echo $pagination_links;  ?>
 </ul>
-
-
 
 </div>

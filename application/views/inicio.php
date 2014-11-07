@@ -269,8 +269,8 @@ if($opiniones){
 			</div>
 			</a>
 			<div class="media-body">
-			<h4 class="titulo-opinion-box">'.$opinion->titulo.'</h4>
-			<p>'.$extracto_opinion.'</p>
+			<h4 class="titulo-opinion-box"><a href="'.base_url('nota/'.$opinion->id.'/'.$opinion->slug).'">'.$opinion->titulo.'</a></h4>
+			<!--<p>'.$extracto_opinion.'</p> -->
 			</div>
 		</div><!-- fin box opinion -->';
 	}
@@ -348,6 +348,7 @@ if($id_videos){
 
 if(!empty($videos)){
 	foreach($videos as $video){
+		$img_video ="";
 		//extracto
 		if(strlen($video->extracto) > 60){
 			$extracto_video = substr($video->extracto, 0, 60).'...';
@@ -357,13 +358,12 @@ if(!empty($videos)){
 		//imagen
 		//imagen
 		if($video->main_image !='0' || !empty($video->main_image) ){
-			$img_video = $this->imagenes_nota->traer_nombre($video->main_image);
+		$img_video = $this->imagenes_nota->traer_nombre($video->main_image);
 			if(!empty($img_video)){
+
 				$img_video = '<img src="'.base_url('images-notas/'.$img_video).'" class="img-responsive" />';
 			}
 
-		}else{
-			$img_video ="";
 		}
 		echo '<div class="media">
 					<!-- inicio box video -->
