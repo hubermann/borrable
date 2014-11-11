@@ -20,12 +20,9 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
         <script src="<?php echo base_url('public_folder/js/vendor/modernizr-2.6.2.min.js'); ?>"></script>
-        <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
-        <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
-        <style type="text/css">
+        <!-- jQuery 2.0.2 -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
-
-        </style>
     </head>
 <body>
     <!--[if lt IE 7]>
@@ -41,6 +38,22 @@
 					<li  id="tab2"><a href="#">Encuentros</a></li>
           <!-- <?php echo base_url('encuentros'); ?>-->
 				 </ul>
+
+         <!-- opciones login -->
+         <div id="opciones_login" >
+<?php
+
+//Si hay login de user muestro opciones de perfil y salir o sino muestro para loguearse o crear cuenta.
+
+if($this->session->userdata('front_logged_in')){
+  $usuario_logged = $this->usuario->get_record($this->session->userdata('front_logged_in')['id']);
+
+  echo '<a href="'.base_url('perfil').'" style=" color:#fff;">Hola, '.$usuario_logged->nombre.'</a>|<a style=" color:#fff;" href="'.base_url('desconectar').'">Finalizar</a>';
+}else{
+  echo '<a href="'.base_url('ingreso').'" style="color:#fff;">Ingresar</a>|<a href="'.base_url('registro').'" style="color:#fff;">Registrarme</a>';
+}
+?>
+         </div>
 			</div>
 
 		</div>
@@ -60,6 +73,9 @@
 			</div>
 
 		</div>
+
+
+
 
 		<div class="row clearfix nomargin" id="wrapp_main_menu">
 
@@ -95,8 +111,42 @@
 	</header>
 <!-- END HEADER -->
 
+
+
+
+
 <!-- MAIN CONTENT -->
 <section class="container" id="fondoblanco">
+
+  <!-- MENSAJES -->
+    <div class="row">
+      <div id="avisos" class="col-lg-12">
+
+      <?php
+      /* SI existe login*/
+
+
+        if($this->session->flashdata('success')):
+        echo '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
+        '.$this->session->flashdata('success').'</div>';
+        endif;
+
+        if($this->session->flashdata('warning')):
+        echo '<div class="alert alert-warning"  role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
+        '.$this->session->flashdata('warning').'</div>';
+        endif;
+
+        if($this->session->flashdata('error')):
+        echo '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
+        '.$this->session->flashdata('error').'</div>';
+        endif;
+      ?>
+
+      </div>
+    </div>
+  <!-- FIN MENSAJES -->
+
+
 	<?php if(isset($content)){$this->load->view($content);} ?>
 </section>
 <!-- END MAIN SECTION -->
@@ -105,4 +155,13 @@
 <?php include_once('includes_front/footer.php'); ?>
 
 </body>
+<script src="http://comunidadrh.dev/public_folder/js/bootstrap.js"></script>
+<script>
+
+  window.setTimeout(function() { $(".alert-success").alert('close'); }, 4000);
+  window.setTimeout(function() { $(".alert-warning").alert('close'); }, 4000);
+  window.setTimeout(function() { $(".alert-danger").alert('close'); }, 4000);
+
+
+</script>
 </html>

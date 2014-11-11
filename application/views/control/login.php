@@ -46,7 +46,7 @@
 			width: 100%; padding: .8em;
 		}
     </style>
-    
+
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -59,15 +59,16 @@
   <body>
 
     <div class="container">
-<?php 
-$attribute = Array ("class"=>"form-signin");
+<?php
+
+$attribute = array ("class"=>"form-signin");
 echo form_open(base_url('dashboard/login'),$attribute); ?>
 
         <h4 class="form-signin-heading">Ok, probemos de acceder!</h4>
         <input type="text" class="input-block-level" placeholder="Email" name="email" value="<?php echo set_value('email'); ?>">
-     
+
         <?php echo form_error('email','<p class="error">', '</p>'); ?>
-        
+
         <input type="password" class="input-block-level" placeholder="Password" name="password">
         <?php echo form_error('password','<p class="error">', '</p>'); ?>
         <label class="checkbox">

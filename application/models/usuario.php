@@ -28,9 +28,6 @@ class Usuario extends CI_Model{
 	}
 
 
-
-
-
 	function check_credentials($email, $password){
 
 		$this->db->where(array('email' => $email));
@@ -50,6 +47,25 @@ class Usuario extends CI_Model{
 		//return false por defecto
 		return FALSE;
 	}
+function check_credentials_front($email, $password){
+
+	$this->db->where(array('email' => $email, 'status'=>0));
+				$query = $this->db->get('usuarios', 1, 0);
+
+				if ($query->num_rows != 1) return FALSE;
+
+					$db_salt = $query->row('salt');
+					$db_hash = $query->row('password');
+					if ($db_hash === hash('sha512', $db_salt.$password))
+			{
+				// Contraseña correcta (creo session)
+				$sess_array = array('id' => $query->row('id'),'email' => $query->row('email'),'role_id' => $query->row('role_id'));
+				$this->session->set_userdata('front_logged_in', $sess_array);
+				return TRUE;
+			}
+	//return false por defecto
+	return FALSE;
+}
 
 
 	//Cerrar session
@@ -57,6 +73,13 @@ class Usuario extends CI_Model{
     	$this->session->unset_userdata('logged_in');
 			redirect('control', 'refresh');
 	}
+
+
+//Cerrar session FRONT
+public function logout_front(){
+		$this->session->unset_userdata('front_logged_in');
+		redirect('/', 'refresh');
+}
 
 
 

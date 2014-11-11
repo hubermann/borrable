@@ -8,16 +8,16 @@
 	reader.readAsDataURL(input.files[0]);
 	}
 }
-</script><?php  
+</script><?php
 $attributes = array('class' => 'form-horizontal', 'id' => 'edit_usuario');
 echo form_open_multipart(base_url('control/usuarios/update/'),$attributes);
 
-echo form_hidden('id', $query->id); 
+echo form_hidden('id', $query->id);
 ?>
 <legend><?php echo $title ?></legend>
 <div class="well well-large well-transparent">
 
- 
+
 
 
 <!-- Text input-->
@@ -26,8 +26,8 @@ echo form_hidden('id', $query->id);
 <label class="control-label">Categoria id</label>
 	<div class="controls">
 	<select name="categoria_id" id="categoria_id">
-		<?php 
-		/* 
+		<?php
+		/*
 		$categorias = $this->categoria->get_records_menu();
 		if($categorias){
 
@@ -39,7 +39,7 @@ echo form_hidden('id', $query->id);
 		*/
 		?>
 		</select>
-		
+
 		<?php echo form_error('categoria_id','<p class="error">', '</p>'); ?>
 	</div>
 </div>
@@ -85,7 +85,7 @@ echo form_hidden('id', $query->id);
 			<?php echo form_error('salt','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
-			
+
 
 			<!-- Text input-->
 
@@ -93,8 +93,8 @@ echo form_hidden('id', $query->id);
 <label class="control-label">Role</label>
 	<div class="controls">
 	<select name="role_id" id="role_id">
-		<?php 
-		
+		<?php
+
 		$roles = $this->rol->get_records();
 		if($roles){
 
@@ -103,10 +103,10 @@ echo form_hidden('id', $query->id);
 				echo '<option value="'.$value->id.'" '.$sel.'>'.$value->nombre.'</option>';
 			}
 		}
-		
+
 		?>
 		</select>
-		
+
 		<?php echo form_error('role_id','<p class="error">', '</p>'); ?>
 	</div>
 </div>

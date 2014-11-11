@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Dashboard extends CI_Controller{
 
@@ -27,8 +27,7 @@ class Dashboard extends CI_Controller{
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 
 	    #Paso validacion
-	    if ($this->form_validation->run()){
-
+	  if($this->form_validation->run()){
 
 		$access_granted = $this->usuario->check_credentials( $this->input->post('email'), $this->input->post('password') );
 		if($access_granted===FALSE){

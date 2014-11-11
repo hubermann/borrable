@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class usuarios extends CI_Controller{
 
@@ -28,15 +28,15 @@ public function index(){
 		$data['pagination_links'] = "";
 		$total_pages = ceil($this->usuario->count_rows() / $per_page);
 
-		if ($total_pages > 1){ 
-			for ($i=1;$i<=$total_pages;$i++){ 
-			if ($page == $i) 
-				//si muestro el índice de la página actual, no coloco enlace 
-				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>'; 
-			else 
-				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina 
-				$data['pagination_links']  .= '<li><a href="'.base_url().'control/usuarios/'.$i.'" > '. $i .'</a></li>'; 
-		} 
+		if ($total_pages > 1){
+			for ($i=1;$i<=$total_pages;$i++){
+			if ($page == $i)
+				//si muestro el índice de la página actual, no coloco enlace
+				$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>';
+			else
+				//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina
+				$data['pagination_links']  .= '<li><a href="'.base_url().'control/usuarios/'.$i.'" > '. $i .'</a></li>';
+		}
 	}
 	//End Pagination
 
@@ -134,16 +134,16 @@ if ($this->form_validation->run() === FALSE){
 		$salt = md5(uniqid(rand(), true));
 		$hash = hash('sha512', $salt.$this->input->post('password'));
 
-		$newusuario = array( 
-			'nombre' => $this->input->post('nombre'), 
-			'apellido' => $this->input->post('apellido'), 
-			'email' => $this->input->post('email'), 
-			'password' => $hash, 
-			'salt' => $salt, 
-			'role_id' => $this->input->post('role_id'), 
-			'created_at' => $ahora, 
-			'updated_at' => $ahora, 
-			'filename' => "", 
+		$newusuario = array(
+			'nombre' => $this->input->post('nombre'),
+			'apellido' => $this->input->post('apellido'),
+			'email' => $this->input->post('email'),
+			'password' => $hash,
+			'salt' => $salt,
+			'role_id' => $this->input->post('role_id'),
+			'created_at' => $ahora,
+			'updated_at' => $ahora,
+			'filename' => "",
 		);
 		#save
 		$this->usuario->add_record($newusuario);
@@ -160,7 +160,7 @@ if ($this->form_validation->run() === FALSE){
 public function editar(){
 	$this->permiso->verify_access( 'usuarios', 'edit');
 	$this->load->helper('form');
-	$data['title']= 'Editar usuario';	
+	$data['title']= 'Editar usuario';
 	$data['content'] = 'control/usuarios/edit_usuario';
 	$data['menu'] = 'control/usuarios/menu_usuario';
 	$data['query'] = $this->usuario->get_record($this->uri->segment(4));
@@ -171,7 +171,7 @@ public function editar(){
 public function update(){
 	$this->permiso->verify_access( 'usuarios', 'edit');
 	$this->load->helper('form');
-	$this->load->library('form_validation'); 
+	$this->load->library('form_validation');
 	$this->form_validation->set_rules('nombre', 'Nombre', 'required');
 	$this->form_validation->set_rules('apellido', 'Apellido', 'required');
 	$this->form_validation->set_rules('email', 'Email', 'required');
@@ -192,9 +192,9 @@ public function update(){
 		$this->load->view('control/control_layout', $data);
 	}else{
 		if($_FILES['filename']['size'] > 0){
-		
+
 			$file  = $this->upload_file();
-		
+
 			if ( $file['status'] != 0 )
 				{
 				//guardo
@@ -203,14 +203,14 @@ public function update(){
 					 if(is_link($path)){
 						unlink($path);
 					 }
-				
-				
+
+
 				$data = array('filename' => $file['filename']);
 				$this->usuario->update_record($this->input->post('id'), $data);
 				}
-		
-		
-}		
+
+
+}
 		$id=  $this->input->post('id');
 
 		// set default time zone if not set at php.ini
@@ -226,7 +226,7 @@ public function update(){
 		$salt = md5(uniqid(rand(), true));
 		$hash = hash('sha512', $salt.$this->input->post('password'));
 
-		$editedusuario = array(  
+		$editedusuario = array(
 			'nombre' => $this->input->post('nombre'),
 			'apellido' => $this->input->post('apellido'),
 			'email' => $this->input->post('email'),
@@ -266,7 +266,7 @@ public function soft_delete(){
 	// 2 Draft
 	$id_usuario = $this->input->post('iditem');
 	if($id_usuario > 0 && $id_usuario != ""){
-		$editedusuario = array(  
+		$editedusuario = array(
 		'status' => 1,
 		);
 		$this->usuario->update_record($id_usuario, $editedusuario);
@@ -335,7 +335,7 @@ public function upload_file(){
 		$yukle->set_file_size('');
 		$yukle->set_file_type('');
 		$imagname='';
-	}//fin if(extencion)	
+	}//fin if(extencion)
 
 
 	return $file;
