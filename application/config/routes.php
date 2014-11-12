@@ -44,13 +44,14 @@ $route['busqueda'] = 'front/busqueda/$1';
 $route['busqueda/(:num)'] = 'front/busqueda/$1';
 
 /* LOGIN */
-$route['registro'] = 'front/registro';
-$route['ingreso'] = 'front/ingreso';
-$route['desconectar'] = 'front/desconectar';
-$route['perfil'] = 'front/perfil';
-$route['perfil-editar'] = 'front/perfil_modificar';
-$route['perfil-imagen'] = 'front/perfil_modificar_imagen';
-$route['perfil-modificar-acceso'] = 'front/perfil_modificar_password';
+$route['registro'] = 'users_front/registro';
+$route['ingreso'] = 'users_front/ingreso';
+$route['desconectar'] = 'users_front/desconectar';
+$route['perfil'] = 'users_front/perfil';
+$route['perfil-editar'] = 'users_front/perfil_modificar';
+$route['perfil-imagen'] = 'users_front/perfil_modificar_imagen';
+$route['perfil-cargar-imagen'] = 'users_front/upload_imagen';
+$route['perfil-modificar-acceso'] = 'users_front/perfil_modificar_password';
 
 $route['404_override'] = '';
 

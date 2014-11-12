@@ -8,8 +8,6 @@ echo form_hidden('id', $query->id);
 <legend><?php if($title!=""){echo $title;} ?></legend>
 <div class="well well-large well-transparent">
 
-
-
       <!-- Text input-->
       <div class="control-group">
       <label class="control-label">Nombre</label>
