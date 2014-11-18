@@ -131,7 +131,7 @@ public function searchterm_handler($searchterm)
 		$this->load->view('front_layout', $data);
 	}
 
-	public function videos(){
+	public function tv(){
 		$per_page = 12;
 		$page = $this->uri->segment(2);
 		if(!$page){ $start =0; $page =1; }else{ $start = ($page -1 ) * $per_page; }
@@ -145,12 +145,12 @@ public function searchterm_handler($searchterm)
 					$data['pagination_links'] .=  '<li class="active"><a>'.$i.'</a></li>';
 				else
 					//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa pagina
-					$data['pagination_links']  .= '<li><a href="'.base_url().'videos/'.$i.'" > '. $i .'</a></li>';
+					$data['pagination_links']  .= '<li><a href="'.base_url().'tv/'.$i.'" > '. $i .'</a></li>';
 			}
 		}
 		//End Pagination
-		$data['title'] = "Videos";
-		$data['smalltitle'] = "videos";
+		$data['title'] = "TV";
+		$data['smalltitle'] = "tv";
 		$data['content'] = "videos";
 		$data['videos'] = $this->video->get_records($per_page,$start);
 		$this->load->view('front_layout', $data);
@@ -168,6 +168,20 @@ public function searchterm_handler($searchterm)
 
 
 	}
+
+
+
+public function detalle_evento(){
+	$id_encuentro = $this->uri->segment(2);
+	if(empty($id_encuentro)){redirect('encuentros');}
+
+	$data['encuentro'] = $this->evento->get_record($id_encuentro);
+
+	$data['content'] = "detalle_encuentro";
+	$this->load->view('front_layout', $data);
+
+
+}
 
 
 

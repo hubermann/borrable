@@ -8,6 +8,12 @@ $route['inicio'] = 'front/inicio';
 $route['encuentros'] = 'front/encuentros/$1';
 $route['encuentros/(:num)'] = 'front/encuentros/$1';
 
+$route['encuentro'] = 'front/detalle_evento';
+$route['encuentro/(:num)'] = 'front/detalle_evento/$1';
+$route['encuentro/(:num)/(:any)'] = 'front/detalle_evento/$1';
+
+
+
 $route['notas'] = 'front/notas/$1';
 $route['notas/(:num)'] = 'front/notas/$1';
 $route['nota/(:num)'] = 'front/detalle_nota/$1';
@@ -37,8 +43,8 @@ $route['suplementos/(:num)'] = 'front/notas_por_slug/suplementos';
 $route['opinion'] = 'front/notas_por_slug/opinion';
 $route['opinion/(:num)'] = 'front/notas_por_slug/opinion';
 
-$route['videos'] = 'front/notas_por_slug/videos';
-$route['videos/(:num)'] = 'front/notas_por_slug/videos';
+$route['tv'] = 'front/notas_por_slug/tv';
+$route['tv/(:num)'] = 'front/notas_por_slug/tv';
 
 $route['busqueda'] = 'front/busqueda/$1';
 $route['busqueda/(:num)'] = 'front/busqueda/$1';

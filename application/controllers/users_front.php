@@ -132,7 +132,9 @@ public function perfil_modificar_password(){
   $this->form_validation->set_rules('pass_actual', 'Contraseña actual', 'required');
   $this->form_validation->set_rules('nuevo_pass', 'Nueva contraseña', 'required|min_length[3]|max_length[20]|xss_clean');
   $this->form_validation->set_rules('repeat_nuevo_pass', 'Nueva contraseña', 'required|min_length[3]|max_length[20]|xss_clean|matches[nuevo_pass]');
-
+  $this->form_validation->set_message('required','El campo %s es requerido.');
+  $this->form_validation->set_message('min_length', "Ingrese un minimo de 3 caracteres y 20 como maximo para password.");
+  $this->form_validation->set_message('matches', 'No coincide el campo "Contraseña" con "Confirmacion contraseña".');
   if ($this->form_validation->run() === FALSE){
     $this->load->helper('form');
 

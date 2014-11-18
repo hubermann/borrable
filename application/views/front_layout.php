@@ -35,8 +35,8 @@
 			<div class="container" id="topheader">
 				<ul id="tabs">
 					<li class="active" id="tab1"><a href="<?php echo base_url('notas'); ?>">Notas</a></li>
-					<li  id="tab2"><a href="#">Encuentros</a></li>
-          <!-- <?php echo base_url('encuentros'); ?>-->
+					<li  id="tab2"><a href="<?php echo base_url('encuentros'); ?>">Encuentros</a></li>
+          <!-- -->
 				 </ul>
 
          <!-- opciones login -->
@@ -89,7 +89,7 @@ if($this->session->userdata('front_logged_in')){
 				<li><a href="<?php echo base_url('tendencias'); ?>" <?php if($this->uri->segment(1)=="tendencias" ){echo 'class="active"';} ?>>tendencias</a></li>
 				<li><a href="<?php echo base_url('suplementos'); ?>" <?php if($this->uri->segment(1)=="suplementos" ){echo 'class="active"';} ?>>suplementos</a></li>
 				<li><a href="<?php echo base_url('tecnologia'); ?>" <?php if($this->uri->segment(1)=="tecnologia" ){echo 'class="active"';} ?>>tecnologia</a></li>
-				<li><a href="<?php echo base_url('videos'); ?>" <?php if($this->uri->segment(1)=="videos" ){echo 'class="active"';} ?>>videos</a></li>
+				<li><a href="<?php echo base_url('tv'); ?>" <?php if($this->uri->segment(1)=="tv" ){echo 'class="active"';} ?>>tv</a></li>
 				</ul>
 			</div>
 

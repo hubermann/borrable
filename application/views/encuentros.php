@@ -1,10 +1,4 @@
-
-
-<!-- MAIN CONTENT -->
-<section class="container" id="fondoblanco">
-
-
-	<div class="row clearfix nomargin">
+<div class="row clearfix nomargin">
 		<div class="col-md-12">
 			<h1>Encuentros</h1>
 		</div>
@@ -21,7 +15,7 @@ $excludes[] = $destacado_principal;
 $destacada_principal = $this->evento->get_record($destacado_principal);
 
 if($destacada_principal->filename !=""){
-  $background_principal = 'style="max-height: 322px;background-image: url('.base_url('images-eventos/'.$destacada_principal->filename).') "';
+  $background_principal = 'style="max-height: 322px; background-size: 100%; background-repeat:no-repeat; background-image: url('.base_url('images-eventos/'.$destacada_principal->filename).') "';
 }else{
   $background_principal = "";
 }
@@ -67,11 +61,11 @@ $dest_sec_tres = $this->destacados_evento->get_destacado_secundario_3();
           }
           echo '<div class="row box-evento no-margin no-gutters">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 thumb">
-              <a href="#"> '.$imagen_dest_1.'
+              <a href="'.base_url('encuentro/'.$dest_sec_1->id).'"> '.$imagen_dest_1.'
               </a>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 excerpt">
-              <h4><a href="#">'.$dest_sec_1->titulo.'</a></h4>
+              <h4><a href="'.base_url('encuentro/'.$dest_sec_1->id).'">'.$dest_sec_1->titulo.'</a></h4>
               <p>'.$dest_sec_1->descripcion.'</p>
             </div>
           </div>';
@@ -88,11 +82,11 @@ $dest_sec_tres = $this->destacados_evento->get_destacado_secundario_3();
           }
           echo '<div class="row box-evento no-margin no-gutters">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 thumb">
-              <a href="#">
+              <a href="#"> '.$imagen_dest_2.'
               </a>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 excerpt">
-              <h4><a href="#">'.$dest_sec_2->titulo.'</a></h4>
+              <h4><a href="'.base_url('encuentro/'.$dest_sec_2->id).'">'.$dest_sec_2->titulo.'</a></h4>
               <p>'.$dest_sec_2->descripcion.'</p>
             </div>
           </div>';
@@ -109,19 +103,18 @@ $dest_sec_tres = $this->destacados_evento->get_destacado_secundario_3();
           }
           echo '<div class="row box-evento no-margin no-gutters">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 thumb">
-              <a href="#">
+              <a href="'.base_url('encuentro/'.$dest_sec_3->id).'"> '.$imagen_dest_3.'
               </a>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 excerpt">
-              <h4><a href="#">'.$dest_sec_3->titulo.'</a></h4>
+              <h4><a href="'.base_url('encuentro/'.$dest_sec_3->id).'">'.$dest_sec_3->titulo.'</a></h4>
               <p>'.$dest_sec_3->descripcion.'</p>
             </div>
           </div>';
 
         }
+
         ?>
-
-
 
 			</div>
 		</div>
@@ -130,11 +123,18 @@ $dest_sec_tres = $this->destacados_evento->get_destacado_secundario_3();
 		<div class="col-md-2 column">
 			<div class="list-group">
 				<h3 style="margin-bottom:0px;">Filtrar por:</h3>
-				<a href="#" class="list-group-item"><span class="badge">14</span>Help</a>
-				<a href="#" class="list-group-item active"><span class="badge">14</span>Help</a>
-				<a href="#" class="list-group-item"><span class="badge">14</span>Help</a>
-				<a href="#" class="list-group-item"><span class="badge">14</span>Help</a>
-				<a href="#" class="list-group-item"><span class="badge">14</span>Help</a>
+
+				<?php
+				$categorias = $this->categoria_evento->get_records_menu();
+
+				if(!empty($categorias)){
+					foreach ($categorias->result() as  $categoria) {
+						$cant_por_categoria = $this->evento->count_rows_por_categoria($categoria->id);
+						echo '	<a href="#" class="list-group-item"><span class="badge">'.$cant_por_categoria.'</span>'.$categoria->nombre.'</a>';
+					}
+				}
+
+				?>
 
 			</div>
 		</div>
@@ -142,7 +142,6 @@ $dest_sec_tres = $this->destacados_evento->get_destacado_secundario_3();
 			<div class="row">
 
 <?php
-var_dump($excludes);
 
 //Pagination
 $per_page = 10;
@@ -165,105 +164,29 @@ if(!$page){ $start =0; $page =1; }else{ $start = ($page -1 ) * $per_page; }
 
 $query_eventos = $this->evento->get_records_with_exclude($excludes, $per_page,$start);
 
+$count = 0;
+foreach($query_eventos as $evento){
 
-var_dump($query_eventos);
-
+	 $evento->filename == '' ? $imagen_evento = "" : $imagen_evento = '<img src="images-eventos/'.$evento->filename.'" alt="" />';
+	echo '<!-- thumbnail -->
+	<div class="col-md-3 col-sm-4 col-xs-6 evento">
+		<div class="thumbnail">
+			<a href="'.base_url('encuentro/'.$evento->id).'">'.$imagen_evento.'</a>
+		</div>
+		<h4>Recruiting: '.$evento->titulo.'</h4>
+		<span class="place"><i class="fa fa-map-marker"></i>'.$evento->lugar.'</span>
+		<span class="date"><i class="fa fa-calendar"></i> '.$evento->fecha_desde.'</span>
+		<hr/>
+	</div>';
+	if($count==4){echo '<div style="width:100%; float:left; background:red;" class="clearfix"></div>'; $count=1;}
+	$count++;
+}
 
 ?>
 
-
-				<!-- thumbnail -->
-				<div class="col-md-3 col-sm-4 col-xs-6 evento">
-					<div class="thumbnail">
-						<a href="#"><img alt="300x200" src="http://lorempixel.com/600/500/people/" /></a>
-					</div>
-					<h4>Recruiting: Take care not to</h4>
-					<span class="place"><i class="fa fa-map-marker"></i> Argentina - Buenos Aires</span>
-					<span class="date"><i class="fa fa-calendar"></i> 14/10/2014</span>
-					<hr/>
-				</div>
-
-				<!-- thumbnail -->
-				<div class="col-md-3 col-sm-4 col-xs-6 evento">
-					<div class="thumbnail">
-						<a href="#"><img alt="300x200" src="http://lorempixel.com/600/500/people/" /></a>
-					</div>
-					<h4>Recruiting: Take care not to</h4>
-					<span class="place"><i class="fa fa-map-marker"></i> Argentina - Buenos Aires</span>
-					<span class="date"><i class="fa fa-calendar"></i> 14/10/2014</span>
-					<hr/>
-				</div>
-
-				<!-- thumbnail -->
-				<div class="col-md-3 col-sm-4 col-xs-6 evento">
-					<div class="thumbnail">
-						<a href="#"><img alt="300x200" src="http://lorempixel.com/600/500/people/" /></a>
-					</div>
-					<h4>Recruiting: Take care not to</h4>
-					<span class="place"><i class="fa fa-map-marker"></i> Argentina - Buenos Aires</span>
-					<span class="date"><i class="fa fa-calendar"></i> 14/10/2014</span>
-					<hr/>
-				</div>
-
-				<!-- thumbnail -->
-				<div class="col-md-3 col-sm-4 col-xs-6 evento">
-					<div class="thumbnail">
-						<a href="#"><img alt="300x200" src="http://lorempixel.com/600/500/people/" /></a>
-					</div>
-					<h4>Recruiting: Take care not to</h4>
-					<span class="place"><i class="fa fa-map-marker"></i> Argentina - Buenos Aires</span>
-					<span class="date"><i class="fa fa-calendar"></i> 14/10/2014</span>
-					<hr/>
-				</div>
-
-				<!-- thumbnail -->
-				<div class="col-md-3 col-sm-4 col-xs-6 evento">
-					<div class="thumbnail">
-						<a href="#"><img alt="300x200" src="http://lorempixel.com/600/500/people/" /></a>
-					</div>
-					<h4>Recruiting: Take care not to</h4>
-					<span class="place"><i class="fa fa-map-marker"></i> Argentina - Buenos Aires</span>
-					<span class="date"><i class="fa fa-calendar"></i> 14/10/2014</span>
-					<hr/>
-				</div>
-
-				<!-- thumbnail -->
-				<div class="col-md-3 col-sm-4 col-xs-6 evento">
-					<div class="thumbnail">
-						<a href="#"><img alt="300x200" src="http://lorempixel.com/600/500/people/" /></a>
-					</div>
-					<h4>Recruiting: Take care not to</h4>
-					<span class="place"><i class="fa fa-map-marker"></i> Argentina - Buenos Aires</span>
-					<span class="date"><i class="fa fa-calendar"></i> 14/10/2014</span>
-					<hr/>
-				</div>
-
-				<!-- thumbnail -->
-				<div class="col-md-3 col-sm-4 col-xs-6 evento">
-					<div class="thumbnail">
-						<a href="#"><img alt="300x200" src="http://lorempixel.com/600/500/people/" /></a>
-					</div>
-					<h4>Recruiting: Take care not to</h4>
-					<span class="place"><i class="fa fa-map-marker"></i> Argentina - Buenos Aires</span>
-					<span class="date"><i class="fa fa-calendar"></i> 14/10/2014</span>
-					<hr/>
-				</div>
-
-				<!-- thumbnail -->
-				<div class="col-md-3 col-sm-4 col-xs-6 evento">
-					<div class="thumbnail">
-						<a href="#"><img alt="300x200" src="http://lorempixel.com/600/500/people/" /></a>
-					</div>
-					<h4>Recruiting: Take care not to</h4>
-					<span class="place"><i class="fa fa-map-marker"></i> Argentina - Buenos Aires</span>
-					<span class="date"><i class="fa fa-calendar"></i> 14/10/2014</span>
-					<hr/>
-				</div>
 
 
 
 			</div><!-- end row -->
 		</div>
 	</div>
-</section>
-<!-- END MAIN SECTION -->

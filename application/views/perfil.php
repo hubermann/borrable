@@ -1,4 +1,3 @@
-soy perfil de usuario
 
 <?php if($this->session->userdata('front_logged_in')){
   $usuario_logged = $this->usuario->get_record($this->session->userdata('front_logged_in')['id']);

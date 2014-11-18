@@ -13,7 +13,7 @@ echo form_open_multipart(base_url('perfil-modificar-acceso'),$attributes);
       <div class="control-group">
       <label class="control-label">Contraseña actual</label>
       <div class="controls">
-      <input value="<?php echo set_value('pass_actual'); ?>" type="text" class="form-control" name="pass_actual" />
+      <input value="<?php echo set_value('pass_actual'); ?>" type="password" class="form-control" name="pass_actual" />
       <?php echo form_error('pass_actual','<p class="error">', '</p>'); ?>
       </div>
       </div>
@@ -22,7 +22,7 @@ echo form_open_multipart(base_url('perfil-modificar-acceso'),$attributes);
       <div class="control-group">
       <label class="control-label">Nueva contraseña</label>
       <div class="controls">
-      <input value="<?php echo set_value('nuevo_pass'); ?>" type="text" class="form-control" name="nuevo_pass" />
+      <input value="<?php echo set_value('nuevo_pass'); ?>" type="password" class="form-control" name="nuevo_pass" />
       <?php echo form_error('nuevo_pass','<p class="error">', '</p>'); ?>
       </div>
       </div>
@@ -32,7 +32,7 @@ echo form_open_multipart(base_url('perfil-modificar-acceso'),$attributes);
       <div class="control-group">
       <label class="control-label">Repetir Nueva contraseña</label>
       <div class="controls">
-      <input value="<?php echo set_value('repeat_nuevo_pass'); ?>" type="text" class="form-control" name="repeat_nuevo_pass" />
+      <input value="<?php echo set_value('repeat_nuevo_pass'); ?>" type="password" class="form-control" name="repeat_nuevo_pass" />
       <?php echo form_error('repeat_nuevo_pass','<p class="error">', '</p>'); ?>
       </div>
       </div>
