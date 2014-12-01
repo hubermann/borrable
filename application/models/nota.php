@@ -46,6 +46,19 @@ public function get_relacionadas($category,$excludes, $limite){
 	return $query->result();
 }
 
+public function notas_por_autor($autor_id,$excludes, $limite){
+	$this->db->select()
+	->from('notas')
+	->where('autor_id', $autor_id)
+	->where_not_in('id', $excludes)
+	->where('status', 0)
+	->order_by('id','ASC')
+	->limit($limite);
+	$query = $this->db->get();
+	if($query->num_rows() != 0){return $query->result();}
+
+}
+
 	//detail
 	public function get_record($id){
 		$this->db->where('id' ,$id);
@@ -128,6 +141,7 @@ public function get_relacionadas($category,$excludes, $limite){
 				}
 
 		*/
+
 
 }
 

@@ -3,6 +3,13 @@
 
 $route['default_controller'] = "front";
 
+
+#####  PRESENTACIONES   #####
+$route['EncuentroHayGroup'] = 'presentaciones/EncuentroHayGroup';
+
+
+
+#####  FRONT   #####
 $route['inicio'] = 'front/inicio';
 
 $route['encuentros'] = 'front/encuentros/$1';

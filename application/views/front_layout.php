@@ -22,12 +22,56 @@
         <script src="<?php echo base_url('public_folder/js/vendor/modernizr-2.6.2.min.js'); ?>"></script>
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <?php
+        // veo el pais del visitante para coloca rle fondo del body (imagen laterales)
 
-    </head>
+      $this->load->library('geoip_lib');
+
+      $this->geoip_lib->InfoIP($_SERVER['REMOTE_ADDR']); //For the "XXX.XXX.XXX.XXX" ip address
+      #$this->geoip_lib->InfoIP(); //For the current ip address
+
+      $array_all_data = $this->geoip_lib->result_array();
+      #var_dump($array_all_data);
+      $city           = $this->geoip_lib->result_city();          // Return Syracuse
+      $area_code      = $this->geoip_lib->result_area_code();     // Return 315
+      $country_code   = $this->geoip_lib->result_country_code();  // Return US
+      $country_code3  = $this->geoip_lib->result_country_code3(); // Return USA
+      $country_name   = $this->geoip_lib->result_country_name();  // Return United States
+      $metro_code     = $this->geoip_lib->result_metro_code();    // Return 555
+      $postal_code    = $this->geoip_lib->result_postal_code();   // Return
+      $latitude       = $this->geoip_lib->result_latitude();      // Return 43.0514
+      $longitude      = $this->geoip_lib->result_longitude();     // Return -76.1495
+      $region         = $this->geoip_lib->result_region();        // Return NY
+      $region_name    = $this->geoip_lib->result_region_name();   // Return New York
+
+
+?>
 <body>
+
+
     <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+
+  <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '726910917392094',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
 
 <div class="full-container aqua">
 		<div class="row clearfix nomargin">

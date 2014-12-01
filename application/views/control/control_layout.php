@@ -44,10 +44,13 @@
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="../../index.html" class="logo">
+          <div id="logo" style="width:250px; float:left; display:block; margin-bottom:.9em; ">
+            <a href="#" class="logo" >
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                <img src="http://e-roy.com/firmas_mail/logoeroy.png"> <small>[labs]</small>
+                <img src="<?php echo base_url('public_folder/img/logo_backend.png');?>" width="120">
             </a>
+          </div>
+
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
