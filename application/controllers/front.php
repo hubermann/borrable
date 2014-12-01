@@ -15,7 +15,8 @@ class Front extends CI_Controller {
 		'nota',
 		'imagenes_nota',
 		'categoria_nota',
-		'video','usuario'
+		'video','usuario',
+		'comentario_nota'
 		));
 		$this->load->model('pais');
 		$this->load->model('categoria_evento');

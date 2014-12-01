@@ -36,6 +36,15 @@ slug
 imagen
 
 
+comentarios_notas
+
+fecha
+usuario_id
+body
+nota_id
+
+
+
 
 se implemento soft delete con opcion 0 por defecto 1 eliminado y 2 como draft
 
@@ -48,8 +57,8 @@ falta agregar a todos los input de formulario la clase "blabla-control" para q s
 #### revision Dic.
 Nota detalle
 
-  Modulo comentarios
-  Modulos para compartir en redes
+  Modulo comentarios  (Lunes)
+  Modulos para compartir en redes ()
 
 
 Home
@@ -70,3 +79,4 @@ Encuentro detalle
 
 General
   Busquedas por tags.
+  cambio de fondo dependiendo del pais

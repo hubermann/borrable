@@ -8,6 +8,7 @@ class Users_Front extends CI_Controller {
     $this->load->helper('form');
     $this->load->library('session');
     $this->load->library('form_validation');
+    $this->load->library('geoip_lib');
     $this->load->model(array('evento',
     'destacados_nota',
     'destacados_evento',

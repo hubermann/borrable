@@ -186,6 +186,106 @@ echo '</section>';
 
 
 
+<section id="comentarios">
+  <h3>Comentarios</h3>
+  <?php
+  //comentarios de la nota
+  $comentarios = $this->comentario_nota->get_by_nota($nota->id, $limite=5);
+
+
+  if($comentarios){
+    foreach ($comentarios as $comentario) {
+
+      setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+      $fecha_comentario = strftime("%d de %B de %Y", strtotime($comentario->created_at));
+
+      $meses_EN =array(
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July ',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+      );
+      $meses_ES   = array(
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio ',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+      );
+
+      $fecha_comentario = str_replace($meses_EN, $meses_ES, $fecha_comentario);
+
+
+
+      $usuario = $this->usuario->get_record($comentario->usuario_id);
+      echo '<div class=box_comentario>
+      <p><strong>'.$usuario->nombre.'</strong></p>
+      <p>
+        '.$comentario->body.'
+      </p><p>
+        <small>'.$fecha_comentario.'</small>
+      </p>
+      <hr>
+      </div>';
+    }
+  }
+
+
+
+  /* SI existe mensaje al usuario*/
+  if($this->session->flashdata('success_comentario')):
+    echo '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
+    '.$this->session->flashdata('success_comentario').'</div>';
+    endif;
+
+
+#form nuevo comentario
+$attributes = array('class' => 'form-horizontal', 'id' => 'new_comentario_nota');
+echo form_open_multipart(base_url('comentarios_notas/nuevo/'),$attributes);
+?>
+
+<!-- Text input-->
+<div class="control-group">
+<label class="control-label">Nuevo comentario</label>
+<div class="controls">
+<textarea name="body" id="body" class="form-control" required title="Complete este campo con su comentario."><?php echo set_value('body'); ?></textarea>
+<?php echo form_error('body','<p class="error">', '</p>'); ?>
+</div>
+</div>
+
+
+<div class="control-group">
+<label class="control-label"></label>
+  <div class="controls">
+    <button class="btn" type="submit">Comentar</button>
+  </div>
+</div>
+
+
+
+<?php
+echo form_hidden('comentario_nota[id]');
+echo form_hidden('nota_id', $nota->id);
+
+echo form_close(); ?>
+</section>
+
+
 <!-- notas del autor -->
 
 <?php

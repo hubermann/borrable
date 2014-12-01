@@ -23,7 +23,7 @@
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <?php
-        // veo el pais del visitante para coloca rle fondo del body (imagen laterales)
+        // veo el pais del visitante para colocar el fondo del body (imagen laterales)
 
       $this->load->library('geoip_lib');
 
