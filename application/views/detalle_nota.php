@@ -98,15 +98,33 @@ if(!empty($autor->filename)){
 </div>
 <ul class="share">
 <?php
-echo '<li><a href="http://www.facebook.com/plugins/share_button.php?href='.base_url('nota/'.$nota->id.'/'.$nota->slug).'&layout=icon&appId=726910917392094" class="btnSocial fb"><i class="fa fa-facebook"></i></a></li>
-';
+
 
 ?>
 
+<li>
+<!-- FACEBOOK -->
+<div class="fb-share-button btnSocial tw" data-href="<?php echo base_url('nota/'.$nota->id.'/'.$nota->slug); ?>" data-layout="icon"></div>
+</li>
+<li>
+<!-- TWITTER -->  
+<!--<a href="#" class="btnSocial tw"><i class="fa fa-twitter"></i></a> -->
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo base_url('nota/'.$nota->id.'/'.$nota->slug); ?>" data-via="Hubermann" data-lang="es" data-size="large" data-count="none" data-hashtags="ComunidadRH">Twittear</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</li>
+<li>
+<!-- GOOGLE PLUS -->
+<a href="https://plus.google.com/share?url=<?php echo base_url('nota/'.$nota->id.'/'.$nota->slug); ?>" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img
+  src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"/></a>
 
-<li><a href="#" class="btnSocial tw"><i class="fa fa-twitter"></i></a></li>
-<li><a href="#" class="btnSocial gplus"><i class="fa fa-google-plus"></i></a></li>
-<li><a href="#" class="btnSocial in"><i class="fa fa-linkedin"></i></a></li>
+<!--<a href="#" class="btnSocial gplus"><i class="fa fa-google-plus"></i></a> --> </li>
+<li>
+<!-- LINKEDIN -->
+<script src="//platform.linkedin.com/in.js" type="text/javascript">
+  lang: es_ES
+</script>
+<script type="IN/Share" data-url="<?php echo base_url('nota/'.$nota->id.'/'.$nota->slug); ?>"></script><!--<a href="#" class="btnSocial in"><i class="fa fa-linkedin"></i></a> --></li>
 </ul>
 </footer>
 <article class="cuerpo">
@@ -193,7 +211,7 @@ echo '</section>';
   $comentarios = $this->comentario_nota->get_by_nota($nota->id, $limite=5);
 
 
-  if($comentarios){
+  if( !empty($comentarios) ){
     foreach ($comentarios as $comentario) {
 
       setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
@@ -254,35 +272,54 @@ echo '</section>';
     endif;
 
 
-#form nuevo comentario
-$attributes = array('class' => 'form-horizontal', 'id' => 'new_comentario_nota');
-echo form_open_multipart(base_url('comentarios_notas/nuevo/'),$attributes);
+
+if($this->session->userdata('front_logged_in')){
+  #form nuevo comentario
+  $attributes = array('class' => 'form-horizontal', 'id' => 'new_comentario_nota');
+  echo form_open_multipart(base_url('comentarios_notas/nuevo/'),$attributes);
+  ?>
+
+  <!-- Text input-->
+  <div class="control-group">
+  <label class="control-label">Nuevo comentario</label>
+  <div class="controls">
+  <textarea name="body" id="body" class="form-control" required title="Complete este campo con su comentario."><?php echo set_value('body'); ?></textarea>
+  <?php echo form_error('body','<p class="error">', '</p>'); ?>
+  </div>
+  </div>
+
+
+  <div class="control-group">
+  <label class="control-label"></label>
+    <div class="controls">
+      <button class="btn" type="submit">Comentar</button>
+    </div>
+  </div>
+
+  <?php
+
+  echo form_hidden('comentario_nota[id]');
+  echo form_hidden('nota_id', $nota->id);
+
+  echo form_close();
+
+
+}else{
+    //USUARIO SIN LOGIN
+
+  echo '<p>
+    Para realizar comentarios debe estar registrado.
+  </p><a href="'.base_url('ingreso').'">Ingresar</a>
+  <a href="'.base_url('registro').'">Registrarme</a>';
+}
+
+
+
+
 ?>
 
-<!-- Text input-->
-<div class="control-group">
-<label class="control-label">Nuevo comentario</label>
-<div class="controls">
-<textarea name="body" id="body" class="form-control" required title="Complete este campo con su comentario."><?php echo set_value('body'); ?></textarea>
-<?php echo form_error('body','<p class="error">', '</p>'); ?>
-</div>
-</div>
 
 
-<div class="control-group">
-<label class="control-label"></label>
-  <div class="controls">
-    <button class="btn" type="submit">Comentar</button>
-  </div>
-</div>
-
-
-
-<?php
-echo form_hidden('comentario_nota[id]');
-echo form_hidden('nota_id', $nota->id);
-
-echo form_close(); ?>
 </section>
 
 
@@ -290,9 +327,10 @@ echo form_close(); ?>
 
 <?php
 
+
 $notas_autor = $this->nota->notas_por_autor($nota->autor_id,$nota->id, 4);
 
-if(!empty($notas_autor)){
+if(!empty($notas_autor) ){
   echo '<section class="row clearfix nomargin" id="otrasNotas">
   <h3>Otras notas del autor</h3>';
 }
