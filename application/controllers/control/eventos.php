@@ -151,6 +151,7 @@ public function create(){
 			'ciudad' => $this->input->post('ciudad'),
 			'coordenadas' => $this->input->post('coordenadas'),
 			'tags' => $this->input->post('tags'),
+			'precio' => $this->input->post('precio'),
 			'filename' => $file['filename'],
 			'status' => 0,
 			);
@@ -257,6 +258,8 @@ public function update(){
 		'coordenadas' => $this->input->post('coordenadas'),
 
 		'tags' => $this->input->post('tags'),
+
+		'precio' => $this->input->post('precio'),
 		);
 		#save
 		$this->session->set_flashdata('success', 'evento Actualizado!');

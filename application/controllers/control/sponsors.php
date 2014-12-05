@@ -115,11 +115,12 @@ public function create(){
 		}else{
 			$file['filename'] = '';
 		}
+		$destacado = ( $this->input->post('destacado') == "on" ? 1 : 0 );
 		$newsponsor = array(
 			'evento_id' => $this->input->post('evento_id'),
 			'nombre' => $this->input->post('nombre'),
 			'slug' => $slug,
-			'destacado' => $this->input->post('destacado'),
+			'destacado' => $destacado,
 			'filename' => $file['filename'],
 			'status' => 0,
 		);

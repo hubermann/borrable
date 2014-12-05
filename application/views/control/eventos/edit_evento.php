@@ -296,6 +296,17 @@ echo form_hidden('id', $query->id);
 			<?php echo form_error('ciudad','<p class="error">', '</p>'); ?>
 			</div>
 			</div>
+
+			<!-- Text input-->
+			<div class="control-group">
+			<label class="control-label">Precio</label>
+			<div class="controls">
+			<input value="<?php echo $query->precio; ?>" class="form-control" type="text" name="precio" />
+			<?php echo form_error('precio','<p class="error">', '</p>'); ?>
+			</div>
+			</div>
+
+
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Coordenadas</label>

@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 class Sponsor extends CI_Model{
 
@@ -17,17 +17,28 @@ class Sponsor extends CI_Model{
 
 	}
 
+public function get_diferenciados($id_evento, $destacado){
+	$this->db->select()->from('sponsors')
+	->where('status',0)
+	->where('destacado',$destacado)
+	->where('evento_id', $id_evento)
+	->order_by('id','ASC');
+	return $this->db->get();
+}
+
+
+
 	//detail
 	public function get_record($id){
 		$this->db->where('id' ,$id);
 		$this->db->limit(1);
 		$c = $this->db->get('sponsors');
 
-		return $c->row(); 
+		return $c->row();
 	}
-	
+
 	//total rows
-	public function count_rows(){ 
+	public function count_rows(){
 		$this->db->select('id')->from('sponsors');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -36,7 +47,7 @@ class Sponsor extends CI_Model{
 
 
 		//add new
-		public function add_record($data){ 
+		public function add_record($data){
 			$this->db->insert('sponsors', $data);
 		}
 
@@ -63,9 +74,9 @@ class Sponsor extends CI_Model{
 					$this->db->limit(1);
 					$c = $this->db->get('sponsors');
 
-					return $c->row('nombre'); 
+					return $c->row('nombre');
 				}
-		
+
 		*/
 
 }

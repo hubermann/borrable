@@ -3,12 +3,12 @@
 #mapa_draw{ height: 300px;}
 #getCords{padding: .4em 1em .4em 1em; background: #999; float: left;margin: 0 0 0 .3em; color: #fff;}
 #maininput{float: left; width: 100%;}
-#maininput input[type="text"] {width: 80%;padding-right: 50px; float: left;}			  	
+#maininput input[type="text"] {width: 80%;padding-right: 50px; float: left;}
 #maininput span {width: 50px;}
 #mapa_draw{ height: 400px; width: 90%; margin-top: .5em}
-#coordenadas_mapa #coordenadas{width: 310px; float: left; margin: .3em;}		
+#coordenadas_mapa #coordenadas{width: 310px; float: left; margin: .3em;}
 #latFld{visibility: hidden;}
-#lngFld{visibility: hidden;}	
+#lngFld{visibility: hidden;}
 #coordenadas{width: 500px; padding: .1em; color: #ccc; font-size: 11px}
 </style>
 
@@ -44,16 +44,16 @@ function codeAddress() {
     var address = document.getElementById("input_direccion").value;
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-		
-	  
+
+
       latitud = results[0].geometry.location.lat();
       longitud = results[0].geometry.location.lng();
-	
+
 		var myLatlng = new google.maps.LatLng(parseFloat(latitud),parseFloat(longitud));
 		ubicarMarcador(myLatlng);
 		document.getElementById("latFld").value = parseFloat(latitud);
         document.getElementById("lngFld").value = parseFloat(longitud);
-      } 
+      }
 
       else {
       document.getElementById("input_direccion").value = "No se encuentra direccion";
@@ -78,34 +78,34 @@ function initMap()
 
     //agrego evento para manejar clicks sobre el mapa
     google.maps.event.addListener(map, "click", function(event)
-    {	
-    
+    {
+
         // agrego marcador
         ubicarMarcador(event.latLng);
-		
+
         // Muestro coordenadas en inputs de solo lectura.
         document.getElementById("latFld").value = event.latLng.lat();
         document.getElementById("lngFld").value = event.latLng.lng();
     });
-    
-                         
-                         
+
+
+
 }
 
 
 //Agrego marcador al hacer click sobre el mapa
 function ubicarMarcador(location) {
-	
+
 
     // Remuevo marcadores
     limpiarMarcadores();
 
     var marker = new google.maps.Marker({
-        position: location, 
+        position: location,
         map: map
     });
-    
-    
+
+
     // Mostrar direccion en el input, al hacer click en mapa.
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({"latLng":location}, function (results, status) {
@@ -113,8 +113,8 @@ function ubicarMarcador(location) {
     	if (status == google.maps.GeocoderStatus.OK) {
 
     	var lat = results[0].geometry.location.lat(),lng = results[0].geometry.location.lng(),placeName = results[0].address_components[0].long_name,latlng = new google.maps.LatLng(lat, lng);
-    
-     
+
+
      	document.getElementById("input_direccion").value = results[0].formatted_address;
 
      }
@@ -127,7 +127,7 @@ function ubicarMarcador(location) {
     document.getElementById("latFld").value = location.lat();
     document.getElementById("lngFld").value = location.lng();
     document.getElementById("coordenadas").value = location;
-    
+
     //muevo centro del mapa
     map.panTo(location);
 }
@@ -145,7 +145,7 @@ function limpiarMarcadores() {
 
 
 </script>
-<?php  
+<?php
 
 $attributes = array('class' => 'form-horizontal', 'id' => 'new_evento');
 echo form_open_multipart(base_url('control/eventos/create/'),$attributes);
@@ -162,10 +162,10 @@ echo form_hidden('evento[id]');
 <div class="control-group">
 <label class="control-label">Categoria</label>
 	<div class="controls">
-		
+
 		<select name="categoria_id" id="categoria_id">
-		<?php  
-		
+		<?php
+
 		$categorias = $this->categoria_evento->get_records_menu();
 		if($categorias){
 
@@ -173,7 +173,7 @@ echo form_hidden('evento[id]');
 				echo '<option value="'.$value->id.'">'.$value->nombre.'</option>';
 			}
 		}
-		
+
 		?>
 		</select>
 
@@ -181,7 +181,7 @@ echo form_hidden('evento[id]');
 	</div>
 </div>
 
-			
+
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Titulo</label>
@@ -192,7 +192,7 @@ echo form_hidden('evento[id]');
 			</div>
 
 
-			
+
 			<!-- Text input-->
 			<div class="control-group">
 			<label class="control-label">Descripcion</label>
@@ -239,7 +239,7 @@ echo form_hidden('evento[id]');
 				<div class="controls">
 
 				<select name="pais" id="pais" >
-				<?php  
+				<?php
 
 				$pais = $this->pais->get_records_menu();
 				if($pais){
@@ -268,6 +268,15 @@ echo form_hidden('evento[id]');
 			</div>
 			</div>
 
+      <!-- Text input-->
+      <div class="control-group">
+      <label class="control-label">Precio</label>
+      <div class="controls">
+      <input value="<?php echo set_value('precio'); ?>" type="text" class="form-control"  name="precio" />
+      <?php echo form_error('precio','<p class="error">', '</p>'); ?>
+      </div>
+      </div>
+
 
 			<!-- Text input-->
 			<div class="control-group">
@@ -276,7 +285,7 @@ echo form_hidden('evento[id]');
 					<input type="text" id="input_direccion" class="form-control"  placeholder="Ingrese direccion a buscar.">
 					<p id="getCords" onClick="codeAddress();" class="btn">>></p>
 				</div>
-							
+
 				<!-- MAPA -->
 				<div id="mapa_draw"></div>
 
@@ -287,7 +296,7 @@ echo form_hidden('evento[id]');
 				<input type="text" id="latFld" readonly="true">
 				<input type="text" id="lngFld" readonly="true">
 				</div>
-				
+
 				<?php echo form_error('mapa','<p class="error">', '</p>'); ?>
     <br />
   </div>
@@ -334,4 +343,3 @@ echo form_hidden('evento[id]');
 <script type="text/javascript">
 	window.onload = initMap();
 </script>
-

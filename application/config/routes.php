@@ -13,6 +13,8 @@ $route['encuentros/(:num)'] = 'front/encuentros/$1';
 $route['encuentro'] = 'front/detalle_evento';
 $route['encuentro/(:num)'] = 'front/detalle_evento/$1';
 $route['encuentro/(:num)/(:any)'] = 'front/detalle_evento/$1';
+$route['inscripcion_encuentro'] = 'eventos/inscripcion';
+
 $route['notas'] = 'front/notas/$1';
 $route['notas/(:num)'] = 'front/notas/$1';
 $route['nota/(:num)'] = 'front/detalle_nota/$1';
