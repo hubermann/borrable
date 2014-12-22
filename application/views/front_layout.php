@@ -36,8 +36,11 @@
 
 			<div class="container" id="topheader">
 				<ul id="tabs">
-					<li class="active" id="tab1"><a href="<?php echo base_url('notas'); ?>">Notas</a></li>
-					<li id="tab2"><a href="<?php echo base_url('encuentros'); ?>">Encuentros</a></li>
+<?php $active_notas = 'class="active"'; if($this->uri->segment(1)== "notas" || $this->uri->segment(1) ==""){$active_notas = 'class="active"';} ?>
+				<?php $active_encuentros= ""; if($this->uri->segment(1)== "encuentros"){$active_encuentros = 'class="active"'; $active_notas = '';} ?>
+				
+					<li <?php echo $active_notas; ?> id="tab1"><a href="<?php echo base_url('notas'); ?>">Notas</a></li>
+					<li <?php echo $active_encuentros; ?> id="tab2"><a href="<?php echo base_url('encuentros'); ?>">Encuentros</a></li>
           <!-- -->
 				</ul>
 
@@ -50,7 +53,7 @@
 			if($this->session->userdata('front_logged_in')){
 			  $usuario_logged = $this->usuario->get_record($this->session->userdata('front_logged_in')['id']);
 
-			  echo '<a href="'.base_url('perfil').'" style=" color:#fff;">Hola, '.$usuario_logged->nombre.'</a>|<a style=" color:#fff;" href="'.base_url('desconectar').'">Finalizar</a>';
+			  echo '<a href="'.base_url('perfil-editar').'" style=" color:#fff;">Hola, '.$usuario_logged->nombre.'</a>|<a style=" color:#fff;" href="'.base_url('desconectar').'">Finalizar</a>';
 			}else{
 			  echo '<a href="'.base_url('ingreso').'"><i class="fa fa-user"></i>Ingresar</a>|<a href="'.base_url('registro').'"><i class="fa fa-sign-in"></i>Registrarme</a>';
 			}

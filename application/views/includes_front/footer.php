@@ -22,13 +22,13 @@
 				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
 					<h4>Acerca de Noticas</h4>
 					<ul class="footer_menu">
-						<li><a href="#">Noticias, notas y articulos de RH</a>
+						<li><a href="<?php echo base_url('/'); ?>">Noticias, notas y articulos de RH</a>
 						</li>
-						<li><a href="#">Videos</a>
+						<!--<li><a href="#">Videos</a>
+						</li>-->
+						<li><a href="<?php echo base_url('tv'); ?>">Comunidad RH TV</a>
 						</li>
-						<li><a href="#">Comunidad RH TV</a>
-						</li>
-						<li><a href="#">Eventos</a>
+						<li><a href="<?php echo base_url('eventos'); ?>">Eventos</a>
 						</li>
 					</ul>
 				</div>

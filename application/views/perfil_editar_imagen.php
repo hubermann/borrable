@@ -1,4 +1,33 @@
-<?php if($this->session->userdata('front_logged_in')){
+<div class="row no-gutters">
+      <div class="col-lg-4 col-md-4 col-sm-4">
+      <nav class="editPanel">
+            
+                  <?php if($this->session->userdata('front_logged_in')){
+                    $usuario_logged = $this->usuario->get_record($this->session->userdata('front_logged_in')['id']);
+                    //echo "<h2>".$usuario_logged->nombre." ".$usuario_logged->apellido."</h2>";
+                    echo '<ul>';
+                    echo '<li>
+                        <a href="'.base_url('perfil-editar').'">Editar mis datos</a>
+                    </li>';
+                    echo '<li>
+                        <a href="'.base_url('perfil-imagen').'">Imagen</a>
+                    </li>';
+                    echo '<li>
+                        <a href="'.base_url('perfil-modificar-acceso').'">Cambiar mi contraseña</a>
+                    </li>';
+                    echo '</ul>';
+                    if(empty($usuario_logged->filename)){
+
+                        echo "<span class='warning'>No tiene imagen cargada</span>";
+
+                    }
+                  }
+                  ?>
+      </nav>
+      </div>
+      <div class="col-lg-8 col-md-8 col-sm-8">
+
+  <?php if($this->session->userdata('front_logged_in')){
   $usuario_logged = $this->usuario->get_record($this->session->userdata('front_logged_in')['id']);
   echo "<h2>".$usuario_logged->nombre." ".$usuario_logged->apellido."</h2>";
 
@@ -21,7 +50,7 @@
   <div class="control-group">
   <label class="control-label"></label>
     <div class="controls">
-      <button class="btn" type="submit">Crear</button>
+      <button class="btn" type="submit">Cargar imagen</button>
     </div>
   </div>
 
@@ -68,3 +97,7 @@
 
 }
 ?>
+
+
+</div>
+  </div>

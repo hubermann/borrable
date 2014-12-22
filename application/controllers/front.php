@@ -127,6 +127,14 @@ public function searchterm_handler($searchterm)
 		$this->load->view('front_layout', $data);
 	}
 
+
+public function encuentros_por_categoria(){
+		$data['title'] = "Encuentros";
+		$data['smalltitle'] = "un titulo small";
+		$data['content'] = "encuentros_por_categoria";
+		$this->load->view('front_layout', $data);
+	}
+
 	public function notas(){
 		$data['title'] = "Notas";
 		$data['smalltitle'] = "un titulo small";

@@ -6,16 +6,16 @@
 <div class="col-md-7 column">
 <!-- destacado principal -->
 <?php
+$excludes[] = "";
+/* traer destacados por categoria???
+
 // $excludes recolecta los que se sacan del query general
 $destacado_principal = $this->destacados_evento->get_destacado_principal();
 
 if($destacado_principal != 0){
 $excludes[] = $destacado_principal;
-//Destacado princiapl es dif a cero
+//Destacado princiapl es dif a cero  
 $destacada_principal = $this->evento->get_record($destacado_principal);
-
-if(!empty($destacada_principal)){
-
 
 if($destacada_principal->filename !=""){
 $background_principal = 'style="max-height: 322px; background-size: 100%; background-repeat:no-repeat; background-image: url('.base_url('images-eventos/'.$destacada_principal->filename).') "';
@@ -35,7 +35,6 @@ echo '<div class="jumbotron destacado clearfix" '.$background_principal.'>
 </div>';
 
 }
-}
 
 //destacados secundario
 $dest_sec_uno = $this->destacados_evento->get_destacado_secundario_1();
@@ -44,7 +43,7 @@ $dest_sec_tres = $this->destacados_evento->get_destacado_secundario_3();
 
 
 
-
+*/
 ?>
 
 
@@ -54,14 +53,11 @@ $dest_sec_tres = $this->destacados_evento->get_destacado_secundario_3();
 <!-- 3 destacados secundarios -->
 
 <?php
+/*
 //uno
 if($dest_sec_uno!= 0){
 $excludes[] = $dest_sec_uno;
 $dest_sec_1= $this->evento->get_record($dest_sec_uno);
-
-if(!empty($dest_sec_1)){
-
-
 if($dest_sec_1->filename !=""){
   $imagen_dest_1 = '<img src="'.base_url('images-eventos/'.$dest_sec_1->filename).'" alt="" class="img-responsive">';
 }else{
@@ -79,15 +75,10 @@ echo '<div class="row box-evento no-margin no-gutters">
 </div>';
 }
 
-}
 //dos
 if($dest_sec_dos!= 0){
 $excludes[] = $dest_sec_dos;
 $dest_sec_2= $this->evento->get_record($dest_sec_dos);
-
-if(!empty($dest_sec_2)){
-
-
 if($dest_sec_2->filename !=""){
   $imagen_dest_2 = '<img src="'.base_url('images-eventos/'.$dest_sec_2->filename).'" alt="" class="img-responsive">';
 }else{
@@ -105,15 +96,10 @@ echo '<div class="row box-evento no-margin no-gutters">
 </div>';
 }
 
-}
-
 //tres
 if($dest_sec_tres!= 0){
 $excludes[] = $dest_sec_tres;
 $dest_sec_3= $this->evento->get_record($dest_sec_tres);
-
-if(!empty($dest_sec_3)){
-
 if($dest_sec_3->filename !=""){
   $imagen_dest_3 = '<img src="'.base_url('images-eventos/'.$dest_sec_3->filename).'" alt="" class="img-responsive">';
 }else{
@@ -131,8 +117,9 @@ echo '<div class="row box-evento no-margin no-gutters">
 </div>';
 
 }
-}
 
+
+*/
 ?>
 
 </div>
@@ -147,10 +134,10 @@ echo '<div class="row box-evento no-margin no-gutters">
 $categorias = $this->categoria_evento->get_records_menu();
 
 if(!empty($categorias)){
-  foreach ($categorias->result() as  $categoria) {
-  	$cant_por_categoria = $this->evento->count_rows_por_categoria($categoria->id);
-  	echo '	<a href="'.base_url('encuentros/c/'.$categoria->id.'/'.$categoria->slug).'" class="list-group-item"><span class="badge">'.$cant_por_categoria.'</span>'.$categoria->nombre.'</a>';
-  }
+foreach ($categorias->result() as  $categoria) {
+	$cant_por_categoria = $this->evento->count_rows_por_categoria($categoria->id);
+	echo '	<a href="'.base_url('encuentros/c/'.$categoria->id.'/'.$categoria->slug).'" class="list-group-item"><span class="badge">'.$cant_por_categoria.'</span>'.$categoria->nombre.'</a>';
+}
 }
 
 ?>
@@ -161,10 +148,10 @@ if(!empty($categorias)){
 <div class="row">
 
 <?php
-
+$categoria = $this->uri->segment(3);
 //Pagination
 $per_page = 10;
-$page = $this->uri->segment(3);
+$page = $this->uri->segment(5);
 if(!$page){ $start =0; $page =1; }else{ $start = ($page -1 ) * $per_page; }
 $data['pagination_links'] = "";
 $total_pages = ceil($this->evento->count_rows() / $per_page);
@@ -179,14 +166,15 @@ else
 $data['pagination_links']  .= '<li><a href="'.base_url('encuentros/'.$i).'" > '. $i .'</a></li>';
 }
 }
+
 //End Pagination
 
-$query_eventos = $this->evento->get_records_with_exclude($excludes, $per_page,$start);
+$query_eventos = $this->evento->get_records_por_categoria_with_exclude($categoria, $excludes, $per_page,$start);
 
 $count = 0;
 foreach($query_eventos as $evento){
 
-$evento->filename == '' ? $imagen_evento = "" : $imagen_evento = '<img src="images-eventos/'.$evento->filename.'" alt="" />';
+$evento->filename == '' ? $imagen_evento = "" : $imagen_evento = '<img src="'.base_url('images-eventos/'.$evento->filename).'" alt="" />';
 echo '<!-- thumbnail -->
 <div class="col-md-3 col-sm-4 col-xs-6 evento">
 <div class="thumbnail">

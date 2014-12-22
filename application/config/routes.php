@@ -11,6 +11,9 @@ $route['encuentro'] = 'front/detalle_evento';
 $route['encuentro/(:num)'] = 'front/detalle_evento/$1';
 $route['encuentro/(:num)/(:any)'] = 'front/detalle_evento/$1';
 $route['inscripcion_encuentro'] = 'eventos/inscripcion';
+#por categoria
+$route['encuentros/c/(:num)/(:any)'] = 'front/encuentros_por_categoria/$1';
+$route['encuentros/c/(:num)/(:any)/(:num)'] = 'front/encuentros_por_categoria/$1';
 
 $route['pais_visitante'] = 'front/pais_visitante';
 

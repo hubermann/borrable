@@ -27,6 +27,33 @@ class Evento extends CI_Model{
 
 	}
 
+	//all por cateogria
+	public function get_records_por_categoria_with_exclude($categoria, $excludes, $num,$start){
+		
+		if(!count($excludes)){
+			echo "corre uno".$excludes;
+			$this->db->select()
+			->from('eventos')
+			->where_not_in('id', $excludes)
+			->where('status', 0)
+			->where('categoria_id', $categoria)
+			->order_by('id','ASC')
+			->limit($num,$start);
+		}else{
+			
+			$this->db->select()
+		->from('eventos')
+		->where('status', 0)
+		->where('categoria_id', $categoria)
+		->order_by('id','ASC')
+		->limit($num,$start);
+		}
+
+
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	//detail
 	public function get_record($id){
 		$this->db->where('id' ,$id);
