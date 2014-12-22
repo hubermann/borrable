@@ -27,9 +27,15 @@ class Usuario extends CI_Model{
 
 	}
 
+function select_by_email($email){
+	$this->db->where('email' ,$email);
+	$this->db->limit(1);
+	return $this->db->get('usuarios');
+
+
+}
 
 	function check_credentials($email, $password){
-
 		$this->db->where(array('email' => $email));
        		$query = $this->db->get('usuarios', 1, 0);
 
@@ -47,6 +53,22 @@ class Usuario extends CI_Model{
 		//return false por defecto
 		return FALSE;
 	}
+
+	function check_email_exist($email){
+
+					$this->db->where('email',$email);
+					$query = $this->db->get('usuarios', 1, 0);
+
+					if ($query->num_rows != 1) return FALSE;
+
+				{
+
+					return TRUE;
+				}
+		//return false por defecto
+		return FALSE;
+	}
+
 function check_credentials_front($email, $password){
 
 	$this->db->where(array('email' => $email, 'status'=>0));
@@ -104,7 +126,7 @@ public function logout_front(){
 		//add new
 		public function add_record($data){
 			$this->db->insert('usuarios', $data);
-
+			return $this->db->insert_id();
 
 	}
 

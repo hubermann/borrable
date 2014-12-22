@@ -3,10 +3,7 @@ $route['default_controller'] = "front";
 #####  PRESENTACIONES   #####
 $route['EncuentroHayGroup'] = 'presentaciones/EncuentroHayGroup';
 #####  FRONT   #####
-
 $route['comentarios_notas/nuevo/'] = 'comentarios_notas/nuevo/';
-
-
 $route['inicio'] = 'front/inicio';
 $route['encuentros'] = 'front/encuentros/$1';
 $route['encuentros/(:num)'] = 'front/encuentros/$1';
@@ -14,6 +11,8 @@ $route['encuentro'] = 'front/detalle_evento';
 $route['encuentro/(:num)'] = 'front/detalle_evento/$1';
 $route['encuentro/(:num)/(:any)'] = 'front/detalle_evento/$1';
 $route['inscripcion_encuentro'] = 'eventos/inscripcion';
+
+$route['pais_visitante'] = 'front/pais_visitante';
 
 $route['notas'] = 'front/notas/$1';
 $route['notas/(:num)'] = 'front/notas/$1';
@@ -48,6 +47,15 @@ $route['perfil-editar'] = 'users_front/perfil_modificar';
 $route['perfil-imagen'] = 'users_front/perfil_modificar_imagen';
 $route['perfil-cargar-imagen'] = 'users_front/upload_imagen';
 $route['perfil-modificar-acceso'] = 'users_front/perfil_modificar_password';
+$route['reset_password'] = 'users_front/reset_password';
+$route['solicitud_reset_password'] = 'users_front/solicitud_reset_password';
+$route['callback_reset_validation/(:any)'] = 'users_front/callback_reset_password';
+$route['create_new_pass'] = 'users_front/create_new_pass';
+/* SUSCRIPCION NEWSLETTER */
+$route['suscripcion_newsletter'] = 'front/suscripcion_newsletter';
+
+
+
 $route['404_override'] = '';
 ############## BACKEND #######################
 $route['control'] = 'dashboard';

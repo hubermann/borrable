@@ -27,16 +27,17 @@ class Eventos extends CI_Controller {
   public function inscripcion(){
 
     $inscripto = array(
-      'nombre' => $this->input->post('nombre'),
+     'evento_id' => $this->input->post('evento_id'),
+     'nombre' => $this->input->post('nombre'),
      'apellido' => $this->input->post('apellido'),
      'documento' => $this->input->post('documento'),
      'telefono' => $this->input->post('telefono'),
-     'mail' => $this->input->post('mail'),
+     'email' => $this->input->post('email'),
     );
     #save
-    $this->inscripto->add_record($inscripto);
-    $this->session->set_flashdata('success', 'nota creado. <a href="notas/detail/'.$this->db->insert_id().'">Ver</a>');
-    redirect('control/notas', 'refresh');
+    $this->inscripcion->add_record($inscripto);
+    $this->session->set_flashdata('success', 'Suscripcion realizada!');
+    redirect('encuentro/'.$this->input->post('evento_id'), 'refresh');
 
 
   }

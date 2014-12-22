@@ -15,7 +15,7 @@ class Users_Front extends CI_Controller {
     'nota',
     'imagenes_nota',
     'categoria_nota',
-    'video','usuario'
+    'video','usuario', 'solicitud_reset'
     ));
     $this->load->model('pais');
     $this->load->model('categoria_evento');
@@ -43,7 +43,7 @@ public function ingreso(){
 }
 //No paso la validacion
 $data['content'] = 'ingreso';
-$this->load->view('front_layout', $data);
+$this->load->view('login_layout', $data);
 
 }
 /* LOGOUT */
@@ -86,7 +86,7 @@ if ($this->form_validation->run() === FALSE){
     $this->load->helper('form');
     $data['title'] = '';
     $data['content'] = 'registro';
-    $this->load->view('front_layout', $data);
+    $this->load->view('login_layout', $data);
 
   }else{
 
@@ -115,13 +115,175 @@ if ($this->form_validation->run() === FALSE){
       'updated_at' => $ahora,
     );
     #save
-    $this->usuario->add_record($newusuario);
-    $this->session->set_flashdata('success', 'Tu cuenta ha sido creada, ya puedes acceder con tu direccion de email y contraseña.');
-    redirect('ingreso', 'refresh');
+    $ultimo = $this->usuario->add_record($newusuario);
+    $this->session->set_flashdata('success', 'Tu cuenta ha sido creada!');
+    //creo la session de logueado
+    $sess_array = array('id' => $ultimo, 'email' => $this->input->post('email'),'role_id' => 4);
+    $this->session->set_userdata('front_logged_in', $sess_array);
+
+    redirect('inicio', 'refresh');
 
   }
 
 }
+
+//RESET
+public function reset_password(){
+  $data['content'] = 'reset_password';
+  $this->load->view('login_layout', $data);
+}
+public function solicitud_reset_password(){
+
+  $this->load->helper('form');
+  $this->load->library('form_validation');
+  $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
+
+  $this->form_validation->set_message('required', "Ingrese su cuenta de email asociada.");
+  $this->form_validation->set_message('valid_email', "Ingrese una cuenta de email valido.");
+  $this->form_validation->set_message('email_check', "no existe usuario registrado con esa direccion de email.");
+
+  if ($this->form_validation->run() === FALSE){
+    $this->load->helper('form');
+
+    $data['title'] = '';
+    $data['content'] = 'reset_password';
+    $this->load->view('login_layout', $data);
+  }else{
+
+    //verifico que exista ese email
+    $usuario = $this->usuario->select_by_email($this->input->post('email'));
+    if($usuario->row('id')){
+      $nueva_solicitud = array(
+        'user_id' => $usuario->row('id'),
+        'user_email' => $usuario->row('email'),
+        'validacion_key' => $validation_salt = md5(uniqid(rand(), true)),
+        'ip' => $_SERVER['REMOTE_ADDR'],
+      );
+
+      $this->solicitud_reset->add_record($nueva_solicitud);
+
+
+
+    /*EMAIL TO USER */
+    $this->load->library('email');
+
+    $this->email->initialize(array(
+      'protocol' => 'smtp',
+      'smtp_host' => 'mail.comunidad-rh.com',
+      'smtp_user' => 'no-reply@comunidad-rh.com',
+      'smtp_pass' => 'Besares1840',
+      'smtp_port' => 587,
+      'crlf' => "\r\n",
+      'newline' => "\r\n",
+      'mailtype'  => 'html',
+      'charset' => 'utf-8',
+      'wordwrap' => TRUE
+
+    ));
+    $link_reset = base_url('callback_reset_validation/'.$validation_salt);
+    $message = '<h3>Reset pass</h3>
+    <p>
+    siga el siguiente enlace <a href="'.$link_reset.'">'.$link_reset.'</a>
+    </p>
+    <p>Gracias!!!</p>';
+
+    $this->email->from('no-reply@comunidad-rh.com', 'Comunidad');
+    $this->email->to($usuario->row('email'));
+    #$this->email->cc('another@another-example.com');
+    #$this->email->bcc('them@their-example.com');
+    $this->email->subject('Reset pass');
+    $this->email->message($message);
+    $this->email->send();
+
+    #echo $this->email->print_debugger();
+
+
+
+    $this->session->set_flashdata('success', 'Hemos enviado un email con los pasos a seguir.');
+
+    redirect('/', 'refresh');
+}//fin if user_email exists
+
+  }//fin (else) paso validacion
+
+}
+
+//valida si existe un user con esa direccion de email
+public function email_check($email){
+		return $this->usuario->check_email_exist($this->input->post('email'));
+}
+
+//viene de un mail con random para reset password
+public function callback_reset_password(){
+
+  if($this->uri->segment(2)!=""){//veo que no este vacia la solicituda
+    //busco por callback
+    $solicitud = $this->solicitud_reset->by_callback($this->uri->segment(2));
+    if(!$solicitud){
+      $this->session->set_flashdata('error', 'No se encuentra esa solicitud!');
+      redirect('ingreso', 'refresh');
+      }else{
+        //Si encuentro por callback veo la fecha
+
+        #strtotime($solicitud->created_at) < time();
+        $session_reseteador = array('user_id' => $solicitud->user_id,'user_email' => $solicitud->user_email,'solicitud' => $solicitud->id);
+        $this->session->set_userdata('password_reset', $session_reseteador);
+        #var_dump($solicitud);
+        //si la fecha es aceptable muestro form para nuevo pass
+        $data['content'] = 'new_reseted_password';
+        $this->load->view('front_layout', $data);
+        //si la fecha caduco lo envio a otro lado
+
+
+    }
+  }
+
+}
+
+
+public function create_new_pass(){
+  $this->load->helper('form');
+  $this->load->library('form_validation');
+  $this->form_validation->set_rules('password', 'Password', 'required');
+  $this->form_validation->set_rules('password_conf', 'Confirmacion password', 'required|min_length[3]|max_length[20]|xss_clean|matches[password]');
+  //validaciones
+  $this->form_validation->set_message('required','El campo %s es requerido.');
+  $this->form_validation->set_message('password_conf', "La direccion de email no coincide con la confirmacion.");
+  $this->form_validation->set_message('min_length', "Ingrese un minimo de 3 caracteres y 20 como maximo para password.");
+  $this->form_validation->set_message('matches', 'No coincide el campo "Password" con "Confirmacion password".');
+
+  if ($this->form_validation->run() === FALSE){
+    $this->load->helper('form');
+
+    $data['title'] = '';
+    $data['content'] = 'new_reseted_password';
+    $this->load->view('front_layout', $data);
+  }else{
+    //Esta todo ok cambio el password por el nuevo y elimino la solicitud de reset.
+    // set default time zone if not set at php.ini
+    if (!date_default_timezone_get('date.timezone'))
+    {
+    date_default_timezone_set('America/Buenos_Aires');
+    }
+    $ahora = date("Y-m-d H:i:s");
+
+    $salt = md5(uniqid(rand(), true));
+    $hash = hash('sha512', $salt.$this->input->post('password'));
+    $editedusuario = array(
+      'password' => $hash,
+      'salt' => $salt,
+      'updated_at' => $ahora,
+    );
+    #var_dump($this->session->userdata('password_reset'));
+    $this->solicitud_reset->delete_record($this->session->userdata('password_reset')['solicitud']);
+    #save
+    $this->session->set_flashdata('success', 'Contraseña Actualizada!');
+    $this->usuario->update_record($this->session->userdata('password_reset')['user_id'], $editedusuario);
+    redirect('ingreso', 'refresh');
+  }
+
+}// fin create_new_pass
+
 
 
 /* MODIFICAR PASSWORD */
@@ -146,7 +308,7 @@ public function perfil_modificar_password(){
     $usuario_logged = $this->usuario->get_record($this->session->userdata('front_logged_in')['id']);
     $access_granted = $this->usuario->check_credentials_front($usuario_logged->email, $this->input->post('pass_actual') );
     //Si no coincide su password actual
-    $this->session->set_flashdata('error', 'No coincide su password actual!');
+  #  $this->session->set_flashdata('error', 'No coincide su password actual!');
     if(!$access_granted){ redirect('perfil-modificar-acceso');}
 
     // ALL OK PROCEDO A ACTUALIZAR

@@ -78,6 +78,7 @@ public function form_new(){
 
 
 function check_date($str){
+	echo $str;
         $three = explode("-",$str);
         if(count($three) <= 2)
         {
@@ -86,7 +87,7 @@ function check_date($str){
         }
         else
         {
-            if(!checkdate((int)$three[0],(int)$three[1],(int)$three[2]))
+            if(!checkdate((int)$three[1],(int)$three[0],(int)$three[2]))
             {
                 $this->form_validation->set_message('check_date','Date must be valid.');
                 return false;

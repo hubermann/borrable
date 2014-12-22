@@ -16,7 +16,8 @@ class Front extends CI_Controller {
 		'imagenes_nota',
 		'categoria_nota',
 		'video','usuario',
-		'comentario_nota'
+		'comentario_nota',
+		'suscrip_newsletter'
 		));
 		$this->load->model('pais');
 		$this->load->model('categoria_evento');
@@ -109,8 +110,8 @@ public function searchterm_handler($searchterm)
 
 	public function index()
 	{
-		$data['content'] = "inicio";
-		$this->load->view('front_layout', $data);
+		#$data['content'] = "inicio";
+		$this->load->view('splash');
 	}
 
 	public function inicio()
@@ -186,6 +187,25 @@ public function detalle_evento(){
 }
 
 
+public function suscripcion_newsletter(){
+	$this->load->helper('form');
+  $this->load->library('form_validation');
+  $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+  $this->form_validation->set_message('required', "Ingrese una cuenta de email.");
+  $this->form_validation->set_message('valid_email', "Ingrese una cuenta de email valido.");
+ 
+  if ($this->form_validation->run() === FALSE){
+    $this->load->helper('form');
+
+    $data['content'] = 'suscrip_newsletter';
+    $this->load->view('login_layout', $data);
+  }else{
+  	#save
+    $this->session->set_flashdata('success', 'Suscripcion realizada!');
+    $this->suscrip_newsletter->add_record(array('email'=> $this->input->post('email')));
+    redirect('/', 'refresh');
+  }
+}
 
 
 

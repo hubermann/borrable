@@ -51,7 +51,7 @@
 				<div class="col-md-3 col-sm-6">
 					<h4>Suscribirse al Newsletter</h4>
 					<!-- form suscribe -->
-					<form role="search">
+					<form role="search" method="post" action="suscripcion_newsletter">
 						<div class="input-group">
 							<input type="text" class="form-control" placeholder="Email" name="srch-term" id="srch-term">
 							<div class="input-group-btn">

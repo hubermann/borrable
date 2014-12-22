@@ -49,7 +49,7 @@ if($destacado_secundario_1 != 0 || !empty($destacado_secundario_1)){
 		$img_secundario_uno ="";
 	}
 	$destacado_chico_uno = '
-	<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
+	<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 	<div class="media destacado-chico"><!-- inicio destacado chico -->
 		<a href="'.base_url('nota/'.$dest_secundario_1->id.'/'.$dest_secundario_1->slug).'">
 			'.$img_secundario_uno.'
@@ -67,14 +67,21 @@ if($destacado_secundario_2 != 0 || !empty($destacado_secundario_2)){
 	$excludes[] =$destacado_secundario_2;
 	$dest_secundario_2 = $this->nota->get_record($destacado_secundario_2);
 	//imagen
+
 	if($dest_secundario_2->main_image !='0' || !empty($dest_secundario_2->main_image) ){
 		$img_sec_dos = $this->imagenes_nota->traer_nombre($dest_secundario_2->main_image);
-		$img_secundario_dos = '<img src="'.base_url('images-notas/'.$img_sec_dos).'" alt="" class="img-responsive">';
+		if($img_sec_dos){
+			$img_secundario_dos = '<img src="'.base_url('images-notas/'.$img_sec_dos).'" alt="" class="img-responsive">';
+		}else{
+			$img_secundario_dos = "";
+		}
+
 	}else{
 		$img_secundario_dos ="";
 	}
+
 	$destacado_chico_dos = '
-	<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
+	<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 	<div class="media destacado-chico"><!-- inicio destacado chico -->
 		<a href="'.base_url('nota/'.$dest_secundario_2->id.'/'.$dest_secundario_2->slug).'">
 			'.$img_secundario_dos.'
@@ -99,7 +106,7 @@ if($destacado_secundario_3 != 0 || !empty($destacado_secundario_3)){
 		$img_secundario_tres ="";
 	}
 	$destacado_chico_tres = '
-	<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
+	<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 	<div class="media destacado-chico"><!-- inicio destacado chico -->
 		<a href="'.base_url('nota/'.$dest_secundario_3->id.'/'.$dest_secundario_3->slug).'">
 			'.$img_secundario_tres.'
@@ -119,12 +126,17 @@ if($destacado_secundario_4 != 0 || !empty($destacado_secundario_4)){
 	//imagen
 	if($dest_secundario_4->main_image !='0' || !empty($dest_secundario_4->main_image) ){
 		$img_sec_cuatro = $this->imagenes_nota->traer_nombre($dest_secundario_4->main_image);
-		$img_secundario_cuatro = '<img src="'.base_url('images-notas/'.$img_sec_cuatro).'" alt="" class="img-responsive">';
+		if($img_sec_cuatro){
+			$img_secundario_cuatro = '<img src="'.base_url('images-notas/'.$img_sec_cuatro).'" alt="" class="img-responsive">';
+		}else{
+			$img_secundario_cuatro = '';
+		}
+
 	}else{
 		$img_secundario_cuatro ="";
 	}
 	$destacado_chico_cuatro = '
-	<div class="col-xs-12 col-lg-3 col-md-6 col-sm-6">
+	<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 	<div class="media destacado-chico"><!-- inicio destacado chico -->
 		<a href="'.base_url('nota/'.$dest_secundario_4->id.'/'.$dest_secundario_4->slug).'">
 			'.$img_secundario_cuatro.'
@@ -156,7 +168,7 @@ if($destacado_secundario_4 != 0 || !empty($destacado_secundario_4)){
 	</div>
 
 
-<div class="row no-gutters">
+<div id="reciente" class="row no-gutters">
 <h3>Lo más reciente</h3>
 
 <?php
@@ -177,27 +189,32 @@ if(!empty($recientes)){
 				$img_reciente = $this->imagenes_nota->traer_nombre($reciente->main_image);
 				$img_reciente = '<img src="'.base_url('images-notas/'.$img_reciente).'" alt="placeholder" height="300"/>';
 			}
-			echo '<div class="col-lg-4" >
+			echo '<div class="col-lg-4 col-md-5 col-sm-5 col-xs-12 recienteDestacado" >
 			<div class="imagen"><a href="'.base_url('nota/'.$reciente->id.'/'.$reciente->slug).'">
 				'.$img_reciente.'</a>
 			</div>
 			<h4><a href="'.base_url('nota/'.$reciente->id.'/'.$reciente->slug).'">'.$reciente->titulo.'</a></h4>
 			<p>'.$reciente->extracto.'</p>
 			</div>
-			<div class="col-lg-1"style="max-width: 30px;"></div>';
+			<div class="col-lg-1 col-md-1 col-sm-1" style="max-width: 30px;"></div>';
 		}else{
 			// 2
 			$img_reciente ="";
 			if($reciente->main_image !='0' || !empty($reciente->main_image) ){
 				$img_reciente = $this->imagenes_nota->traer_nombre($reciente->main_image);
-				$img_reciente = '<img src="'.base_url('images-notas/'.$img_reciente).'" alt="" class="img-responsive">';
+				if($img_reciente){
+					$img_reciente = '<img src="'.base_url('images-notas/'.$img_reciente).'" alt="" class="img-responsive">';
+				}else{
+					$img_reciente = '';
+				}
+
 			}
 			$nombre_categoria = $this->categoria_nota->traer_nombre($reciente->categoria_id);
 			$nombre_categoria = strtolower($nombre_categoria);
 			list($anio, $mes, $dia) = explode("-", $reciente->fecha);
 			$fecha_reciente = $dia."-".$mes."-".$anio;
 			$recientes_adicionales .= '
-					<div class="row box-reciente">
+					<div class="row no-gutters box-reciente">
 							<div class="col-lg-4 thumb">
 								<a href="'.base_url('nota/'.$reciente->id.'/'.$reciente->slug).'">'.$img_reciente.'
 								</a>
@@ -225,7 +242,7 @@ if(!empty($recientes)){
 
 
 
-<div class="col-lg-7">
+<div class="col-lg-7 col-md-6 col-sm-6">
 			<?php echo $recientes_adicionales; ?>
 </div>
 
@@ -258,7 +275,12 @@ if($opiniones){
 		//imagen
 		if($opinion->main_image !='0' || !empty($opinion->main_image) ){
 			$img_opinion = $this->imagenes_nota->traer_nombre($opinion->main_image);
-			$img_opinion = '<img src="'.base_url('images-notas/'.$img_opinion).'" alt="" />';
+			if($img_opinion){
+				$img_opinion = '<img src="'.base_url('images-notas/'.$img_opinion).'" alt="" />';
+			}else{
+				$img_opinion = '';
+			}
+
 		}else{
 			$img_opinion ="";
 		}
@@ -359,12 +381,15 @@ if(!empty($videos)){
 		//imagen
 		if($video->main_image !='0' || !empty($video->main_image) ){
 		$img_video = $this->imagenes_nota->traer_nombre($video->main_image);
-			if(!empty($img_video)){
+			if($img_video){
 
 				$img_video = '<img src="'.base_url('images-notas/'.$img_video).'" class="img-responsive" />';
+			}else{
+				$img_video = '';
 			}
 
 		}
+	
 		echo '<div class="media">
 					<!-- inicio box video -->
 						<a href="'.base_url('nota/'.$video->id.'/'.$video->slug).'"> '.$img_video.' </a>

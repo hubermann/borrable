@@ -100,7 +100,7 @@ class Permiso extends CI_Model{
 	}
 
 
-	//Muestra el tipo de parmiso por rol en /control/permisos
+	//Muestra el tipo de permiso por rol en /control/permisos
 	public function show_permiso_rol($role_id, $modulo, $action){
 		$this->db->where('role_id' ,$role_id);
 		$this->db->where('modulo' ,$modulo);
@@ -118,7 +118,7 @@ class Permiso extends CI_Model{
 			return FALSE;
 
 		//No existe el permiso en la BD. Lo creo.
-	}elseif( $c->row('permiso')=="" ){
+	}elseif( $c->row('permiso')==NULL ){
 			$newpermiso = array( 'role_id' => $role_id,
 			'modulo' => $modulo,
 			'url' => $action,

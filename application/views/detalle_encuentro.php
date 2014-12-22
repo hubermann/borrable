@@ -65,13 +65,14 @@ if(!empty($encuentro->filename)){
         <h3>Sponsors</h3>
 
         <section class="row clearfix nomargin">
-          <h4>Sponsors Gold</h4>
+
 
           <?php
           // SPONSORS
           $sponsors_destacados = $this->sponsor->get_diferenciados($encuentro->id, 1);
 
-          if(!empty($sponsors_destacados)){
+          if(!$sponsors_destacados->result()){
+            echo '<h4>Sponsors Gold</h4>';
             foreach ($sponsors_destacados->result() as $sponsor) {
               $imagen="";
               if($sponsor->filename!=""){
@@ -104,12 +105,13 @@ if(!empty($encuentro->filename)){
 
         </section>
         <section class="row clearfix nomargin">
-          <h4>Sponsors Silver</h4>
+
           <?php
           // SPONSORS
           $sponsors_destacados = $this->sponsor->get_diferenciados($encuentro->id, 0);
 
-          if(!empty($sponsors_destacados)){
+          if(!$sponsors_destacados->result()){
+            echo '<h4>Sponsors Silver</h4>';
             foreach ($sponsors_destacados->result() as $sponsor) {
               $imagen="";
               if($sponsor->filename!=""){
@@ -280,65 +282,87 @@ if(!empty($encuentro->filename)){
           ?>
         </div>
       </section>
-      <h3>Registrarse</h3>
-      <section class="grey">
-        <div class="row no-gutters form">
-          <form class="suscribe" action="<?php echo base_url('inscripcion_encuentro'); ?>" method="post">
-            <fieldset>
-              <input type="hidden" name="evento_id" value="<?php echo $encuentro->id; ?>">
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="apellido">Nombre</label>
-              <div class="col-md-12">
-              <input id="apellido" name="apellido" type="text" placeholder="" class="form-control input-md" required="">
 
+
+          <?php
+          // Si hubo registro exitoso no umuestro el formulario
+          if($this->session->flashdata('success')){
+          echo '<div class="alert alert-success" role="alert">
+          '.$this->session->flashdata('success').'</div>';
+
+          }else{
+            ?>
+
+            <h3>Registrarse</h3>
+            <section class="grey">
+              <div class="row no-gutters form">
+
+
+            <form class="suscribe" action="<?php echo base_url('inscripcion_encuentro'); ?>" method="post">
+              <fieldset>
+                <input type="hidden" name="evento_id" value="<?php echo $encuentro->id; ?>">
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="apellido">Nombre</label>
+                <div class="col-md-12">
+                <input id="apellido" name="apellido" type="text" placeholder="" class="form-control input-md" required="">
+
+                </div>
               </div>
-            </div>
 
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="apellido">Apellido</label>
-              <div class="col-md-12">
-              <input id="apellido" name="apellido" type="text" placeholder="" class="form-control input-md" required="">
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="apellido">Apellido</label>
+                <div class="col-md-12">
+                <input id="apellido" name="apellido" type="text" placeholder="" class="form-control input-md" required="">
 
+                </div>
               </div>
-            </div>
 
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="dni">Documento</label>
-              <div class="col-md-12">
-              <input id="dni" name="dni" type="text" placeholder="xx.xxxx.xx" class="form-control input-md">
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="dni">Documento</label>
+                <div class="col-md-12">
+                <input id="dni" name="dni" type="text" placeholder="xx.xxxx.xx" class="form-control input-md">
 
+                </div>
               </div>
-            </div>
 
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="telefono">Telefono de contacto</label>
-              <div class="col-md-12">
-              <input id="telefono" name="telefono" type="text" placeholder="" class="form-control input-md" required="">
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="telefono">Telefono de contacto</label>
+                <div class="col-md-12">
+                <input id="telefono" name="telefono" type="text" placeholder="" class="form-control input-md" required="">
 
+                </div>
               </div>
-            </div>
 
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-12 control-label" for="mail">Direccion de mail</label>
-              <div class="col-md-12">
-              <input id="mail" name="mail" type="text" placeholder="@" class="form-control input-md">
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-12 control-label" for="mail">Direccion de mail</label>
+                <div class="col-md-12">
+                <input id="mail" name="mail" type="text" placeholder="@" class="form-control input-md">
 
+                </div>
               </div>
-            </div>
 
-          
-            <button id="send" name="send" class="btn btn-primary fullWidth">Enviar</button>
 
-            </fieldset>
-          </form>
+              <button id="send" name="send" class="btn btn-primary fullWidth">Enviar</button>
 
-        </div>
-      </section>
+              </fieldset>
+            </form>
+          </div>
+          </section>
+
+            <?php
+          }
+
+          ?>
+
+
+
+
+
     </aside>
   </div>
 </article>

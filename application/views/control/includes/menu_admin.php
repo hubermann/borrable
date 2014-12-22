@@ -1,10 +1,5 @@
 <ul class="sidebar-menu">
-<?php  
-
-
-
-
-
+<?php
 ######## eventos
 if($this->uri->segment(2)=="eventos" || $this->uri->segment(2)=="categorias_eventos" ){
 	echo '
@@ -17,9 +12,9 @@ if($this->uri->segment(2)=="eventos" || $this->uri->segment(2)=="categorias_even
 <ul class="treeview-menu">
 <li><a href="'.base_url('control/eventos').'"><i class="fa fa-angle-double-right"></i> Ver Todos</a></li>
 <li><a href="'.base_url('control/eventos/form_new').'"><i class="fa fa-angle-double-right"></i> Crear nuevo</a></li>
-
 <li><a href="'.base_url('control/categorias_eventos').'"><i class="fa fa-angle-double-right"></i> Ver categorias</a></li>
 <li><a href="'.base_url('control/categorias_eventos/form_new').'"><i class="fa fa-angle-double-right"></i> Crear nueva categoria</a></li>
+<li><a href="'.base_url('control/inscripciones').'"><i class="fa fa-angle-double-right"></i> inscripciones</a></li>
 </ul>
 </li>
 	';
@@ -32,12 +27,6 @@ if($this->uri->segment(2)=="eventos" || $this->uri->segment(2)=="categorias_even
     </li>
 	';
 }
-
-
-
-
-
-
 ######## notas
 if($this->uri->segment(2)=="notas" || $this->uri->segment(2)=="categorias_notas"){
 	echo '
@@ -64,8 +53,6 @@ if($this->uri->segment(2)=="notas" || $this->uri->segment(2)=="categorias_notas"
     </li>
 	';
 }
-
-
 ######## usuarios
 if($this->uri->segment(2)=="usuarios"){
 	echo '
@@ -90,7 +77,6 @@ if($this->uri->segment(2)=="usuarios"){
     </li>
 	';
 }
-
 ######## roles
 if($this->uri->segment(2)=="roles"){
 	echo '
@@ -115,7 +101,6 @@ if($this->uri->segment(2)=="roles"){
     </li>
 	';
 }
-
 ######## permisos
 if($this->uri->segment(2)=="permisos"){
 	echo '
@@ -140,7 +125,6 @@ if($this->uri->segment(2)=="permisos"){
     </li>
 	';
 }
-
 ?>
 
 <li class="treeview">
@@ -151,7 +135,7 @@ if($this->uri->segment(2)=="permisos"){
 </a>
 <ul class="treeview-menu">
 <li><a href="<?php echo base_url('control/logout'); ?>"><i class="fa fa-angle-double-right"></i> Cerrar sesion </a></li>
-</ul> 
+</ul>
 </li>
-    
+
 </ul>

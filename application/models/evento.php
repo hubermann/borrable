@@ -9,7 +9,7 @@ class Evento extends CI_Model{
 	}
 	//all
 	public function get_records($num,$start){
-		$this->db->select()->from('eventos')->where('status', 0)->order_by('id','ASC')->limit($num,$start);
+		$this->db->select()->from('eventos')->where('status', 0)->order_by('id','DESC')->limit($num,$start);
 		return $this->db->get();
 
 	}
