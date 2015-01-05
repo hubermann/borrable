@@ -24,6 +24,37 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
         <script charset="utf-8" src="<?php echo base_url('public_folder/js/vendor/jquery-1.11.0.min.js'); ?>">
         </script>
+		<!-- background functions-->
+		<?php  
+		
+		$pais_visitante = verificar_pais();
+		switch ($pais_visitante) {
+			case 'py':
+				# code...
+			#echo "Fondo PY";
+				break;
+
+			case 'ur':
+				# code...
+			#echo "Fondo UR";
+				break;
+
+			case 'ar':
+				# code...
+			#echo "Fondo AR";
+				break;
+
+			case 'unknow':
+				# code...
+			#echo "Fondo desconocido";
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+		?>
+
 
     </head>
 <body>

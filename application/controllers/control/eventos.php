@@ -78,7 +78,6 @@ public function form_new(){
 
 
 function check_date($str){
-	echo $str;
         $three = explode("-",$str);
         if(count($three) <= 2)
         {

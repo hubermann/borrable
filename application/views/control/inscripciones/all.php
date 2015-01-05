@@ -4,20 +4,6 @@
 <?php 
 if(count($query->result())){
 	echo '<table class="table table-striped">';
-
-    echo '<thead>
-        <tr>
-        <th>ID </th>
-        <th>Nombre </th>
-        <th>Apellido </th>
-        <th>Tel: </th>
-        <th>email </th>
-        <th>Created </th>
-        <th>Doc. </th>
-        <th>opciones </th>    
-        </tr>
-        </thead>';
-
 	foreach ($query->result() as $row):
 
 		/* $nombre_categoria = $this->categoria->traer_nombre($row->categoria_id); */
@@ -30,7 +16,7 @@ echo '<td>'.$row->telefono.' </td>';
 echo '<td>'.$row->email.' </td>';
 echo '<td>'.$row->created_at.' </td>';
 echo '<td>'.$row->documento.' </td>';
-
+echo '<td>'.$row->procesado.' </td>';
 
 		echo '</td>';
 

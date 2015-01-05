@@ -1,31 +1,19 @@
 <?php
-
 if($nota){
-
 $titulo = $nota->titulo;
 $nombre_categoria = $this->categoria_nota->traer_nombre($nota->categoria_id);
 $categoria_nota = $this->categoria_nota->get_record($nota->categoria_id);
-
 //main image
 $imagen_principal ="";
-
 if($nota->main_image !='0' || !empty($nota->main_image) ){
-
 $nombre_imagen = $this->imagenes_nota->traer_nombre($nota->main_image);
 $imagen_principal= '<img src="'.base_url('images-notas/'.$nombre_imagen).'" alt="Imagen" class="img-responsive"/>';
 }
-
 $descripcion = $nota->contenido;
-
 list($anio, $mes, $dia) = explode("-", $nota->fecha);
 $fecha = $dia."-".$mes."-".$anio;
-
-
-
-
 setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
 $fecha = strftime("%d de %B de %Y", strtotime($nota->fecha));
-
 $meses_EN =array(
 'January',
 'February',
@@ -54,16 +42,10 @@ $meses_ES   = array(
 'Noviembre',
 'Diciembre',
 );
-
 $fecha = str_replace($meses_EN, $meses_ES, $fecha);
-
 $fuente = $nota->fuente_nombre;
 $fuente_url = $nota->fuente_url;
-
-
 }
-
-
 ?>
 
 <article class="row clearfix nomargin">
@@ -81,9 +63,9 @@ $fuente_url = $nota->fuente_url;
 /* DATOS AUTOR */
 $autor = $this->usuario->get_record($nota->autor_id);
 if(!empty($autor->filename)){
-  echo '<img src="'.base_url('images_usuarios/'.$autor->filename).'" width="80" alt="Profile"/>';
+  echo '<img src="'.base_url('images_usuarios/'.$autor->filename).'" alt="Profile"/>';
 }else{
-  echo '<img src="'.base_url('public_folder/img/Icon-user.png').'" width="80" alt="Profile"/>';
+  echo '<img src="'.base_url('public_folder/img/guestIcon.jpg').'" alt="Profile"/>';
 }
 ?>
 
@@ -98,8 +80,6 @@ if(!empty($autor->filename)){
 </div>
 <ul class="share">
 <?php
-
-
 ?>
 
 <li>
@@ -143,13 +123,8 @@ if(!empty($autor->filename)){
 
 
 <?php
-
-
 //imagenes
-
 $query_imagenes = $this->imagenes_nota->imagenes_nota($nota->id);
-
-
 if(count($query_imagenes->result()) >= 2){
 echo '<section class="row clearfix nomargin" id="otrasNotas">
 <h3>Imagenes</h3>';
@@ -164,7 +139,6 @@ echo '<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
 </div> -->
 </article>
 ';
-
 echo '<!-- Modal for image -->
 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog">
@@ -182,24 +156,17 @@ echo '<!-- Modal for image -->
   </div>
 </div>
 </div>
-
-
 <script charset="utf-8">
 $("#pop'.$imagen->id.'").on("click", function() {
  $(\'#imagepreview\').attr(\'src\', $(\'#imageresource'.$imagen->id.'\').attr(\'src\'));
  $(\'#imagemodal\').modal(\'show\');
-
 });
 </script>
-
 ';
 }
 }
-
 echo '</section>';
-
 }
-
 ?>
 
 
@@ -209,14 +176,10 @@ echo '</section>';
   <?php
   //comentarios de la nota
   $comentarios = $this->comentario_nota->get_by_nota($nota->id, $limite=5);
-
-
   if( !empty($comentarios) ){
     foreach ($comentarios as $comentario) {
-
       setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
       $fecha_comentario = strftime("%d de %B de %Y", strtotime($comentario->created_at));
-
       $meses_EN =array(
       'January',
       'February',
@@ -245,11 +208,7 @@ echo '</section>';
       'Noviembre',
       'Diciembre',
       );
-
       $fecha_comentario = str_replace($meses_EN, $meses_ES, $fecha_comentario);
-
-
-
       $usuario = $this->usuario->get_record($comentario->usuario_id);
       echo '<div class=box_comentario>
       <p><strong>'.$usuario->nombre.'</strong></p>
@@ -262,17 +221,11 @@ echo '</section>';
       </div>';
     }
   }
-
-
-
   /* SI existe mensaje al usuario*/
   if($this->session->flashdata('success_comentario')):
     echo '<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>
     '.$this->session->flashdata('success_comentario').'</div>';
     endif;
-
-
-
 if($this->session->userdata('front_logged_in')){
   #form nuevo comentario
   $attributes = array('class' => 'form-horizontal', 'id' => 'new_comentario_nota');
@@ -297,25 +250,17 @@ if($this->session->userdata('front_logged_in')){
   </div>
 
   <?php
-
   echo form_hidden('comentario_nota[id]');
   echo form_hidden('nota_id', $nota->id);
-
   echo form_close();
-
-
 }else{
     //USUARIO SIN LOGIN
-
   echo '<p>
     Para realizar comentarios debe estar registrado.
-  </p><a href="'.base_url('ingreso').'">Ingresar</a>
-  <a href="'.base_url('registro').'">Registrarme</a>';
+  </p>
+  <p><a href="'.base_url('ingreso').'" class="btn btn-primary">Ingresar</a>
+  <a href="'.base_url('registro').'" class="btn btn-default">Registrarme</a></p><br/>';
 }
-
-
-
-
 ?>
 
 
@@ -326,29 +271,19 @@ if($this->session->userdata('front_logged_in')){
 <!-- notas del autor -->
 
 <?php
-
-
 $notas_autor = $this->nota->notas_por_autor($nota->autor_id,$nota->id, 4);
-
 if(!empty($notas_autor) ){
   echo '<section class="row clearfix nomargin" id="otrasNotas">
   <h3>Otras notas del autor</h3>';
 }
 foreach ($notas_autor as $nota_autor) {
-
   //main image
   $imagen_principal_rel ="";
-
   if($nota_autor->main_image !='0' || !empty($nota_autor->main_image) ){
-
   $nombre_imagen = $this->imagenes_nota->traer_nombre($nota_autor->main_image);
   $imagen_principal_rel= '<a href="'.base_url('nota/'.$nota_autor->id.'/'.$nota_autor->slug).'"><img src="'.base_url('images-notas/'.$nombre_imagen).'" alt="Imagen" class="img-responsive" /></a>
   ';
-
-
 }
-
-
 echo '<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
 <figure class="thumbnail">
 '.$imagen_principal_rel.'
@@ -358,17 +293,11 @@ echo '<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
 </div>
 </article>';
 $excludes[] =$nota_autor->id;
-
-
-
 }
-
 if($notas_autor){
   echo '</section>
   <!-- FIN notas del auto -->';
 }
-
-
 ?>
 
 
@@ -395,7 +324,7 @@ if($notas_autor){
 <p>Si</p>
 <small>(79.18% - 194 Votos)</small>
 <div class="graphicBar">
-	<div class="bar" style="width:80%;"></div>
+  <div class="bar" style="width:80%;"></div>
 </div>
 </span>
 </div>
@@ -405,7 +334,7 @@ if($notas_autor){
 <p>No</p>
 <small>(20.82% - 51 Votos)</small>
 <div class="graphicBar">
-	<div class="bar" style="width:20%;"></div>
+  <div class="bar" style="width:20%;"></div>
 </div>
 </span>
 </div>
@@ -418,7 +347,6 @@ if($notas_autor){
 <?php
 $excludes[]= $nota->id;
 $notas_relacionadas = $this->nota->get_relacionadas($nota->categoria_id,$excludes, 5);
-
 if(!empty($notas_relacionadas)){
 foreach($notas_relacionadas as $nota_relacionada){
 if($nota_relacionada->main_image !='0' || !empty($nota_relacionada->main_image) ){
@@ -438,7 +366,6 @@ echo '<div class="media">
 </div>';
 }
 }
-
 ?>
 
 

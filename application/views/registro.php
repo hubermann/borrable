@@ -21,7 +21,7 @@
 				  <div class="control-group">
 					  <label class="control-label">Nombre</label>
 					  <div class="controls">
-					  <input value="<?php echo set_value('nombre'); ?>" class="field" placeholder="Nombre" type="text" name="nombre" />
+					  <input value="<?php echo set_value('nombre'); ?>" class="col-lg-12 field"" placeholder="Nombre" type="text" name="nombre" />
 					  <?php echo form_error('nombre','<p class="error">', '</p>'); ?>
 					  </div>
 				  </div>
@@ -29,7 +29,7 @@
 				  <div class="control-group">
 					  <label class="control-label">Apellido</label>
 					  <div class="controls">
-					  <input value="<?php echo set_value('apellido'); ?>" class="field" placeholder="Apellido" type="text" name="apellido" />
+					  <input value="<?php echo set_value('apellido'); ?>" class="col-lg-12 field"" placeholder="Apellido" type="text" name="apellido" />
 					  <?php echo form_error('apellido','<p class="error">', '</p>'); ?>
 					  </div>
 				  </div>
@@ -37,7 +37,7 @@
 				  <div class="control-group">
 						<label class="control-label">Email</label>
 					  <div class="controls">
-						<input value="<?php echo set_value('email'); ?>" class="field" placeholder="Email" type="text" name="email" />
+						<input value="<?php echo set_value('email'); ?>" class="col-lg-12 field"" placeholder="Email" type="text" name="email" />
 						<?php echo form_error('email','<p class="error">', '</p>'); ?>
 					  </div>
 				  </div>
@@ -45,7 +45,7 @@
 				  <div class="control-group">
 					  <label class="control-label">Password</label>
 					  <div class="controls">
-						<input value="<?php echo set_value('password'); ?>" class="field" placeholder="Password" type="password" name="password" />
+						<input value="<?php echo set_value('password'); ?>" class="col-lg-12 field"" placeholder="Password" type="password" name="password" />
 						<?php echo form_error('password','<p class="error">', '</p>'); ?>
 					  </div>
 				  </div>
@@ -54,7 +54,7 @@
 				  <div class="control-group">
 					  <label class="control-label">Confirmación Password</label>
 					  <div class="controls">
-						<input value="<?php echo set_value('password_conf'); ?>" class="field" placeholder="Confirmación Password" type="password" name="password_conf" />
+						<input value="<?php echo set_value('password_conf'); ?>" class="col-lg-12 field"" placeholder="Confirmación Password" type="password" name="password_conf" />
 						<?php echo form_error('password_conf','<p class="error">', '</p>'); ?>
 					  </div>
 				  </div>

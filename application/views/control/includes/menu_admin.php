@@ -14,7 +14,6 @@ if($this->uri->segment(2)=="eventos" || $this->uri->segment(2)=="categorias_even
 <li><a href="'.base_url('control/eventos/form_new').'"><i class="fa fa-angle-double-right"></i> Crear nuevo</a></li>
 <li><a href="'.base_url('control/categorias_eventos').'"><i class="fa fa-angle-double-right"></i> Ver categorias</a></li>
 <li><a href="'.base_url('control/categorias_eventos/form_new').'"><i class="fa fa-angle-double-right"></i> Crear nueva categoria</a></li>
-<li><a href="'.base_url('control/inscripciones').'"><i class="fa fa-angle-double-right"></i> inscripciones</a></li>
 </ul>
 </li>
 	';

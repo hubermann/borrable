@@ -151,10 +151,6 @@ if($destacado_secundario_4 != 0 || !empty($destacado_secundario_4)){
 ?>
 
 
-
-
-
-
 	<div class="row no-gutters">
 
 		<?php echo $destacado_chico_uno; ?>

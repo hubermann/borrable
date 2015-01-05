@@ -1,22 +1,20 @@
 <?php  
+function verificar_pais(){
 
-#arg
-echo $ipvisitante = ip2long('190.55.113.118');
-echo "<br>";
-
-#pais_visitante
-
-
-
-
-
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		$supuesta_ip = $_SERVER['HTTP_CLIENT_IP'];
+	} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		$supuesta_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} else {
+		$supuesta_ip = $_SERVER['REMOTE_ADDR'];
+	}
 
 
-function verificar_pais($ipvisitante){
-
+	$supuesta_ip = $_SERVER['REMOTE_ADDR'];
+	$ipvisitante = ip2long($supuesta_ip);
 
 	$py  = array(
-	array('181.40.0.0','181.40.255.255'),
+	array('181.40.0.0','164.73.255.255'),
 	array('181.124.0.0','181.127.255.255'),
 	array('186.2.192.0','186.2.223.255'),
 	array('186.2.224.0','186.2.239.255'),
@@ -510,7 +508,7 @@ function verificar_pais($ipvisitante){
 	foreach ($py as $row){
 		$ipstart = ip2long($row[0]);
 		$ipend = ip2long($row[1]);
-	  	 echo "Prim: $ipstart -- Seg: $ipend <br>";
+	  	 #echo "Prim: $ipstart -- Seg: $ipend <br>";
 	   	if ($ipvisitante <= $ipend && $ipstart <= $ipvisitante) {
 	  		return "py";
 	  		#exit();
@@ -521,7 +519,7 @@ function verificar_pais($ipvisitante){
 	foreach ($ur as $row){
 		$ipstart = ip2long($row[0]);
 		$ipend = ip2long($row[1]);
-	  	 echo "Prim: $ipstart -- Seg: $ipend <br>";
+	  	 #echo "Prim: $ipstart -- Seg: $ipend <br>";
 	   	if ($ipvisitante <= $ipend && $ipstart <= $ipvisitante) {
 	  		return "ur";
 	  		#exit();
@@ -532,7 +530,7 @@ function verificar_pais($ipvisitante){
 	foreach ($ar as $row){
 		$ipstart = ip2long($row[0]);
 		$ipend = ip2long($row[1]);
-	  	 echo "Prim: $ipstart -- Seg: $ipend <br>";
+	  	 #echo "Prim: $ipstart -- Seg: $ipend <br>";
 	   	if ($ipvisitante <= $ipend && $ipstart <= $ipvisitante) {
 	  		return  "ar";
 	  		#exit();
@@ -546,21 +544,5 @@ function verificar_pais($ipvisitante){
 
 }//fin function verificar_pais
 
-$pais = verificar_pais($ipvisitante);
-
-echo "Es: ".$pais;
-/*
-if ($ip <= $high_ip && $low_ip <= $ip) {
-  echo "in range";
-}
-*/
 
 ?>
-<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-<script>
-	$.get("http://ipinfo.io/179.24.0.0/geo", function(response) {
-    console.log(response.country);
-}, "jsonp");
-
-	alert('Pais'+ response.country);
-</script>
